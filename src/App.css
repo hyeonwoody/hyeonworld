@@ -1,5 +1,8 @@
 .App {
+  display: grid;
   text-align: center;
+  place-items: center;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -36,3 +39,11 @@
     transform: rotate(360deg);
   }
 }
+
+
+.box{
+  border:1px solid red;
+  width:100px;
+  height:100px;
+}
+
