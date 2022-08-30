@@ -1,0 +1,15 @@
+
+    {
+        "members": [
+            {"name":"정덕수", "id": 0},
+            {"name":"윤순덕", "id":1},
+            {"name":"정현우", "id": 2},
+            {"name":"정인애", "id": 3}
+            
+        ],
+        "games":[
+            {"name": "2 truth 1 lie"}
+        ],
+        "va": "nma",
+        "ta": "cxv"
+    }
