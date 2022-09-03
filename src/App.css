@@ -5,7 +5,7 @@
   min-height: 100vh;
   color: #ebe1e1;
   font-family: 'recipe';
-  background-attachment:scroll;
+  
   background: linear-gradient(
     to bottom,
     hsl(330, 3.03%, 12.94%) 0%,
@@ -50,7 +50,7 @@
 }
 
 .App-link {
-  color: #a5a9aa;
+  color: #000000;
 }
 
 @keyframes App-logo-spin {
@@ -65,5 +65,5 @@
 @font-face {
   font-family: "recipe";
   src: url("./fonts/Recipekorea\ 레코체\ FONT.ttf") format("truetype");
-  font-size: 240px;
+
 }

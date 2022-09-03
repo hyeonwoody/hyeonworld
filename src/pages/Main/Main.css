@@ -1,0 +1,389 @@
+.Main{
+
+}
+
+.input {
+    max-width: 190px;
+    height: 30px;
+    border: 2px solid transparent;
+    outline: none;
+    border-bottom: 2px solid #3f3f3f;
+    caret-color: #3f3f3f;
+    background-color: #212121;
+    padding: 5px;
+    transition: .5s linear;
+    font-family: monospace;
+    letter-spacing: 1px;
+
+  }
+  
+  .input:focus {
+    border: 2px solid #31abcd;
+    caret-color: #31abcd;
+    color: #31abcd;
+    box-shadow: 4px 4px 10px #070707;
+  }
+  
+  .input:focus::placeholder {
+    color: #31abcd;
+  }
+
+.contents{
+  display: flex;
+  width: 350px;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 25px;
+  column-gap : 20px;
+  
+}
+
+
+
+:root {
+  --orange: #40d0f8;
+  --darkorange: #31abcd;
+  --platinum: #e5e5e5;
+  --black: #2b2d42;
+  --white: #fff;
+  --thumb: #edf2f4;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font: 16px / 24px "Rubik", sans-serif;
+  color: var(--black);
+  background: var(--platinum);
+  margin: 50px 0;
+}
+
+.container {
+  max-width: 1400px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 32px;
+  margin-bottom: 1em;
+}
+
+.cards {
+  display: grid;
+  grid-auto-columns: 100%;
+  grid-column-gap: 10px;
+  grid-auto-flow: column;
+  padding: 25px 0px;
+  list-style: none;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+}
+
+.card0 {
+  flex: 0 0 100%;
+  padding: 30px;
+  scroll-snap-align: start;
+  border-radius: 30px;
+  background: linear-gradient(
+    276deg,
+    hsl(17.04, 100%, 49.02%) 0%,
+    hsl(16.65, 98.65%, 49.32%) 8.1%,
+    hsl(16.1, 97.38%, 49.53%) 15.5%,
+    hsl(15.4, 96.18%, 49.67%) 22.5%,
+    hsl(14.55, 95.05%, 49.75%) 29%,
+    hsl(13.57, 93.98%, 49.77%) 35.3%,
+    hsl(12.45, 92.98%, 49.75%) 41.2%,
+    hsl(11.2, 92.06%, 49.69%) 47.1%,
+    hsl(9.83, 91.21%, 49.61%) 52.9%,
+    hsl(8.34, 90.43%, 49.5%) 58.8%,
+    hsl(6.76, 89.75%, 49.39%) 64.7%,
+    hsl(5.11, 89.16%, 49.28%) 71%,
+    hsl(3.44, 88.68%, 49.18%) 77.5%,
+    hsl(1.84, 88.31%, 49.09%) 84.5%,
+    hsl(0.55, 88.08%, 49.04%) 91.9%,
+    hsl(0, 88%, 49.02%) 100%
+  );
+}
+.card1 {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+  background: linear-gradient(
+    276deg,
+    hsl(35.04, 100%, 49.02%) 0%,
+    hsl(34.75, 97.68%, 49.56%) 8.1%,
+    hsl(34.49, 95.5%, 50%) 15.5%,
+    hsl(34.25, 94.77%, 50.35%) 22.5%,
+    hsl(34.03, 93.86%, 50.62%) 29%,
+    hsl(33.83, 92.78%, 50.82%) 35.3%,
+    hsl(33.66, 91.59%, 50.96%) 41.2%,
+    hsl(33.5, 90.33%, 51.05%) 47.1%,
+    hsl(33.36, 89.04%, 51.1%) 52.9%,
+    hsl(33.24, 87.77%, 51.11%) 58.8%,
+    hsl(33.13, 86.57%, 51.1%) 64.7%,
+    hsl(33.04, 85.48%, 51.08%) 71%,
+    hsl(32.98, 84.55%, 51.04%) 77.5%,
+    hsl(32.93, 83.83%, 51.01%) 84.5%,
+    hsl(32.9, 83.37%, 50.99%) 91.9%,
+    hsl(32.88, 83.2%, 50.98%) 100%
+  );
+}
+
+.card2 {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 30px;
+  color:rgb(2, 2, 2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+  background: linear-gradient(
+    276deg,
+    hsl(66.96, 100%, 49.02%) 0%,
+    hsl(66.89, 98.65%, 49.28%) 8.1%,
+    hsl(66.59, 97.38%, 49.4%) 15.5%,
+    hsl(66.08, 96.16%, 49.39%) 22.5%,
+    hsl(65.4, 95%, 49.27%) 29%,
+    hsl(64.56, 93.9%, 49.06%) 35.3%,
+    hsl(63.6, 92.85%, 48.78%) 41.2%,
+    hsl(62.53, 91.85%, 48.44%) 47.1%,
+    hsl(61.39, 90.92%, 48.06%) 52.9%,
+    hsl(60.23, 90.07%, 47.66%) 58.8%,
+    hsl(59.1, 89.43%, 47.91%) 64.7%,
+    hsl(58.07, 88.94%, 48.28%) 71%,
+    hsl(57.19, 88.54%, 48.58%) 77.5%,
+    hsl(56.51, 88.25%, 48.82%) 84.5%,
+    hsl(56.07, 88.06%, 48.97%) 91.9%,
+    hsl(55.91, 88%, 49.02%) 100%
+  );
+}
+
+.card3 {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+  background: linear-gradient(
+    276deg,
+    hsl(135.08, 82.98%, 46.08%) 0%,
+    hsl(134.94, 82.93%, 46.15%) 8.1%,
+    hsl(134.56, 82.79%, 46.33%) 15.5%,
+    hsl(133.96, 82.58%, 46.62%) 22.5%,
+    hsl(133.19, 82.33%, 46.99%) 29%,
+    hsl(132.28, 82.04%, 47.41%) 35.3%,
+    hsl(131.25, 81.74%, 47.88%) 41.2%,
+    hsl(130.15, 81.43%, 48.36%) 47.1%,
+    hsl(129, 81.14%, 48.85%) 52.9%,
+    hsl(127.84, 80.87%, 49.32%) 58.8%,
+    hsl(126.69, 80.63%, 49.77%) 64.7%,
+    hsl(125.62, 80.94%, 50.16%) 71%,
+    hsl(124.66, 81.86%, 50.5%) 77.5%,
+    hsl(123.88, 82.57%, 50.76%) 84.5%,
+    hsl(123.36, 83.03%, 50.92%) 91.9%,
+    hsl(123.17, 83.2%, 50.98%) 100%
+  );
+}
+
+.card4 {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+  background: linear-gradient(
+    276deg,
+    hsl(200.94, 94.38%, 48.82%) 0%,
+    hsl(200.74, 93.95%, 48.91%) 8.1%,
+    hsl(200.16, 92.88%, 49.12%) 15.5%,
+    hsl(199.25, 91.51%, 49.39%) 22.5%,
+    hsl(198.04, 90.04%, 49.65%) 29%,
+    hsl(196.62, 88.57%, 49.9%) 35.3%,
+    hsl(195.04, 87.59%, 50.12%) 41.2%,
+    hsl(193.37, 86.92%, 50.32%) 47.1%,
+    hsl(191.67, 86.25%, 50.49%) 52.9%,
+    hsl(190, 85.58%, 50.62%) 58.8%,
+    hsl(188.43, 84.95%, 50.74%) 64.7%,
+    hsl(187.01, 84.39%, 50.83%) 71%,
+    hsl(185.8, 83.9%, 50.89%) 77.5%,
+    hsl(184.86, 83.53%, 50.94%) 84.5%,
+    hsl(184.25, 83.29%, 50.97%) 91.9%,
+    hsl(184.04, 83.2%, 50.98%) 100%
+  );
+}
+
+.card5 {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+  background: linear-gradient(
+    276deg,
+    hsl(260.92, 82.98%, 46.08%) 0%,
+    hsl(260.41, 81.76%, 46.44%) 8.1%,
+    hsl(259.05, 78.83%, 47.36%) 15.5%,
+    hsl(257.07, 75.21%, 48.58%) 22.5%,
+    hsl(254.61, 71.51%, 49.95%) 29%,
+    hsl(251.78, 71.84%, 51.37%) 35.3%,
+    hsl(248.65, 72.49%, 52.78%) 41.2%,
+    hsl(245.29, 73.27%, 54.16%) 47.1%,
+    hsl(241.74, 74.15%, 55.46%) 52.9%,
+    hsl(238.15, 75.69%, 55.64%) 58.8%,
+    hsl(234.89, 77.65%, 54.77%) 64.7%,
+    hsl(232.03, 79.43%, 53.83%) 71%,
+    hsl(229.6, 80.94%, 52.87%) 77.5%,
+    hsl(227.67, 82.13%, 51.97%) 84.5%,
+    hsl(226.35, 82.92%, 51.26%) 91.9%,
+    hsl(225.87, 83.2%, 50.98%) 100%
+  );
+}
+
+.card6{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+  background: linear-gradient(
+    276deg,
+    hsl(291.06, 94.38%, 48.82%) 0%,
+    hsl(291, 93.95%, 48.91%) 8.1%,
+    hsl(290.81, 92.88%, 49.12%) 15.5%,
+    hsl(290.54, 91.51%, 49.39%) 22.5%,
+    hsl(290.18, 90.04%, 49.65%) 29%,
+    hsl(289.77, 88.57%, 49.9%) 35.3%,
+    hsl(289.31, 87.59%, 50.12%) 41.2%,
+    hsl(288.82, 86.92%, 50.32%) 47.1%,
+    hsl(288.31, 86.25%, 50.49%) 52.9%,
+    hsl(287.8, 85.58%, 50.62%) 58.8%,
+    hsl(287.31, 84.95%, 50.74%) 64.7%,
+    hsl(286.85, 84.39%, 50.83%) 71%,
+    hsl(286.46, 83.9%, 50.89%) 77.5%,
+    hsl(286.14, 83.53%, 50.94%) 84.5%,
+    hsl(285.94, 83.29%, 50.97%) 91.9%,
+    hsl(285.87, 83.2%, 50.98%) 100%
+  );
+}
+
+.card:hover {
+  color: var(--white);
+  background: var(--orange);
+}
+
+.card .card-title {
+  font-size: 30px;
+}
+
+.card .card-content {
+  margin: 20px 0;
+  max-width: 85%;
+}
+
+.card .card-link-wrapper {
+  margin-top: auto;
+}
+
+.card .card-link {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  background: var(--orange);
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.card:hover .card-link {
+  background: var(--darkorange);
+}
+
+.cards::-webkit-scrollbar {
+  height: 12px;
+}
+
+.cards::-webkit-scrollbar-thumb,
+.cards::-webkit-scrollbar-track {
+  border-radius: 92px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+  background: var(--darkorange);
+}
+
+.cards::-webkit-scrollbar-track {
+  background: var(--thumb);
+}
+
+@media (min-width: 500px) {
+  .cards {
+    grid-auto-columns: calc(50% - 10px);
+    grid-column-gap: 20px;
+  }
+}
+
+@media (min-width: 700px) {
+  .cards {
+    grid-auto-columns: calc(calc(100% / 3) - 20px);
+    grid-column-gap: 30px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .cards {
+    grid-auto-columns: calc(25% - 30px);
+    grid-column-gap: 40px;
+  }
+}
+
+
+/* FOOTER STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-footer {
+  position: fixed;
+  right: 0;
+  bottom: 50px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  z-index: 1;
+}
+
+.page-footer a {
+  display: flex;
+  margin-left: 4px;
+}

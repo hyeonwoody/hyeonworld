@@ -24,12 +24,12 @@ function Login(){
                 .then(function(res){
                     console.log("result code : ",res.data.resultcode)
                     if (res.data.resultcode ){
-                        if (res.data.resultcode === 1)
-                            sessionStorage.setItem('memberName', inputName)
+                        sessionStorage.setItem('memberName', inputName)
+                        if (res.data.resultcode === 1){}
                         else if (res.data.resultcode === 2) //admin
-                            sessionStorage.setItem('memberName', "2")
-                        else if (res.data.resultcode === 3)
-                            sessionStorage.setItem('memberName', "3")
+                            sessionStorage.setItem('special', 2)
+                        else if (res.data.resultcode === 3)//monitor
+                            sessionStorage.setItem('special', 3)
                     }
                     else {
                         alert('다시 시도해 주세요.')
@@ -74,12 +74,12 @@ function Login(){
             <h1  className="h3 mb-3 fw-normal" >해주세요 로그인.</h1>
             <div className="form-floating">
                 <input  className="form-control" id="floatingInput" placeholder='성함' value={inputName} onChange={handleInputName}></input>
-                <label for="floatingInput" style={{'color' : "#181717"}}>성함</label>
+                <label htmlFor="floatingInput" style={{'color' : "#181717"}}>성함</label>
             </div>
             <div className="checkbox mb-3"></div>
-            <button i type="submit" onClick={onClickLogin} className="w-100 btn btn-lg btn-primary" style={{'font-family': "recipe"}} >로그인</button>
+            <button type="submit" onClick={onClickLogin} className="w-100 btn btn-lg btn-primary"  >로그인</button>
             <div className="checkbox mb-3"></div>
-            <p  className="text" style={{'color' : "#a5a9aa", "font-size": "12px"}}>© HyeonwoORld v0.1 2022</p>
+            <p  className="text" style={{'color' : "#a5a9aa" }}>© HyeonwoORld v0.1 2022</p>
         </form>
         </main>
     )
