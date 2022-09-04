@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
-
+import {useNavigate} from 'react-router-dom';
 function Game0() {
+  const navigate = useNavigate();
+  
+  const aa = (e) => {
+    navigate('/')
+  }
+  
   return (
-    <div >
-        fdasdasdasdsa
+    <div onClick={aa}>
+        game0
     </div>
   );
 }

@@ -3,14 +3,14 @@ import { Routes, Route, useNavigate} from 'react-router-dom';
 
 import './Main.css';
 
-import {PersistGate} from 'redux-persist/integration/react'
 
 import Admin from "./Admin/Admin";
 import Monitor from "./Monitor/Monitor";
 
 import {store} from '../../store/mainStore';
 
-import { Provider } from 'react-redux';
+
+import axios from "axios";
 //import { store, persistor } from './redux/store';
 
 
@@ -18,38 +18,51 @@ import { Provider } from 'react-redux';
 function Main (pros){
     const isLogin = pros.isLogin
     const navigate = useNavigate();
-    let special = sessionStorage.getItem('special')
+    const special = sessionStorage.getItem('special')
 
-    
-    console.log("before",store.getState());
+        
+    console.log("Main,, before",store.getState());
     const db = require ('../../config/db.json')
 
-
+    async function openGame (id)  {
+        axios.post('/game/onGame', null, {
+            params: {
+                GAME: id,
+                SPECIAL: special
+            }
+        })
+                    .then (res => {
+                        if (String(res.data.resultcode) === id){
+                            navigate('/game'+String(id), {replace:true})
+                        }
+                    })
+                    .catch(err => console.log(err))
+    };
 
     const clickA = (e)=>{
         var id = e.target.getAttribute("id");
-        var state = store.getState();
+        var stage= store.getState().STAGE
         if (special === null){
-            console.log("no special",store.getState());
-            if (state.CURRENT_GAME === String(id)){
-                navigate('/game'+String(id), {replace:true})            
+            openGame(id)
+        }
+        else if (special === '2'){    
+            if (stage === '1'){
+                openGame(id);
             }
         }
-        else if (special === '2'){
-            console.log("special",store.getState());
-        }
-            
+        
+
+        
         // store.dispatch(changeCurrentGame(0))
         // console.log("yo",store.getState());
         // console.log(e.target.getAttribute("id"))
     }
-    
+
     useEffect(() => {
-       
+        
     },
     [])
     return (
-        <Provider store={store}>
         <main>
         <div className="container">
         <h2>게임을 선택해주세요.</h2>
@@ -66,7 +79,6 @@ function Main (pros){
             {special==='2' && <Admin/>}
             {special==='3' && <Monitor/>}
         </main>
-        </Provider>
     )
 }
 

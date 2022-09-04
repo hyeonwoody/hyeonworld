@@ -2,13 +2,13 @@ import React, {useState} from "react";
 import { Routes, Route, useNavigate} from 'react-router-dom';
 
 import store from '../../../store/mainStore';
-import Game0 from '../../Games/0';
+
 
 function Admin() {
 
     const [color, setColor] = useState("red");
 
-    const menu = ["Open", "Tutorial", "Submit", "Check", "Show", "Play", "Result"];
+    const menu = ["Init", "Open", "Tutorial", "Submit", "Check", "Show", "Play", "Result", "Terminate"];
     
     const navigate = useNavigate();
     const changeGameStage = (game_id) => {
@@ -25,7 +25,13 @@ function Admin() {
         e.preventDefault()
         let id = e.target.getAttribute("id");
         console.log(id)
+        console.log("Admin,, beforemenu", store.getState())
         store.dispatch(changeGameStage(id))
+        console.log("Admin,, aftermenu", store.getState())
+
+
+
+
     }
 
     return (

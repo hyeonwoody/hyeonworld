@@ -1,37 +1,16 @@
 const express = require('express');
 const router = express.Router();
-//const db = require('../../src/config/db');
-import store from '../../store/mainStore';
 
-let static_value = (function static_func (value){
-    let i = value;
-    return function() {
-        return ++i;
+let GAME = '-1'
+router.post ('/onGame', async (req,res) => {
+    console.log("game,, before : ", GAME);
+    console.log("game,, before q: ", req.query);
+    if (req.query.SPECIAL){
+        console.log("special");
+       GAME = req.query.GAME
     }
-})(0); // 정적 변수 시작을 0으로 초기화
-
-function increment() {
-    let cnt = static_value();
-    console.log(cnt);
-}
-
-router.post ('/gameStore', async (req,res) => {
-    const name = req.query.name
-
-    const data = fs.readFileSync("./src/config/db.json", {encoding: "utf-8"})
-    let db = JSON.parse(data)
-    if (name === "어드minister")
-        return res.send({'resultcode': 2})
-    else if (name === "화면monitor")
-    return res.send({'resultcode': 3})
-    for (key in db.members){
-        console.log(db.members[key].name," +", key)
-        if (name === db.members[key].name){
-           increment()
-            return res.send({'resultcode': 1})
-        }
-    }
-    return res.send({'resultcode': 0})
+    console.log("game,, after : ", GAME);
+    return res.send ({'resultcode': GAME})
 })
 
 module.exports = router;
