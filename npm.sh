@@ -17,9 +17,14 @@ killa()
 {
     echo "killing npm"
     `netstat -lntp | grep :$npmPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9`
-    echo "killing nodeServer"
+    echo "killing nodeServer memeber"
     `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
-
+	#nodeServerPort = nodeServerPort + 1
+    #echo "killing nodeServer game"
+    #`netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
+	#nodeServerPort = nodeServerPort + 1
+    #echo "killing nodeServer stage"
+    #`netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
 }
 
 #$# == total number of param

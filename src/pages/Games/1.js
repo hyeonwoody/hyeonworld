@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+
+import Admin from "../Main/Admin/Admin";
+import Monitor from "../Main/Monitor/Monitor";
 function Game0() {
   const navigate = useNavigate();
+  const special = sessionStorage.getItem('special')
   
   const aa = (e) => {
     navigate('/')
   }
   
   return (
-    <div onClick={aa}>
+    <main className='App'>
+      <div onClick={aa} >
         game1
     </div>
+    {special==='2' && <Admin/>}
+    {special==='3' && <Monitor/>}
+    </main>
   );
 }
 

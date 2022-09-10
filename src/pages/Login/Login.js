@@ -14,9 +14,9 @@ function Login(){
 
     const onClickLogin = (e) => {
         e.preventDefault()
-        async function postLogin (){
+         function postLogin (){
             try {
-                await axios.post('/member/onLogin', null,{
+                axios.post('/member/onLogin', null,{
                     params: {
                         name : inputName
                     }

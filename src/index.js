@@ -15,6 +15,7 @@ import Game3 from './pages/Games/3';
 import Game4 from './pages/Games/4';
 import Game5 from './pages/Games/5';
 import Game6 from './pages/Games/6';
+import Monitor from './pages/Main/Monitor/Monitor'
 
 import reportWebVitals from './reportWebVitals';
 
@@ -31,6 +32,8 @@ root.render(
     <Route path="/game4" element={<Game4 />}/> 
     <Route path="/game5" element={<Game5 />}/> 
     <Route path="/game6" element={<Game6 />}/> 
+    <Route path="/monitor" element={<Monitor />}/> 
+    
   </Routes>
   {/* <App /> */}
   

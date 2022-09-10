@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { Routes, Route, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import './Main.css';
 
@@ -11,6 +11,7 @@ import {store} from '../../store/mainStore';
 
 
 import axios from "axios";
+
 //import { store, persistor } from './redux/store';
 
 
@@ -20,11 +21,12 @@ function Main (pros){
     const navigate = useNavigate();
     const special = sessionStorage.getItem('special')
 
-        
+    let check = 1
+
     console.log("Main,, before",store.getState());
     const db = require ('../../config/db.json')
 
-    async function openGame (id)  {
+    function openGame (id)  {
         axios.post('/game/onGame', null, {
             params: {
                 GAME: id,
@@ -39,6 +41,28 @@ function Main (pros){
                     .catch(err => console.log(err))
     };
 
+    
+
+    const onLogout = () => {
+        const name = sessionStorage.getItem('memberName')
+        axios.post('/member/onLogout', null, {
+            params: {
+                NAME: name,
+            }
+        })
+                    .then (res => {
+                        console.log("결과 " , res.data.resultcode);
+                        if (res.data.resultcode){
+                            sessionStorage.removeItem ("memberName")
+                            document.location.href = '/'
+                        }
+                        
+                    })
+                    .catch (err => console.log (err))
+        
+        
+    }
+
     const clickA = (e)=>{
         var id = e.target.getAttribute("id");
         var stage= store.getState().STAGE
@@ -49,6 +73,9 @@ function Main (pros){
             if (stage === '1'){
                 openGame(id);
             }
+        }
+        else if (special === '1'){
+            
         }
         
 
@@ -64,6 +91,7 @@ function Main (pros){
     [])
     return (
         <main>
+            
         <div className="container">
         <h2>게임을 선택해주세요.</h2>
         <ul className="cards">
@@ -76,8 +104,10 @@ function Main (pros){
         </ul>
         {/* {specialMenu} */}
         </div>
-            {special==='2' && <Admin/>}
-            {special==='3' && <Monitor/>}
+            {special ==='2' && <Admin/>} 
+            {special ==='3' && (document.location.href = '/monitor')}
+            
+            <button type='button' className="btn btn-danger" onClick={onLogout}>로그아웃</button>
         </main>
     )
 }

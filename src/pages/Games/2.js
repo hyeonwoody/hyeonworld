@@ -15,8 +15,8 @@ function Game2() {
   }
   
   return (
-    <main>
-      <div onClick={aa}>
+    <main className='App'>
+      <div onClick={aa} >
         game2
     </div>
     {special==='2' && <Admin/>}
