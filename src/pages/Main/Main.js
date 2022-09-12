@@ -5,8 +5,6 @@ import './Main.css';
 
 
 import Admin from "./Admin/Admin";
-import Monitor from "./Monitor/Monitor";
-
 import {store} from '../../store/mainStore';
 
 
@@ -34,7 +32,10 @@ function Main (pros){
             }
         })
                     .then (res => {
-                        if (String(res.data.resultcode) === id){
+                        console.log("what is this ",res.data.resultcode)
+                        console.log(typeof(id))
+                        console.log(typeof(res.data.resultcode))
+                        if (res.data.resultcode === id){
                             navigate('/game'+String(id), {replace:true})
                         }
                     })

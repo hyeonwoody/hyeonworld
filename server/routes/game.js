@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-let GAME = '-1'
+let GAME = '0'
 let STAGE = '-1'
 
-router.post ('/onGame', async (req,res) => {
+router.post ('/onGame', (req,res) => {
     console.log("game,, before : ", GAME);
     console.log("game,, before q: ", req.query);
     if (req.query.SPECIAL){
