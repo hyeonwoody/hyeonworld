@@ -20,7 +20,7 @@ function Home (pros){
     const special = sessionStorage.getItem('special')
     console.log("스페셜"+special);
     const state = useSelector(state => state.currentGameReducer)
-    
+    console.log("스테이트"+state)
     const db = require ('../../db/games.json')
 
     function openGame (id)  {

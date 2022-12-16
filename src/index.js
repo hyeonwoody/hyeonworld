@@ -7,7 +7,6 @@ import store from './store/mainStore'
 import {Provider} from 'react-redux'
 
 console.log("태초 : "+store.getState().STAGE)
-store.subscribe (()=> console.log("바뀌었다다"+store.getState().STAGE))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

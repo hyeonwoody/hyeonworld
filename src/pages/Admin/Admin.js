@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate} from 'react-router-dom';
 
 import axios from "axios";
 
-import { addToCart } from '../../actions/index'; // 액션 가져오기
+//import { addToCart } from '../../actions/index'; // 액션 가져오기
 import { useSelector, useDispatch } from 'react-redux'; // 리덕스 후크 가져오기
 
 import store from '../../store/mainStore'
@@ -49,10 +49,10 @@ function Init () {
 }
 const onClickOpen = () => {
     const game = parseInt(document.getElementById("game").value)
-    store.dispatch (changeCurrentGame(game))
+    //store.dispatch (changeCurrentGame(game))
 }
 
-const onClickInit = () => {
+function onClickInit ()  {
     const familySide = parseInt(document.getElementById("familySide").value)
     const players = parseInt(document.getElementById("persons").value)
 

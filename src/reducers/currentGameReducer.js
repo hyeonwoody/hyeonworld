@@ -1,8 +1,10 @@
 
-const currentGameReducer = (state =  {
-      STAGE: -1,
-      CURRENT_GAME: -1
-    }, action) => {
+const initialState ={
+  STAGE : -1,
+  CURRENT_GAME: -1
+}
+
+const currentGameReducer = (state =  initialState, action) => {
     switch(action.type) {
       case 'CURRENT_GAME':
         return Object.assign({}, state, { ...state, CURRENT_GAME: action.payload });
