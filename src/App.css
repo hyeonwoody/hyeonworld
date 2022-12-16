@@ -1,38 +1,32 @@
 .App {
+  display: grid;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  place-items: center;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-family: 'recipe';
+  /* background: linear-gradient(
+    to bottom,
+    hsl(330, 3.03%, 12.94%) 0%,
+    hsl(232.49, 4.6%, 15.73%) 3.7%,
+    hsl(220.33, 7.94%, 17.97%) 7.6%,
+    hsl(216.66, 10.06%, 19.99%) 11.7%,
+    hsl(214.86, 11.51%, 21.83%) 16.2%,
+    hsl(213.79, 12.57%, 23.53%) 21%,
+    hsl(213.07, 13.37%, 25.11%) 26.3%,
+    hsl(212.57, 13.99%, 26.58%) 32%,
+    hsl(212.19, 14.49%, 27.96%) 38.2%,
+    hsl(211.9, 14.89%, 29.24%) 44.9%,
+    hsl(211.67, 15.22%, 30.43%) 52.3%,
+    hsl(211.49, 15.49%, 31.53%) 60.3%,
+    hsl(211.34, 15.72%, 32.55%) 69.1%,
+    hsl(211.22, 15.91%, 33.48%) 78.5%,
+    hsl(211.12, 16.07%, 34.33%) 88.8%,
+    hsl(211.03, 16.2%, 35.1%) 100%
+  ); */
 }
 
-.App-link {
-  color: #61dafb;
-}
+@font-face {
+  font-family: "recipe";
+  src: url("./fonts/Recipekorea\ 레코체\ FONT.ttf") format("truetype");
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
