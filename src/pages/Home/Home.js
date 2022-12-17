@@ -23,41 +23,44 @@ function Home (pros){
     console.log("스테이트"+state)
     const db = require ('../../db/games.json')
 
+    function monitorGame(id){
+
+    }
+
     function openGame (id)  {
         console.log("오픈게임"+id)
-        axios.post('/game/onGame', null, {
-            params: {
-                GAME: id,
-                SPECIAL: special
-            }
-        })
-                    .then (res => {
-                        console.log("what is this ",res.data.resultcode)
-                        console.log(typeof(id))
-                        console.log(typeof(res.data.resultcode))
-                        if (res.data.resultcode === id){
-                            navigate('/game'+String(id), {replace:true})
-                        }
-                    })
-                    .catch(err => console.log(err))
+        // axios.post('/game/onGame', null, {
+        //     params: {
+        //         GAME: id,
+        //         SPECIAL: special
+        //     }
+        // })
+        //             .then (res => {
+        //                 console.log("what is this ",res.data.RESULT_CODE)
+        //                 console.log(typeof(id))
+        //                 console.log(typeof(res.data.RESULT_CODE))
+        //                 if (res.data.RESULT_CODE === id){
+        //                     navigate('/game'+String(id), {replace:true})
+        //                 }
+        //             })
+        //             .catch(err => console.log(err))
     };
 
     const onLogout = () => {
         const name = sessionStorage.getItem('memberName')
 
-        axios.post('/onLog/in', null, {
+        axios.post('/onLog/out', null, {
             params: {
                 NAME: name,
             }
         })
                     .then (res => {
-                        console.log("결과 " , res.data.resultcode);
-                        if (res.data.resultcode){
+                        console.log("결과 " , res.data.RESULT_CODE);
+                        if (res.data.RESULT_CODE){
                             sessionStorage.removeItem ("memberName")
                             sessionStorage.removeItem("special")
                             setIsLogin (false)
                             document.location.href = '/'
-                            
                         }
                         
                     })
@@ -68,26 +71,29 @@ function Home (pros){
 
     const clickA = (e)=>{
         let id = e.target.getAttribute("id");
-
-        game = store.getState().CURRENT_GAME
-        stage = store.getState().STAGE
-        console.log("this id"+id)
         
-        console.log("this stage : "+stage)
+        axios.post ('/stage/get')
+            .then ((res) => {
+                console.log ("Admin GAME ",res.data.CURRENT_GAME)
+                console.log ("Admin STAGE",res.data.CURRENT_STAGE)
+                console.log ("Admin id",id)
+                 game = res.data.CURRENT_GAME
+                 stage = res.data.CURRENT_STAGE
+            });
 
-        console.log("this game: "+game)
-        if (special === null){
-            openGame(id)
+        if (special === '3'){ //monitor
+            monitorGame(id)
         }
-        else if (special === '2'){    
+        else if (special === '2'){ //admin
             if (stage === '1'){
                 console.log("뭐야")
                 openGame(id);
             }
             
         }
-        else if (special === '1'){
-            
+        else if (special === '1'){ //players
+            if (stage === '1' && game === id)
+            openGame(id)
         }
         
     }
@@ -99,7 +105,7 @@ function Home (pros){
         <ul className="cards">
             {db.games.map((game, index) =>{
                 return <li className={"card"+index%7} key={index} id={index} onClick={clickA}>
-                <h3 className="card-title" id={index} onClick={ clickA}>{game.name}</h3>
+                <h3 className="card-title" id={index} onClick={clickA}>{game.name}</h3>
                 <div className="checkbox mb-3"></div>
                 {game.description}</li>
             })}

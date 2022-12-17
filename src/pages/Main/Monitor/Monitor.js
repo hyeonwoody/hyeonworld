@@ -12,8 +12,8 @@ function Monitor() {
             }
         })
                     .then (res => {
-                        console.log("결과 " , res.data.resultcode);
-                        if (res.data.resultcode){
+                        console.log("결과 " , res.data.RESULT_CODE);
+                        if (res.data.RESULT_CODE){
                             sessionStorage.removeItem ("memberName")
                             sessionStorage.removeItem("special")
                             setIsLogin (false)

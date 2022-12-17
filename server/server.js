@@ -3,6 +3,7 @@ const app = express();
 
 const onLog = require ('./routes/onLog');
 const onInit = require ('./routes/onInit');
+const stage = require ('./routes/stage');
 //const store = require('./routes/store')
 // app.use('/onLogin', (req,res)=>{
 
@@ -21,5 +22,6 @@ app.listen(3001, ()=> console.log(`Node.js Server is running on port 3001`));
 app.use ('/onInit', onInit)
 app.listen(3002, ()=> console.log(`Node.js Server is running on port 3002`));
 
-// app.use ('/store', store)
-// app.listen(3003, ()=> console.log(`Node.js Server is running on port 3002`));
+app.use ('/stage', stage)
+app.listen(3003, ()=> console.log(`Node.js Server is running on port 3003`));
+

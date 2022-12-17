@@ -4,21 +4,20 @@ const fs = require ('fs');
 
 
 const dir = './src/db/plays/onGoing/'
+    let LastInit
 
-let static_value = (function static_func(value){
-    let i = value;
-    return function () {
-        return ++i;
-    }
-})
 
 function deleteOnGoing(){
 
-    fs.readdir ('./src/db/plays/onGoing/', (err, data)=>{
+    fs.readdir (dir, (err, data)=>{
         if (err) return console.log(err);
     
         data.forEach((item, i)=>{
-            const file = './src/db/plays/onGoing/' + item;
+            const file = dir + item;
+            fs.copyFile(file, './src/db/plays/done/'+item, (err)=>{
+                if (err) return console.log(err);
+                console.log('file was moved');
+            })
             fs.unlink (file, (err)=>{
                 if (err) return console.log(err);
                 console.log('file deleted successfully');
@@ -33,19 +32,19 @@ router.post ('/in', (req,res)=>{
     const data = fs.readFileSync("./src/db/members.json", {encoding:"utf-8"})
     let db = JSON.parse (data)
     if (name === "어드min")
-        return res.send({"resultcode": 2})
+        return res.send({"RESULT_CODE": 2})
     else if (name === "화면monitor")
-        return res.send({"resultcode": 3})
+        return res.send({"RESULT_CODE": 3})
     for (key in db.members){
         if (name === db.members[key].name){
             increment(name)
-            return res.send ({"resultcode":1})
+            return res.send ({"RESULT_CODE":1})
         }
     }
-    return res.send ({"resultcode": 0})
+    return res.send ({"RESULT_CODE": 0})
 })
 
-router.post ('/admin', (req, res)=>{
+router.post ('/admin', async(req, res)=>{
     const familySide = req.query.FAMILYSIDE
     const players = req.query.PLAYERS
 
@@ -65,8 +64,25 @@ router.post ('/admin', (req, res)=>{
     var formattedTime = year+month+day+hours.substr(-2)+ minutes.substr(-2)
     //var formattedTime = date + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
     console.log(formattedTime)
-    LastInit = formattedTime
-    fs.writeFileSync(dir+LastInit+".json", players)
-    console.log('file wring complete')
+
+
+    var obj = {
+        init :{
+            familySide: familySide,
+            numPlayers: players,
+            players: []
+        },
+    };
+    if (fs.existsSync(dir+formattedTime+".json")){
+        console.log("we DO have file")
+        fs.writeFileSync(dir+formattedTime+"_"+".json", JSON.stringify(obj))
+        LastInit = LastInit+"_"
+    }
+    else {
+        console.log("we dont have file")
+        fs.writeFileSync(dir+formattedTime+".json", JSON.stringify(obj))
+        LastInit = formattedTime
+    }
+    
 })
 module.exports =router;

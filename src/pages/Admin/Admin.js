@@ -49,7 +49,14 @@ function Init () {
 }
 const onClickOpen = () => {
     const game = parseInt(document.getElementById("game").value)
-    //store.dispatch (changeCurrentGame(game))
+    axios.post ('/stage/game', null,{
+        params:{
+            CURRENT_GAME: game
+        }
+    })
+        .then ((res) => {
+            console.log ("Admin result ",res.data)
+        });
 }
 
 function onClickInit ()  {
@@ -68,7 +75,7 @@ function onClickInit ()  {
         
         e.preventDefault()
         let menu = parseInt(e.target.getAttribute("id"))
-        store.dispatch (changeGameStage(menu))
+
         switch (menu){
             case 0:
                 Init();

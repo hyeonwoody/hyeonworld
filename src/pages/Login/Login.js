@@ -24,15 +24,15 @@ function Login (pros){
             }
         })
             .then ((res) => {
-                console.log ("Login, result code : ",res.data.resultcode)
-                const resultcode = res.data.resultcode
-                if (resultcode){
+                console.log ("Login, result code : ",res.data.RESULT_CODE)
+                const RESULT_CODE = res.data.RESULT_CODE
+                if (RESULT_CODE){
                     sessionStorage.setItem ('memberName', inputName)
-                    if (resultcode === 1)
-                        sessionStorage.setItem ('special', 1)
-                    else if (resultcode === 2)
+                    if (RESULT_CODE === 1)
+                        sessionStorage.setItem ('special', 1) //players
+                    else if (RESULT_CODE === 2)
                         sessionStorage.setItem ('special', 2) //Admin
-                    else if (resultcode === 3)
+                    else if (RESULT_CODE === 3)
                         sessionStorage.setItem ('special', 3) //Monitor
                 }
                 else {

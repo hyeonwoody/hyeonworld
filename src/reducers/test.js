@@ -4,8 +4,6 @@ const { configureStore } = require('@reduxjs/toolkit');
 //data basic
 const nameData = {name : 'Hanamon'}
 
-
-
 // reducer fuction
 const postReducer = (state = nameData, action)=>{
     switch(action.type){

@@ -20,16 +20,16 @@
 //     const data = fs.readFileSync("./src/db/members.json", {encoding:"utf-8"})
 //     let db = JSON.parse (data)
 //     if (name === "어드min")
-//         return res.send({"resultcode": 2})
+//         return res.send({"RESULT_CODE": 2})
 //     else if (name === "화면monitor")
-//         return res.send({"resultcode": 3})
+//         return res.send({"RESULT_CODE": 3})
 //     for (key in db.members){
 //         if (name === db.members[key].name){
 //             increment(name)
-//             return res.send ({"resultcode":1})
+//             return res.send ({"RESULT_CODE":1})
 //         }
 //     }
-//     return res.send ({"resultcode": 0})
+//     return res.send ({"RESULT_CODE": 0})
 // })
 
 // router.post ('/out', (req,res)=>{
