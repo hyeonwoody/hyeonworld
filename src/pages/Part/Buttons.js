@@ -1,12 +1,18 @@
 import React, {useEffect, useState} from "react";
-
+import {useNavigate} from 'react-router-dom';
 import axios from "axios";
-function Monitor() {
+function Buttons() {
+    
     const [isLogin, setIsLogin] = useState (true)
+    const navigate = useNavigate();
+    
+    const onBack = () =>{
+        navigate ('/')
+    }
     const onLogout = () => {
         const name = sessionStorage.getItem('memberName')
 
-        axios.post('/onLog/in', null, {
+        axios.post('/onLog/out', null, {
             params: {
                 NAME: name,
             }
@@ -18,23 +24,17 @@ function Monitor() {
                             sessionStorage.removeItem("special")
                             setIsLogin (false)
                             document.location.href = '/'
-                            
                         }
                         
                     })
                     .catch (err => console.log (err))
-        
-        
     }
     return (
-        
-        <main>
-            <div>fsdㄹㅇㄹfdsf</div>
-
+            <div>
+            <button type="button" onClick={onBack} className="btn btn-primary"  >뒤로가기</button>
             <button type='button' className="btn btn-danger" onClick={onLogout}>로그아웃</button>
-        </main>
-        
+            </div>
     )
 }
 
-export default Monitor;
+export default Buttons;

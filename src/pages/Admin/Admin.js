@@ -7,7 +7,6 @@ import axios from "axios";
 //import { addToCart } from '../../actions/index'; // 액션 가져오기
 import { useSelector, useDispatch } from 'react-redux'; // 리덕스 후크 가져오기
 
-import store from '../../store/mainStore'
 
 function Admin() {
     const menu = ["Init", "Open", "Tutorial", "Submit", "Check", "Show", "Play", "Result", "Terminate"];
@@ -74,8 +73,15 @@ function onClickInit ()  {
     const onClickmenu = (e) => {
         
         e.preventDefault()
-        let menu = parseInt(e.target.getAttribute("id"))
-
+        const menu = parseInt(e.target.getAttribute("id"))
+        axios.post ('/stage/current', null,{
+            params:{
+                CURRENT_STAGE: menu
+            }
+        })
+            .then ((res) => {
+                console.log ("Admin result ",res.data.RESULT_CODE)
+            });       
         switch (menu){
             case 0:
                 Init();
@@ -111,7 +117,7 @@ function onClickInit ()  {
     })
     return (
         
-        <main>
+        <div>
             
             {menu.map ((menu, index) => {
                 return <button id={index}  onClick={onClickmenu} key={index}>{menu}</button>
@@ -148,7 +154,7 @@ function onClickInit ()  {
             </div>
             <button type="submit" onClick={onClickOpen} className="w-100 btn btn-lg btn-primary"  >제출</button>
         </form>
-        </main>
+        </div>
         
     )
 }

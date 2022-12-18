@@ -13,7 +13,8 @@ function deleteOnGoing(){
         if (err) return console.log(err);
     
         data.forEach((item, i)=>{
-            const file = dir + item;
+            if (i === 0){
+                const file = dir + item;
             fs.copyFile(file, './src/db/plays/done/'+item, (err)=>{
                 if (err) return console.log(err);
                 console.log('file was moved');
@@ -22,6 +23,7 @@ function deleteOnGoing(){
                 if (err) return console.log(err);
                 console.log('file deleted successfully');
             });
+            }
         });
     });
 }
@@ -44,7 +46,7 @@ router.post ('/in', (req,res)=>{
     return res.send ({"RESULT_CODE": 0})
 })
 
-router.post ('/admin', async(req, res)=>{
+router.post ('/admin', (req, res)=>{
     const familySide = req.query.FAMILYSIDE
     const players = req.query.PLAYERS
 
@@ -70,7 +72,6 @@ router.post ('/admin', async(req, res)=>{
         init :{
             familySide: familySide,
             numPlayers: players,
-            players: []
         },
     };
     if (fs.existsSync(dir+formattedTime+".json")){
@@ -83,6 +84,10 @@ router.post ('/admin', async(req, res)=>{
         fs.writeFileSync(dir+formattedTime+".json", JSON.stringify(obj))
         LastInit = formattedTime
     }
+    obj = {
+        players : []
+    }
+    fs.writeFileSync(dir+"logged.json", JSON.stringify(obj));
     
 })
 module.exports =router;

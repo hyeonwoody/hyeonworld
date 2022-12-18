@@ -6,21 +6,24 @@ import './Home.css';
 import axios from "axios";
 
 import Admin from "../Admin/Admin"
-import {store} from '../../store/mainStore'
 
 import {useSelector} from 'react-redux'
 
+import Buttons from '../Part/Buttons'
+
 function Home (pros){
-    let [stage,changeStage] = useState(store.getState().STAGE)
-    let [game, changeGame] = useState(store.getState().CURRENT_GAME)
+    const [stage,changeStage] = useState(-1)
+    const [game, changeGame] = useState(-1)
     
 
+    console.log ("game : ",game)
+    console.log ("stage : ",stage)
     const [isLogin, setIsLogin] = useState (pros.isLogin)
     const navigate = useNavigate();
     const special = sessionStorage.getItem('special')
     console.log("스페셜"+special);
-    const state = useSelector(state => state.currentGameReducer)
-    console.log("스테이트"+state)
+    //const state = useSelector(state => state.currentGameReducer)
+
     const db = require ('../../db/games.json')
 
     function monitorGame(id){
@@ -29,6 +32,7 @@ function Home (pros){
 
     function openGame (id)  {
         console.log("오픈게임"+id)
+        navigate ('/game'+String(id), {replace:true})
         // axios.post('/game/onGame', null, {
         //     params: {
         //         GAME: id,
@@ -46,53 +50,31 @@ function Home (pros){
         //             .catch(err => console.log(err))
     };
 
-    const onLogout = () => {
-        const name = sessionStorage.getItem('memberName')
-
-        axios.post('/onLog/out', null, {
-            params: {
-                NAME: name,
-            }
-        })
-                    .then (res => {
-                        console.log("결과 " , res.data.RESULT_CODE);
-                        if (res.data.RESULT_CODE){
-                            sessionStorage.removeItem ("memberName")
-                            sessionStorage.removeItem("special")
-                            setIsLogin (false)
-                            document.location.href = '/'
-                        }
-                        
-                    })
-                    .catch (err => console.log (err))
-        
-        
-    }
+    
 
     const clickA = (e)=>{
-        let id = e.target.getAttribute("id");
+        let id = parseInt(e.target.getAttribute("id"));
         
-        axios.post ('/stage/get')
+        axios.post ('/stage/gameCheck')
             .then ((res) => {
                 console.log ("Admin GAME ",res.data.CURRENT_GAME)
                 console.log ("Admin STAGE",res.data.CURRENT_STAGE)
                 console.log ("Admin id",id)
-                 game = res.data.CURRENT_GAME
-                 stage = res.data.CURRENT_STAGE
+                 changeGame(res.data.CURRENT_GAME)
+                 changeStage(res.data.CURRENT_STAGE)
             });
 
         if (special === '3'){ //monitor
             monitorGame(id)
         }
         else if (special === '2'){ //admin
-            if (stage === '1'){
-                console.log("뭐야")
+            if (game === id){
                 openGame(id);
             }
             
         }
         else if (special === '1'){ //players
-            if (stage === '1' && game === id)
+            if ( game === id)
             openGame(id)
         }
         
@@ -118,7 +100,8 @@ function Home (pros){
             {special === 2 && <div>bbbddb</div>}
             {special === 3 && <div>cccc</div>}
             </div>
-        <button type='button' className="btn btn-danger" onClick={onLogout}>로그아웃</button>
+        <Buttons/>
+        {/* <button type='button' className="btn btn-danger" onClick={onLogout}>로그아웃</button> */}
         </main>
     )
 }

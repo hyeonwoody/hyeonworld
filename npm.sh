@@ -51,6 +51,7 @@ else
             killa
             ;;
         start)
+            nodeServer_on
             npm_on
             ;;
         stop)

@@ -2,35 +2,18 @@ const express = require('express');
 const router = express.Router();
 const fs = require ('fs');
 
-    let id =0
 
-function dataEdit(name){
-    const onGoing = "./src/db/plays/onGoing/"
-    fs.readdir (onGoing, (err, data)=>{
-        if (err) return console.log(err);
-        id++
-        data.forEach((item, i)=>{
-            file = onGoing + item;
-            const data = fs.readFileSync(file, {encoding:"utf-8"})
-            db = JSON.parse (data)
+const onGoing = "./src/db/plays/onGoing/"
+    let id = 0
+    let double = false
+const file = onGoing + "logged.json";
 
-            db.init.players.push({id:id, name:name, login: true})
-            // db.init.players = {...db.init.players[z],
-            //     id: z++,
-            //     name: name
-            // }
 
-            
-            fs.writeFileSync (file, JSON.stringify(db))
-        });
-    });
+router.post ('/in', async (req,res)=>{
     
-}
-
-router.post ('/in', (req,res)=>{
-
     const name = req.query.NAME
     let resultCode = 0
+
     const data = fs.readFileSync("./src/db/members.json", {encoding:"utf-8"})
     let db = JSON.parse (data)
     if (name === "어드min")
@@ -38,12 +21,30 @@ router.post ('/in', (req,res)=>{
     else if (name === "화면monitor")
         resultCode = 3
     for (key in db.members){
+        
         if (name === db.members[key].name){ 
             resultCode = 1
-            dataEdit(name)
+            
+            const data1 = fs.readFileSync(file, {encoding:"utf-8"})
+            db = JSON.parse (data1)    
+            let push = true
+            for (j in db.players){
+                if (db.players[j].name === name){
+                    resultCode = 4
+                    push = false
+                    break;
+                }
+            }
+            if (push){
+                db.players.push({id:id++, name:name, login: true})
+                double = false
+            }
+                    
+            fs.writeFileSync (file, JSON.stringify(db))
+            
+            break;
         }
     }
-    
 
     return res.send ({"RESULT_CODE": resultCode})
 })
@@ -55,21 +56,18 @@ router.post ('/out', (req,res)=>{
     const onGoing = "./src/db/plays/onGoing/"
     fs.readdir (onGoing, (err, data)=>{
         if (err) return console.log(err);
-        
-        data.forEach((item, i)=>{
-            file = onGoing + item;
-            const data = fs.readFileSync(file, {encoding:"utf-8"})
-            db = JSON.parse (data)
-            
-            for (j in db.init.players){
-                if (db.init.players[j].name === name){
-                    db.init.players[j].login = false
-                    db.init.players.splice(j,1)
-                }
+
+        const data2 = fs.readFileSync (file, {encoding:"utf-8"})
+        db = JSON.parse (data2)
+
+        for (j in db.players){
+            if (db.players[j].name === name){
+                db.players[j].login = false
+                db.players.splice(j,1) //delete
             }
-            
-            fs.writeFileSync (file, JSON.stringify(db))
-        });
+        }
+
+        fs.writeFileSync (file, JSON.stringify(db))
     });
 
     return res.send ({"RESULT_CODE": resultCode})

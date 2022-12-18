@@ -34,6 +34,11 @@ function Login (pros){
                         sessionStorage.setItem ('special', 2) //Admin
                     else if (RESULT_CODE === 3)
                         sessionStorage.setItem ('special', 3) //Monitor
+                    else if (RESULT_CODE === 4){
+                        sessionStorage.removeItem ('memberName', inputName)
+                        alert('이미 로그인 되셨습니다.')
+                    }
+                        
                 }
                 else {
                     alert('다시 시도해 주세요.')

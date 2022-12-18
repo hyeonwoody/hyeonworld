@@ -1,25 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const fs = require ('fs');
-const { route } = require('./onLog');
 
 const dir = './src/db/plays/onGoing/'
 
     let currentGame;
     let currentStage;
 
-router.post ('/game', (req,res)=>{
+    //get post 차이
 
-    currentGame = req.query.CURRENT_GAME
-    currentStage = "1"
 
-    
-
+router.post('/current', async(req, res)=>{
+    currentStage = parseInt (req.query.CURRENT_STAGE)
     return res.send ({"RESULT_CODE": 1})
-    
+    //return res.send (JSON.stringify(obj))
+
 })
 
-router.post ('/get', (req,res)=>{
+//current game Set
+router.post ('/game', (req,res)=>{
+
+    currentGame = parseInt(req.query.CURRENT_GAME)
+    currentStage = 1
+ 
+    return res.send ({"RESULT_CODE": 1})
+        
+})
+
+router.post('/gameCheck', (req,res)=>{
+    return res.send ({"CURRENT_GAME":currentGame, "CURRENT_STAGE": currentStage})
+})
+
+
+//fetch
+router.get ('/get', (req,res)=>{
     // fs.readdir (dir, async(err, data)=>{
     //     if (err) return console.log(err);
 
@@ -35,5 +49,7 @@ router.post ('/get', (req,res)=>{
     // });
     return res.send ({"CURRENT_GAME":currentGame, "CURRENT_STAGE": currentStage})
 })
+
+
 
 module.exports =router;
