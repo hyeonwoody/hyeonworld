@@ -1,6 +1,14 @@
-import React from "react";
+import React,{useState} from "react";
 import { useQuery } from "react-query";
+import {io} from 'socket.io-client'
+
 function Games(number){
+
+    function switchView(){
+        console.log("스위칭")
+    }
+    const [currentGame, changeGame] = useState(-1);
+    const [currentStage, changeStage] = useState(1);
     // /**
     //  * standard
     //  * @returns 
@@ -35,7 +43,7 @@ function Games(number){
     //         }
     //     },[])
     // }
-    var currentGame
+    
     const {isLoading, error,data,isFetching} = useQuery ('repoData', ()=>
     // axios.get (
     //     "https://api.github.com/repos/tannerlinsley/react-query"
@@ -56,12 +64,26 @@ function Games(number){
     if (isLoading) return "Loading..";
     
     if (error) return "An error has occured : " + error.message;
-    currentGame = data.CURRENT_GAME
-    
+    //changeGame(data.CURRENT_GAME)
+    //changeStage(data.CURRENT_STAGE)
     console.log("YOURT",data.CURRENT_GAME)
 
-    //const socket = io('http://172.30.1.14:3004')
+    const socket = io('http://172.30.1.14:3000')
+    
+    socket.on ('gameStage', obj=>{
+        console.log(obj)
+        if (obj.CURRENT_STAGE !== currentStage){
+            changeStage(obj.CURRENT_STAGE)
+            switchView()
+        } 
+        else{
+            console.log("no 스위치")
+        }
+    })
 
+    socket.on ('f', obj=>{
+        console.log (obj)
+    })
     return (
         <div>
             <strong> {data.RESULT_CODE}</strong>

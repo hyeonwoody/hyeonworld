@@ -19,12 +19,15 @@ killa()
     `netstat -lntp | grep :$npmPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9`
     echo "killing nodeServer onLog"
     `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
-	nodeServerPort = nodeServerPort + 1
-    echo "killing nodeServer onInit"
-    `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
-	nodeServerPort = nodeServerPort + 1
-    echo "killing nodeServer stage"
-    `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
+	#nodeServerPort = nodeServerPort + 1
+    #echo "killing nodeServer onInit"
+    #`netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
+	#nodeServerPort = nodeServerPort + 1
+    #echo "killing nodeServer stage"
+    #`netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
+    #echo "killing nodeServer 3004"
+	#nodeServerPort = nodeServerPort + 1
+    #`netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
 }
 
 #$# == total number of param

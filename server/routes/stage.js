@@ -9,6 +9,33 @@ const dir = './src/db/plays/onGoing/'
 
     //get post 차이
 
+const io = require('socket.io')(3000, {
+    cors: {
+        origin: '*'
+    }
+})
+
+io.on('connection', socket=>{
+    console.log(socket.id)
+    console.log("통과는 됐어")
+    const req = socket.request;
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log("통과는 됐어", socket.id, "dfdsf", ip)
+    io.emit('gameStage', {CURRENT_STAGE: currentStage, CURRENT_GAME: currentGame})
+    socket.on ('disconnect', ()=>{
+        console.log('클라이언트 접속 해제', scoket.id)
+        // clearInterval(socket.interval)
+    });
+    socket.on ('error', (error)=>{
+        console.error(error);
+    });
+    socket.on ('custom-event', (number,string, obj)=>{
+        console.log(number,string,obj);
+    });
+    socket.interval = setInterval(()=>{
+        socket.emit('f','fsd');
+    }, 3000)
+})
 
 router.post('/current', async(req, res)=>{
     currentStage = parseInt (req.query.CURRENT_STAGE)

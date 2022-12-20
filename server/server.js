@@ -17,12 +17,9 @@ const stage = require ('./routes/stage');
 
 
 app.use ('/onLog', onLog)
-app.listen(3001, ()=> console.log(`Node.js Server is running on port 3001`));
 
 app.use ('/onInit', onInit)
-app.listen(3002, ()=> console.log(`Node.js Server is running on port 3002`));
 
 app.use ('/stage', stage)
-app.listen(3003, ()=> console.log(`Node.js Server is running on port 3003`));
 
-app.listen(3004, ()=> console.log(`Node.js Server is running on port 3004`));
+app.listen(3001, ()=> console.log(`Node.js Server is running on port 3001`));
