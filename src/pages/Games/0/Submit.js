@@ -69,7 +69,7 @@ function Submit(){
                     NAME: name
                 }
             })
-                .then (res=>{
+                .then (async (res)=>{
                     console.log("리절트 보기 : ",res.data)
                     setFirst(res.data.FIRST);
                     setSecond(res.data.SECOND);
