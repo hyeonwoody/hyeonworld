@@ -32,7 +32,7 @@ function Home (pros){
 
     function openGame (id)  {
         console.log("오픈게임"+id)
-        navigate ('/game'+String(id), {replace:true})
+        navigate ('/game'+String(id))
         // axios.post('/game/onGame', null, {
         //     params: {
         //         GAME: id,
@@ -95,7 +95,7 @@ function Home (pros){
         {/* {specialMenu} */}
         </div>
         <div>
-            {special === '2' && <Admin/>} 
+            {special === '2' && <Admin game={-1}/>} 
             {special === '3' && (document.location.href = '/monitor')}
             {special === 2 && <div>bbbddb</div>}
             {special === 3 && <div>cccc</div>}

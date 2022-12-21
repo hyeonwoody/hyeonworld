@@ -1,19 +1,18 @@
-import {React,useState} from 'react';
+import {React,useEffect,useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import './Games.css';
-import Games from './Games'
-import Admin from "../Admin/Admin";
-import Monitor from '../Main/Monitor/Monitor'
-import Buttons from '../Part/Buttons'
+import '../Games.css';
+import {Games} from '../Games'
+import Admin from "../../Admin/Admin";
+import Monitor from '../../Main/Monitor/Monitor'
+import Buttons from '../../Part/Buttons'
 import axios from 'axios';
 
 function Game0() {
   const special = sessionStorage.getItem('special')
 
   const navigate = useNavigate();
-
+  
   const game = 0
-
   axios.post ('/stage/gameCheck')
             .then ((res) => {
                 console.log ("Admin GAME ",res.data.CURRENT_GAME)
@@ -24,16 +23,18 @@ function Game0() {
                     navigate ('/')
                   }
             });
-
+  useEffect(() =>{
+    
+  },[]);
   return (
     <div className='App'>
       <div>
-        <Games />
+        game0<Games number="0" />
     </div>
-    <Buttons/>
-    {special==='2' && <Admin/>}
+    
+    {special==='2' && <Admin game={0}/>}
     {special==='3' && <Monitor/>}
-
+    <Buttons/>
     </div>
     
   );

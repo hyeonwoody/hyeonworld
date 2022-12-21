@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require ('fs');
+const { clearInterval } = require('timers');
 
 const dir = './src/db/plays/onGoing/'
 
@@ -9,34 +10,7 @@ const dir = './src/db/plays/onGoing/'
 
     //get post 차이
 
-const io = require('socket.io')(3000, {
-    cors: {
-        origin: '*'
-    }
-})
-
-io.on('connection', socket=>{
-    console.log(socket.id)
-    console.log("통과는 됐어")
-    const req = socket.request;
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    console.log("통과는 됐어", socket.id, "dfdsf", ip)
-    io.emit('gameStage', {CURRENT_STAGE: currentStage, CURRENT_GAME: currentGame})
-    socket.on ('disconnect', ()=>{
-        console.log('클라이언트 접속 해제', scoket.id)
-        // clearInterval(socket.interval)
-    });
-    socket.on ('error', (error)=>{
-        console.error(error);
-    });
-    socket.on ('custom-event', (number,string, obj)=>{
-        console.log(number,string,obj);
-    });
-    socket.interval = setInterval(()=>{
-        socket.emit('f','fsd');
-    }, 3000)
-})
-
+let time = 0
 router.post('/current', async(req, res)=>{
     currentStage = parseInt (req.query.CURRENT_STAGE)
     return res.send ({"RESULT_CODE": 1})
@@ -78,5 +52,36 @@ router.get ('/get', (req,res)=>{
 })
 
 
+    const io = require('socket.io')(3005, {
+        cors: {
+            origin: '*'
+        }
+    })
+
+    io.on('connection', (socket)=>{
+        const req = socket.request;
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        console.log('클라이언트 접속', ip, socket.id)
+        
+        socket.on ('error', (error)=>{
+            console.error(error);
+        });
+        
+        socket.interval = setInterval(()=>{
+            socket.emit('gameStage', {CURRENT_STAGE: currentStage, CURRENT_GAME: currentGame, TIME: time++, ID: socket.id})
+        }, 3000)
+
+
+        socket.on ('disconnect', ()=>{
+            console.log('클라이언트 접속 해제', ip, socket.id)
+            clearInterval(socket.interval)
+        });
+
+        socket.on ('terminate', (socket)=>{
+            console.log("클라이언트 연결 끊기기", ip)
+            clearInterval(socket.interval)
+        })
+        
+    })
 
 module.exports =router;

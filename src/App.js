@@ -4,7 +4,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Routes, Route, BrowserRouter} from 'react-router-dom'
 
 import Root from './pages/Main/Root'
-import Game0 from './pages/Games/0';
+import Game0 from './pages/Games/0/0';
 import Game1 from './pages/Games/1';
 import Game2 from './pages/Games/2';
 import Game3 from './pages/Games/3';
@@ -20,7 +20,7 @@ const queryClient = new QueryClient()
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    //<QueryClientProvider client={queryClient}>
 
       <BrowserRouter>
         <Routes>
@@ -35,8 +35,8 @@ function App() {
           <Route path="/monitor" element={<Monitor />}/>
         </Routes>
       </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false}/>
-    </QueryClientProvider>
+      //<ReactQueryDevtools initialIsOpen={false}/>
+    //</QueryClientProvider>
   );
 }
 

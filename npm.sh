@@ -1,4 +1,4 @@
-path='/home/recr/Documents/hyeonworld'
+path='home/recr/Documents/hyeonworld/'
 npmPort='187'
 nodeServerPort='3001'
 npm_on()
@@ -13,21 +13,35 @@ nodeServer_on()
     node ./server/server.js &
 }
 
+allow_port()
+{
+    ufw allow 3005
+}
+
+delete_allow_port()
+{
+    ufw delete allow 3005
+}
+
 killa()
 {
     echo "killing npm"
     `netstat -lntp | grep :$npmPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9`
-    echo "killing nodeServer onLog"
+    echo "killing nodeServer onLog 3001"
     `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
-	#nodeServerPort = nodeServerPort + 1
-    #echo "killing nodeServer onInit"
-    #`netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
-	#nodeServerPort = nodeServerPort + 1
-    #echo "killing nodeServer stage"
-    #`netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
-    #echo "killing nodeServer 3004"
-	#nodeServerPort = nodeServerPort + 1
-    #`netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
+	nodeServerPort = nodeServerPort + 1
+    echo "killing nodeServer onInit 3002"
+    `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
+	nodeServerPort = nodeServerPort + 1
+    echo "killing nodeServer stage 3003"
+    `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9`
+    nodeServerPort = nodeServerPort + 1 
+    echo "killing nodeServer 3004"
+    `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
+	nodeServerPort = nodeServerPort + 1
+    echo "killing nodeServer 3005"
+    `netstat -lntp | grep :$nodeServerPort | awk '{ print $7 }' | cut -d '/' -f1 | xargs kill -9` 
+    nodeServerPort = nodeServerPort + 1
 }
 
 #$# == total number of param
@@ -54,11 +68,13 @@ else
             killa
             ;;
         start)
+            allow_port
             nodeServer_on
             npm_on
             ;;
         stop)
             killa
+            delete_allow_port
             ;;
         npm)
             echo "npm On"

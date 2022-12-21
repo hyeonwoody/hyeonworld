@@ -4,7 +4,7 @@ import React, { useEffect,useState } from "react";
 import Home from '../Home/Home'
 import Login from '../Login/Login'
 
-function  Root (pros){
+function  Root (){
     const [isLogin, setIsLogin] = useState(false);
     
     useEffect(()=>{

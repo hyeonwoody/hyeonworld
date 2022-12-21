@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import Games from './Games'
+import {Games} from './Games'
 import Admin from "../Admin/Admin";
 import Monitor from "../Main/Monitor/Monitor";
 
@@ -26,7 +26,7 @@ function Game3() {
   return (
     <div className='App'>
       <div >
-        game3<Games />
+        game3<Games number="3" />
     </div>
     {special==='2' && <Admin/>}
     {special==='3' && <Monitor/>}

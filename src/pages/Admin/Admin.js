@@ -5,10 +5,10 @@ import { Routes, Route, useNavigate} from 'react-router-dom';
 import axios from "axios";
 
 //import { addToCart } from '../../actions/index'; // 액션 가져오기
-import { useSelector, useDispatch } from 'react-redux'; // 리덕스 후크 가져오기
+//import { useSelector, useDispatch } from 'react-redux'; // 리덕스 후크 가져오기
 
 
-function Admin() {
+function Admin(props) {
     const menu = ["Init", "Open", "Tutorial", "Submit", "Check", "Show", "Play", "Result", "Terminate"];
     
     const navigate = useNavigate();
@@ -115,6 +115,16 @@ function onClickInit ()  {
     useEffect(() => {
         
     })
+    function process(){
+        switch (props.game){
+            case -1:
+                return <p>피는 물보다 진하다</p>
+            case 0:
+                return <p>Tutorial Submit Check Show Play Result</p>
+            default:
+                return <p>아직몰라</p>;
+        }
+    };
     return (
         
         <div>
@@ -133,9 +143,10 @@ function onClickInit ()  {
 
         <div>5 |Open Tuturial Submit Check Show Play Result|
         </div>
-
+        
         <div>6 Open |Tuturial| Submit |Check| Show Play Result
         </div> */}
+        {process()}
         <form id="Init" style={{"display": "none"}}>
         <div className="form-floating">
                 <input  className="form-control" id="familySide"></input>

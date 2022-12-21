@@ -1,14 +1,49 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { useQuery } from "react-query";
+import { Navigate } from "react-router-dom";
 import {io} from 'socket.io-client'
 
-function Games(number){
 
-    function switchView(){
-        console.log("스위칭")
-    }
-    const [currentGame, changeGame] = useState(-1);
+import Tutorial from '../Stages/Tutorial'
+import Submit from '../Stages/Submit'
+import Check from '../Stages/Check'
+import Show from '../Stages/Show.js'
+import Play from '../Stages/Play'
+import Result from '../Stages/Result'
+import Terminate from '../Stages/Terminate'
+
+function Games(props){
+
+    
+    const socket = io('http://172.30.1.14:3005');
+
+    const [currentGame, changeGame] = useState(parseInt(props.number));
     const [currentStage, changeStage] = useState(1);
+    const stage = ["Init", "Open", "Tutorial", "Submit", "Check", "Show", "Play", "Result", "Terminate"];
+    
+    //const stage = ["Init", "Open", Tutorial, Submit, Check, Show, Play, Result, Terminate];
+    function pressBack(){
+        const pressBack = document.getElementById('pressBack')
+        if (pressBack.style.display === 'none'){
+            pressBack.style.display = 'block'
+        }
+            
+        
+    }
+
+    function switchView(stage){
+        const show = document.getElementById (stage)
+        console.log("스위칭")
+        if (show.style.display === 'none'){
+            show.style.display = 'block'
+        }
+        const hide = document.getElementById (currentStage)
+        hide.style.display = 'none'
+    }
+    //switchView(currentStage)
+    console.log("넘버 값 parse, ", props.number)
+    console.log("커렌트", currentGame)
+
     // /**
     //  * standard
     //  * @returns 
@@ -43,52 +78,91 @@ function Games(number){
     //         }
     //     },[])
     // }
-    
-    const {isLoading, error,data,isFetching} = useQuery ('repoData', ()=>
-    // axios.get (
-    //     "https://api.github.com/repos/tannerlinsley/react-query"
-    // ).then ((res)=>res.json())
-    
-    // axios.get('/stage', null, {
-    //         params: {
-    //             NAME : 22
-    //         }
-    //     }).then ((res)=> console.log("f",res.data.RESULT_CODE))
-    
-    fetch(
-        "/stage/get"
-
-    ).then ((res)=> res.json())
-    );
-    //let resultCode = new Number (data.RESULT_CODE)
-    if (isLoading) return "Loading..";
-    
-    if (error) return "An error has occured : " + error.message;
-    //changeGame(data.CURRENT_GAME)
-    //changeStage(data.CURRENT_STAGE)
-    console.log("YOURT",data.CURRENT_GAME)
-
-    const socket = io('http://172.30.1.14:3000')
-    
-    socket.on ('gameStage', obj=>{
+    	
+    useEffect(() => {
+    console.log("유스 이펟ㄱ트")
+    socket.open()
+    socket.on('gameStage', async (obj) => {
         console.log(obj)
         if (obj.CURRENT_STAGE !== currentStage){
+            switchView(obj.CURRENT_STAGE)
             changeStage(obj.CURRENT_STAGE)
-            switchView()
+            //currentStage = obj.currentStage
         } 
+        
         else{
             console.log("no 스위치")
         }
-    })
+        if (obj.CURRENT_GAME !== currentGame){
+            //changeGame(obj.currentGame)
+            pressBack()
+            console.log("달라요")
+            console.log("커렌트", currentGame)
+            console.log("옵젝", obj.CURRENT_GAME)
+        }
+        else{
+            console.log("똑같아요")
+        }
+    });
+    return (()=>{
+        socket.close()
+    });
+  }, [socket]);
+    // const {isLoading, error,data,isFetching} = useQuery ('repoData', ()=>
+    // // axios.get (
+    // //     "https://api.github.com/repos/tannerlinsley/react-query"
+    // // ).then ((res)=>res.json())
+    
+    // // axios.get('/stage', null, {
+    // //         params: {
+    // //             NAME : 22
+    // //         }
+    // //     }).then ((res)=> console.log("f",res.data.RESULT_CODE))
+    
+    // fetch(
+    //     "/stage/get"
 
-    socket.on ('f', obj=>{
-        console.log (obj)
-    })
+    // ).then ((res)=> res.json())
+    // );
+    // //let resultCode = new Number (data.RESULT_CODE)
+    // if (isLoading) return "Loading..";
+    
+    // if (error) return "An error has occured : " + error.message;
+    // //changeGame(data.CURRENT_GAME)
+    // //changeStage(data.CURRENT_STAGE)
+    // console.log("YOURT",data.CURRENT_GAME)
+    function renderStage(){
+        switch (currentStage){
+            case 2:
+                return <Tutorial game={currentGame}/>
+            case 3:
+                return <Submit game={currentGame}/>
+            case 4:
+                return <Check game={currentGame}/>
+            case 5:
+                return <Show game={currentGame}/>
+            case 6:
+                return <Play game={currentGame}/>
+            case 7:
+                return <Result game={currentGame}/>
+            case 8:
+                return <Terminate /> 
+            default:
+                return <div/>
+        }
+    }
     return (
+        
         <div>
-            <strong> {data.RESULT_CODE}</strong>
-            <div> {isFetching ? "Updating.." : ""}</div>
             
+            {stage.map ((stage, index) => {
+            return <div id={index} style={{"display": "none"}} >{stage}</div>
+            })}
+
+            {renderStage()}
+
+        
+            <p id="pressBack" style={{"display": "none"}}>뒤로가기를 눌러주세요 </p>
         </div>
     )
 } 
@@ -96,4 +170,5 @@ function Games(number){
 
 
 
-export default Games;
+export {Games};
+

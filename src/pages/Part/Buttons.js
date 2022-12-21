@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
+//import {socket} from '../Games/Games'
+
 function Buttons() {
     
     const [isLogin, setIsLogin] = useState (true)
     const navigate = useNavigate();
-    
+   
     const onBack = () =>{
         navigate ('/')
     }
