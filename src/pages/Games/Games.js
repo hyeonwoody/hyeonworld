@@ -4,13 +4,13 @@ import { Navigate } from "react-router-dom";
 import {io} from 'socket.io-client'
 
 
-import Tutorial from '../Stages/Tutorial'
-import Submit from '../Stages/Submit'
-import Check from '../Stages/Check'
-import Show from '../Stages/Show.js'
-import Play from '../Stages/Play'
-import Result from '../Stages/Result'
-import Terminate from '../Stages/Terminate'
+import Tutorial from '../Stages/GenericTutorial'
+import Submit from '../Stages/GenericSubmit'
+import Check from '../Stages/GenericCheck'
+import Show from '../Stages/GenericShow.js'
+import Play from '../Stages/GenericPlay'
+import Result from '../Stages/GenericResult'
+import Terminate from '../Stages/GenericTerminate'
 
 function Games(props){
 
@@ -94,7 +94,6 @@ function Games(props){
             console.log("no 스위치")
         }
         if (obj.CURRENT_GAME !== currentGame){
-            //changeGame(obj.currentGame)
             pressBack()
             console.log("달라요")
             console.log("커렌트", currentGame)
@@ -156,7 +155,7 @@ function Games(props){
         <div>
             
             {stage.map ((stage, index) => {
-            return <div id={index} style={{"display": "none"}} >{stage}</div>
+            return <div id={index} style={{"display": "none"}} key={stage}>{stage}</div>
             })}
 
             {renderStage()}

@@ -28,8 +28,8 @@ function Game0() {
   },[]);
   return (
     <div className='App'>
-      <div>
-        game0<Games number="0" />
+      <div key="unique">
+        <Games number={"0"}/>
     </div>
     
     {special==='2' && <Admin game={0}/>}
