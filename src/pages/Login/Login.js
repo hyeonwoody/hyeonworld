@@ -62,7 +62,19 @@ function Login (pros){
             <div className="checkbox mb-3"></div>
             <p  className="text" style={{'color' : "#a5a9aa" }}>© HyeonwoORld v0.3 2022</p>
         </form>
-
+        {/* <div className="container">
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="card">
+                <h4 className="title">해주세요 로그인.</h4>
+                <div className="form-input">
+                    <input type="email" id="usern함me" placeholder="성함" value={inputName} onChange={handleInputName}/>
+                </div>
+                <button className="login-btn" onClick={onClickLogin}>로그인</button>
+            </div>
+            <p className="text" style={{'color' : "#a5a9aa" }}>© HyeonwoORld v0.3 2022</p>
+        </div> */}
+        
         </main>
     )
 }

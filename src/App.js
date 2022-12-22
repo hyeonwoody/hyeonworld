@@ -20,7 +20,7 @@ const queryClient = new QueryClient()
 
 function App() {
   return (
-    //<QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
 
       <BrowserRouter>
         <Routes>
@@ -35,8 +35,8 @@ function App() {
           <Route path="/monitor" element={<Monitor />}/>
         </Routes>
       </BrowserRouter>
-      //<ReactQueryDevtools initialIsOpen={false}/>
-    //</QueryClientProvider>
+      <ReactQueryDevtools initialIsOpen={false}/>
+    </QueryClientProvider>
   );
 }
 

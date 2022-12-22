@@ -7,10 +7,8 @@ const dir = './src/db/plays/onGoing/'
 
     let currentGame;
     let currentStage;
-
-    //get post 차이
-
-let time = 0
+    let time=0
+    //get post 차
 router.post('/current', async(req, res)=>{
     currentStage = parseInt (req.query.CURRENT_STAGE)
     return res.send ({"RESULT_CODE": 1})
@@ -32,9 +30,7 @@ router.post('/gameCheck', (req,res)=>{
     return res.send ({"CURRENT_GAME":currentGame, "CURRENT_STAGE": currentStage})
 })
 
-
-//fetch
-router.get ('/get', (req,res)=>{
+router.post ('/get', (req, res)=>{
     // fs.readdir (dir, async(err, data)=>{
     //     if (err) return console.log(err);
 
@@ -48,40 +44,40 @@ router.get ('/get', (req,res)=>{
     //     });
         
     // });
-    return res.send ({"CURRENT_GAME":currentGame, "CURRENT_STAGE": currentStage})
+    return res.send ({"CURRENT_GAME":currentGame, "CURRENT_STAGE": currentStage, "TIME":time++})
 })
+    //socket.io 사용
+    // const io = require('socket.io')(3005, {
+    //     cors: {
+    //         origin: '*'
+    //     }
+    // })
 
-
-    const io = require('socket.io')(3005, {
-        cors: {
-            origin: '*'
-        }
-    })
-
-    io.on('connection', (socket)=>{
-        const req = socket.request;
-        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        console.log('클라이언트 접속', ip, socket.id)
+    
+    // io.on('connection', (socket)=>{
+    //     const req = socket.request;
+    //     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    //     console.log('클라이언트 접속', ip, socket.id)
         
-        socket.on ('error', (error)=>{
-            console.error(error);
-        });
+    //     socket.on ('error', (error)=>{
+    //         console.error(error);
+    //     });
         
-        socket.interval = setInterval(()=>{
-            socket.emit('gameStage', {CURRENT_STAGE: currentStage, CURRENT_GAME: currentGame, TIME: time++, ID: socket.id})
-        }, 3000)
+    //     socket.interval = setInterval(()=>{
+    //         socket.emit('gameStage', {CURRENT_STAGE: currentStage, CURRENT_GAME: currentGame, TIME: time++, ID: socket.id})
+    //     }, 3000)
 
 
-        socket.on ('disconnect', ()=>{
-            console.log('클라이언트 접속 해제', ip, socket.id)
-            clearInterval(socket.interval)
-        });
+    //     socket.on ('disconnect', ()=>{
+    //         console.log('클라이언트 접속 해제', ip, socket.id)
+    //         clearInterval(socket.interval)
+    //     });
 
-        socket.on ('terminate', (socket)=>{
-            console.log("클라이언트 연결 끊기기", ip)
-            clearInterval(socket.interval)
-        })
+    //     socket.on ('terminate', (socket)=>{
+    //         console.log("클라이언트 연결 끊기기", ip)
+    //         clearInterval(socket.interval)
+    //     })
         
-    })
+    // })
 
 module.exports =router;

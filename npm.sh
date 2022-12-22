@@ -1,5 +1,5 @@
 path='home/recr/Documents/hyeonworld/'
-npmPort='187'
+npmPort='1219'
 nodeServerPort='3001'
 npm_on()
 {   
@@ -15,12 +15,16 @@ nodeServer_on()
 
 allow_port()
 {
+    ufw allow 1219
     ufw allow 3005
+    ufw allow from 220.86.148.146
 }
 
 delete_allow_port()
-{
+{   
+    ufw delete allow 1219
     ufw delete allow 3005
+    ufw delete allow from 220.86.148.146
 }
 
 killa()

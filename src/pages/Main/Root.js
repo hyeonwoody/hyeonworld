@@ -3,7 +3,7 @@ import React, { useEffect,useState } from "react";
 
 import Home from '../Home/Home'
 import Login from '../Login/Login'
-
+import './Root.css'
 function  Root (){
     const [isLogin, setIsLogin] = useState(false);
     
@@ -17,7 +17,7 @@ function  Root (){
     }, [])
     
     return (
-        <div className='App'>
+        <div className="Root">
             {isLogin?
             <Home isLogin={isLogin}/>:
             <Login/>}

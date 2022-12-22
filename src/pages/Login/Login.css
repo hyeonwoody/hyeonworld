@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.container {
+    position: relative;
+}
+
+.circle {
+    width: 6rem;
+    height: 6rem;
+    background: linear-gradient(45deg, #7b4397, #dc2430);
+    border-radius: 50%;
+    z-index: -1;
+    position: absolute;
+    top: -40px;
+    right: -30px;
+}
+
+.circle:nth-child(2) {
+    top: 240px;
+    left: -45px;
+    background: linear-gradient(45deg, #000046, #1CB5E0);
+}
+
+.card {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgb(255 255 255 / 11%);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 15rem;
+    padding: 20px 20px;
+    padding-top: 20px;
+}
+
+
+.title {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+.form-input {
+    margin: 0px 0;
+}
+
+.form-input label {
+    font-size: 12px;
+}
+
+.form-input input {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgb(255 255 255 / 11%);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    width: 90%;
+    padding: 6px 10px;
+    color: white;
+    outline: none;
+}
+
+.form-input input::placeholder {
+    color: white;
+}
+
+.login-btn {
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding: 10px 0;
+    margin: 20px 0;
+    cursor: pointer;
+    border: none;
+}

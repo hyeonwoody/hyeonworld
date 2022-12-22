@@ -1,9 +1,8 @@
 import React,{useState, useEffect} from "react";
 import { useQuery } from "react-query";
 import { Navigate } from "react-router-dom";
-import {io} from 'socket.io-client'
 
-
+import Spinner from '../Part/Spinner'
 import Tutorial from '../Stages/GenericTutorial'
 import Submit from '../Stages/GenericSubmit'
 import Check from '../Stages/GenericCheck'
@@ -12,10 +11,11 @@ import Play from '../Stages/GenericPlay'
 import Result from '../Stages/GenericResult'
 import Terminate from '../Stages/GenericTerminate'
 
+
 function Games(props){
 
     
-    const socket = io('http://172.30.1.14:3005');
+    
 
     const [currentGame, changeGame] = useState(parseInt(props.number));
     const [currentStage, changeStage] = useState(1);
@@ -31,6 +31,35 @@ function Games(props){
         
     }
 
+    async function getStage(){
+        const res = await fetch('/stage/get',{
+            method: "POST", //GET , POST, PUT, DELETE
+        })
+            .then ((res)=> res.json())
+            .then ((data)=> {
+                console.log("입",data)
+                if (data.CURRENT_STAGE !== currentStage){
+                    switchView(data.CURRENT_STAGE)
+                    changeStage(data.CURRENT_STAGE)
+                    //currentStage = obj.currentStage
+                } 
+                        
+                else{
+                    console.log("no 스위치")
+                }
+                if (data.CURRENT_GAME !== currentGame){
+                    pressBack()
+                    console.log("달라요")
+                    console.log("커렌트", currentGame)
+                    console.log("옵젝", data.CURRENT_GAME)
+                }
+                else{
+                    console.log("똑같아요")
+                }
+            })
+    }
+    
+
     function switchView(stage){
         const show = document.getElementById (stage)
         console.log("스위칭")
@@ -44,6 +73,41 @@ function Games(props){
     console.log("넘버 값 parse, ", props.number)
     console.log("커렌트", currentGame)
 
+    const {data, status} = useQuery('getStage',  getStage,{
+        enabled: true,
+        refetchInterval: 6000,
+        cacheTime: Infinity,
+    });
+    console.log("상태", status)
+    if (status === 'loading'){
+        console.log("로딩중")
+    }
+    if (status === 'error'){
+        console.log ('에러 발생')
+    }
+    if (status === 'success'){
+        console.log("성공")
+        // if (data.CURRENT_STAGE !== currentStage){
+        //             switchView(data.CURRENT_STAGE)
+        //             changeStage(data.CURRENT_STAGE)
+        //             //currentStage = obj.currentStage
+        //         } 
+                
+        // else{
+        //     console.log("no 스위치")
+        // }
+        // if (data.CURRENT_GAME !== currentGame){
+        //     pressBack()
+        //     console.log("달라요")
+        //     console.log("커렌트", currentGame)
+        //     console.log("옵젝", data.CURRENT_GAME)
+        // }
+        // else{
+        //     console.log("똑같아요")
+        // }
+
+    }
+    console.log("데이터 : ",data)
     // /**
     //  * standard
     //  * @returns 
@@ -81,32 +145,33 @@ function Games(props){
     	
     useEffect(() => {
     console.log("유스 이펟ㄱ트")
-    socket.open()
-    socket.on('gameStage', async (obj) => {
-        console.log(obj)
-        if (obj.CURRENT_STAGE !== currentStage){
-            switchView(obj.CURRENT_STAGE)
-            changeStage(obj.CURRENT_STAGE)
-            //currentStage = obj.currentStage
-        } 
+    // const socket = io('http://172.30.1.14:3005');
+    // socket.open()
+    // socket.on('gameStage', async (obj) => {
+    //     console.log(obj)
+    //     if (obj.CURRENT_STAGE !== currentStage){
+    //         switchView(obj.CURRENT_STAGE)
+    //         changeStage(obj.CURRENT_STAGE)
+    //         //currentStage = obj.currentStage
+    //     } 
         
-        else{
-            console.log("no 스위치")
-        }
-        if (obj.CURRENT_GAME !== currentGame){
-            pressBack()
-            console.log("달라요")
-            console.log("커렌트", currentGame)
-            console.log("옵젝", obj.CURRENT_GAME)
-        }
-        else{
-            console.log("똑같아요")
-        }
-    });
-    return (()=>{
-        socket.close()
-    });
-  }, [socket]);
+    //     else{
+    //         console.log("no 스위치")
+    //     }
+    //     if (obj.CURRENT_GAME !== currentGame){
+    //         pressBack()
+    //         console.log("달라요")
+    //         console.log("커렌트", currentGame)
+    //         console.log("옵젝", obj.CURRENT_GAME공
+    //     }
+    //     else{
+    //         console.log("똑같아요")
+    //     }
+    // });
+    // return (()=>{
+    //     socket.close()
+    // });
+  },[data]);
     // const {isLoading, error,data,isFetching} = useQuery ('repoData', ()=>
     // // axios.get (
     // //     "https://api.github.com/repos/tannerlinsley/react-query"
@@ -131,6 +196,7 @@ function Games(props){
     // //changeStage(data.CURRENT_STAGE)
     // console.log("YOURT",data.CURRENT_GAME)
     function renderStage(){
+
         switch (currentStage){
             case 2:
                 return <Tutorial game={currentGame}/>
@@ -158,7 +224,7 @@ function Games(props){
             return <div id={index} style={{"display": "none"}} key={stage}>{stage}</div>
             })}
 
-            {renderStage()}
+            {status === 'loading'? <Spinner/>:renderStage()}
 
         
             <p id="pressBack" style={{"display": "none"}}>뒤로가기를 눌러주세요 </p>
