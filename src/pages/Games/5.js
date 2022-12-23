@@ -30,7 +30,6 @@ function Game5() {
         game5<Games number="5" />
     </div>
     {special==='2' && <Admin/>}
-    {special==='3' && <Monitor/>}
     <Buttons/>
     </main>
     

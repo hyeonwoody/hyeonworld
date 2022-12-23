@@ -12,7 +12,7 @@ import Game4 from './pages/Games/4';
 import Game5 from './pages/Games/5';
 import Game6 from './pages/Games/6';
 
-import Monitor from './pages/Main/Monitor/Monitor'
+
 import {QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -32,7 +32,7 @@ function App() {
           <Route path="/game4" element={<Game4 />}/>
           <Route path="/game5" element={<Game5 />}/>
           <Route path="/game6" element={<Game6 />}/>
-          <Route path="/monitor" element={<Monitor />}/>
+          
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false}/>

@@ -1,9 +1,23 @@
 import React from "react";
 
+import Game0 from "../Games/0/Play0"
+function Play(props){
+    function game(){
+        
+        switch (props.game){
+            case 0:
+                return <Game0/>
 
-function Play(a){
+            default:
+                return <div></div>
+        }
+            
+    }
     return (
-        <p>플레이</p>
+        <div>
+            {game()}
+
+        </div>
     )
 }
 export default Play;

@@ -7,9 +7,9 @@ import Monitor from '../../Main/Monitor/Monitor'
 import Buttons from '../../Part/Buttons'
 import axios from 'axios';
 
-function Game0() {
+function Game0(props) {
   const special = sessionStorage.getItem('special')
-
+  console.log("여긴긴",props.param)
   const navigate = useNavigate();
   
   const game = 0
@@ -33,7 +33,6 @@ function Game0() {
     </div>
     
     {special==='2' && <Admin game={0}/>}
-    {special==='3' && <Monitor/>}
     <Buttons/>
     </div>
     

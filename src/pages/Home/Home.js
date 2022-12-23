@@ -8,7 +8,7 @@ import axios from "axios";
 import Admin from "../Admin/Admin"
 
 import {useSelector} from 'react-redux'
-
+import  SCORES from '../../config/scores'
 import Buttons from '../Part/Buttons'
 
 function Home (pros){
@@ -23,7 +23,7 @@ function Home (pros){
     const special = sessionStorage.getItem('special')
     console.log("스페셜"+special);
     //const state = useSelector(state => state.currentGameReducer)
-
+    console.log("놀러왔지지", SCORES.GAME0)
     const db = require ('../../db/games.json')
 
     function monitorGame(id){
@@ -65,7 +65,9 @@ function Home (pros){
             });
 
         if (special === '3'){ //monitor
-            monitorGame(id)
+            if (game === id){
+                openGame(id);
+            }
         }
         else if (special === '2'){ //admin
             if (game === id){
@@ -96,7 +98,7 @@ function Home (pros){
         </div>
         <div>
             {special === '2' && <Admin game={-1}/>} 
-            {special === '3' && (document.location.href = '/monitor')}
+            
             {special === 2 && <div>bbbddb</div>}
             {special === 3 && <div>cccc</div>}
             </div>

@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 
-import Game0 from "../Games/0/Submit"
+import Game0 from "../Games/0/Submit0"
 
 function Submit(props){
     
     function game(){
-        console.log("포를", props.game)
         switch (props.game){
             case 0:
                 return <Game0/>

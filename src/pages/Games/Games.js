@@ -11,7 +11,7 @@ import Play from '../Stages/GenericPlay'
 import Result from '../Stages/GenericResult'
 import Terminate from '../Stages/GenericTerminate'
 
-
+let tmpStage = 1
 function Games(props){
 
     
@@ -73,7 +73,33 @@ function Games(props){
     console.log("넘버 값 parse, ", props.number)
     console.log("커렌트", currentGame)
 
-    const {data, status} = useQuery('getStage',  getStage,{
+    const {data, status} = useQuery('getStage',  ()=>{
+        fetch('/stage/get',{
+            method: "POST", //GET , POST, PUT, DELETE
+        })
+            .then ((res)=> res.json())
+            .then ((data)=> {
+                console.log("입",data)
+                if (data.CURRENT_STAGE !== currentStage){
+                    switchView(data.CURRENT_STAGE)
+                    changeStage(data.CURRENT_STAGE)
+                    //currentStage = obj.currentStage
+                } 
+                        
+                else{
+                    console.log("no 스위치")
+                }
+                if (data.CURRENT_GAME !== currentGame){
+                    pressBack()
+                    console.log("달라요")
+                    console.log("커렌트", currentGame)
+                    console.log("옵젝", data.CURRENT_GAME)
+                }
+                else{
+                    console.log("똑같아요")
+                }
+            })
+    },{
         enabled: true,
         refetchInterval: 6000,
         cacheTime: Infinity,
@@ -87,6 +113,7 @@ function Games(props){
     }
     if (status === 'success'){
         console.log("성공")
+        
         // if (data.CURRENT_STAGE !== currentStage){
         //             switchView(data.CURRENT_STAGE)
         //             changeStage(data.CURRENT_STAGE)
@@ -198,19 +225,37 @@ function Games(props){
     function renderStage(){
 
         switch (currentStage){
-            case 2:
+            case 2: 
                 return <Tutorial game={currentGame}/>
             case 3:
                 return <Submit game={currentGame}/>
-            case 4:
-                return <Check game={currentGame}/>
-            case 5:
-                return <Show game={currentGame}/>
-            case 6:
-                return <Play game={currentGame}/>
-            case 7:
+            case 4: //check
+                if ((sessionStorage.getItem('special') === '2')){
+                    return <Check game={currentGame}/>
+                }
+                else {
+                    return <Submit game={currentGame}/>
+                }
+            case 5: //show
+                if ((sessionStorage.getItem('special') === '2')){
+                    return <Check game={currentGame}/>
+                }
+                else {
+                    return <Show game={currentGame}/>
+                }
+            case 6: //play
+                if ((sessionStorage.getItem('special') === '1')){
+                    return <Play game={currentGame}/>
+                }
+                else if ((sessionStorage.getItem('special') === '2')){
+                    return <Check game={currentGame}/>
+                }
+                else {
+                    return <Show game={currentGame}/>
+                }
+            case 7: //result
                 return <Result game={currentGame}/>
-            case 8:
+            case 8: //terminate
                 return <Terminate /> 
             default:
                 return <div/>
@@ -221,10 +266,10 @@ function Games(props){
         <div>
             
             {stage.map ((stage, index) => {
-            return <div id={index} style={{"display": "none"}} key={stage}>{stage}</div>
+            return <div id={index} style={{"display": "none"}} key={stage}></div>
             })}
 
-            {status === 'loading'? <Spinner/>:renderStage()}
+            {currentStage === 1? <Spinner/>:renderStage()}
 
         
             <p id="pressBack" style={{"display": "none"}}>뒤로가기를 눌러주세요 </p>

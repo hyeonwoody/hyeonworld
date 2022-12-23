@@ -6,6 +6,9 @@ const onInit = require ('./routes/onInit');
 const stage = require ('./routes/stage');
 const submit = require ('./routes/submit');
 const tmp = require ('./routes/tmp');
+const check = require ('./routes/check');
+const show = require ('./routes/show')
+const result = require ('./routes/result')
 //const store = require('./routes/store')
 // app.use('/onLogin', (req,res)=>{
 
@@ -23,6 +26,8 @@ app.use ('/onLog', onLog)
 app.use ('/onInit', onInit)
 
 app.use ('/stage', stage)
-
+    app.use ('/check', check)
+    app.use ('/show', show)
+    app.use ('/result', result)
 
 app.listen(3001, ()=> console.log(`Node.js Server is running on port 3001`));

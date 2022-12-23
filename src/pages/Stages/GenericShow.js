@@ -1,9 +1,24 @@
 import React from "react";
+import "./GenericShow.css"
+import Game0 from "../Games/0/Show0"
 
+function Show(props){
+    function game(){
+        
+        switch (props.game){
+            case 0:
+                return <Game0/>
 
-function Show(a){
+            default:
+                return <div></div>
+        }
+            
+    }
     return (
-        <p>쇼</p>
+        <div>
+            {game()}
+
+        </div>
     )
 }
 export default Show;

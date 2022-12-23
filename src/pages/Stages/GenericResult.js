@@ -1,9 +1,28 @@
 import React from "react";
 
+import Scores from "../Part/Scores"
 
-function Result(a){
+import Game0 from "../Games/0/Result0"
+
+
+
+function Result(props){
+    function game(){
+        
+        switch (props.game){
+            case 0:
+                return <Game0/>
+
+            default:
+                return <div></div>
+        }
+            
+    }
     return (
-        <p>결과</p>
+        <div>
+            {game()}
+
+        </div>
     )
 }
 export default Result;

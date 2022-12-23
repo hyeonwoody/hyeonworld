@@ -60,7 +60,7 @@ body {
 .container {
   max-width: 1400px;
   padding: 0 0px;
-  margin: 0 auto;
+  margin: 0 0;
 }
 
 h2 {
@@ -362,7 +362,7 @@ h2 {
 .page-footer {
   position: fixed;
   right: 0;
-  bottom: 50px;
+  bottom: 20px;
   display: flex;
   align-items: center;
   padding: 5px;

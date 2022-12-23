@@ -36,7 +36,12 @@ router.post ('/in', async (req,res)=>{
                 }
             }
             if (push){
-                db.players.push({id:id++, name:name, login: true})
+                db.players.push({   id:id++, 
+                                    name:name, 
+                                    login: true, 
+                                    GAME0SCORE: 0,
+                                    GAME1SCORE: 0,
+                                    GAME2SCORE: 0, })
                 double = false
             }
                     

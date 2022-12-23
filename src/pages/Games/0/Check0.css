@@ -1,0 +1,8 @@
+.open img {  
+    transform: rotate(180deg); // 화살표 아이콘 방향돌리기 
+  }
+  
+  .content {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; // 애니메이션 속성 설정해주기
+  }
