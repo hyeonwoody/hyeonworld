@@ -47,26 +47,22 @@ router.post('/submit/0/set', async(req, res)=>{
             if (!fs.existsSync(dir+"game0/"+obj.NAME)){
                 fs.mkdirSync(dir+"game0/"+obj.NAME)
             }
-            console.log("일일")
             await fs.copyFile(dir+obj.NAME+".json", dir+"game0/"+obj.NAME+"/"+obj.NAME+timeStamp()+".json", (err) => {
                 if (err) {return res.send({"RESULT_CODE": 0})};
                 console.log('source.txt was copied to destination.txt');
               })
-              console.log("이")
+
             await fs.writeFileSync(dir+obj.NAME+".json", JSON.stringify(obj));
-            console.log("삼")
         }
         else{
-            fs.writeFileSync(dir+obj.NAME+".json", JSON.stringify(obj));
+            await fs.writeFileSync(dir+obj.NAME+".json", JSON.stringify(obj));
         }
-        console.log("사")
         return res.send ({"RESULT_CODE": 0})
 });
 
 router.post('/submit/0/get', (req, res)=>{
     var name = req.query.NAME
 
-    console.log("서버 이름은요",name)
     if (fs.existsSync(dir+name+".json")){
         let data = fs.readFileSync(dir+name+".json", {encoding:"utf-8"})
         let db = JSON.parse (data)

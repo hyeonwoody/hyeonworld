@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
+
+import './Buttons.css'
 //import {socket} from '../Games/Games'
 
 function Buttons() {
@@ -33,8 +35,8 @@ function Buttons() {
     }
     return (
             <div>
-            <button type="button" onClick={onBack} className="btn btn-primary"  >뒤로가기</button>
-            <button type='button' className="btn btn-danger" onClick={onLogout}>로그아웃</button>
+            <button className="back" type="button" onClick={onBack} className="btn btn-primary"  >뒤로가기</button>
+            <button className="logOut" type='button' className="btn btn-danger" onClick={onLogout}>로그아웃</button>
             </div>
     )
 }

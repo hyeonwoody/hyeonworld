@@ -3,6 +3,8 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Routes, Route, BrowserRouter} from 'react-router-dom'
 
+import Init from './pages/Part/Init'
+
 import Root from './pages/Main/Root'
 import Game0 from './pages/Games/0/0';
 import Game1 from './pages/Games/1';
@@ -23,6 +25,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
 
       <BrowserRouter>
+        <Init / >
         <Routes>
           <Route path="/" element={<Root />} />
           <Route path="/game0" element={<Game0 />}/>

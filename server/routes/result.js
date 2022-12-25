@@ -1,57 +1,123 @@
+
 const express = require('express');
 const router = express.Router();
+const router2 = express.Router()
 const fs = require ('fs');
+const { stringify } = require('querystring');
 
+const tmpDB = "./src/db/plays/onGoing/tmp/game00Score.json"
+const correcter = new Map();
+let whos = ""
 
-const dir = "./src/db/plays/onGoing/"
-const map = new Map();
+GAME0CORRECTSCORE = 3
+GAME0MISSINGSCORE = 2
 
-const GAME0 = 2
+router.post('/0/init', ()=>{
+    console.log("이니셜라이징징")
+    correcter.clear()
+});
+
+router.post ('/0/set/whos', async (req,res)=>{
+    correcter.set (whos, 2)
+})
 
 router.post('/0/calculate', async(req, res)=>{
-    console.log ("계싼싼",req.query.NAME)
-    var correct = (req.query.VALUE%7 === 0)
-        console.log("before ",map)
-        map.set(req.query.NAME, correct)
-        console.log("after ", map)
-        return res.send ({"RESULT_CODE": 0})
+    var correct = (req.query.ANSWER === '0')
+    whos = req.query.WHOS
+    if (whos !== req.query.NAME){
+        var val = 0
+        if (correct){
+            console.log ("#result/0/calculate  정답 [첫번째 게임 제출자 : "+req.query.NAME+"]")
+            console.log ("#result/0/calculate  정답 [첫번째 게임 제출답안 : "+0+"]")
+            val = 1
+        }
+        else {
+            console.log ("#result/0/calculate 노답 [첫번째 게임 제출자 : "+req.query.NAME+"]")
+            console.log ("#result/0/calculate 노답 [첫번째 게임 제출답안 : "+req.query.ANSWER+"]")
+        }
+        correcter.set(req.query.NAME, val)
+        console.log(correcter)
+    }
+    return res.send ({"RESULT_CODE": 0})
 });
 
 router.post('/0/get', async (req, res)=>{
-    console.log("서버 리절트aaa")
-    console.log("dfd",map)
-    var data = []
-    map.forEach((value, key, map)=>{
-        if (value){
-            data.push(key)
-            let addNew = true
-            if (fs.existsSync(dir+"logged.json")){
-                let data1 = fs.readFileSync(dir+"logged.json", {encoding:"utf-8"})
-                let db = JSON.parse(data1)
-                db.players.forEach((item,i)=>{
-                    
-                    if (key === item.name){
-                        item.GAME0SCORE += 2
-                    }
-                })
-                
-                fs.writeFileSync (dir+"logged.json", JSON.stringify(db))
+    var count = 0
+    var db
+    var yes = [] 
+    correcter.set("왔다")
+    correcter.forEach((correct, name, map)=>{
+        if (correct === 0){
+            
+            count++
+        }
+        else if (correct === 1){
+            yes.push (name)
+            let push = true
+            var data
+            if (fs.existsSync(tmpDB)){
+                data = fs.readFileSync(tmpDB, {encoding:"utf-8"})
             }
             else {
-                var obj = {
-                    NAME: key,
-                    SCORE: GAME0
-                }
-                fs.writeFileSync(dir+"logged.json", JSON.stringify(obj))
+                db1 = []
+                db1.push ({"name": "a", "game00Score" : 0, "scoreReason": "^game00_Missing_"})
+                fs.writeFileSync (tmpDB, JSON.stringify(db1))
+                data = fs.readFileSync(tmpDB, {encoding:"utf-8"})
             }
+            db = JSON.parse(data)
+
+            console.log("맞음음")
+            console.log("길이이",db.length)
+            if (db.length){
+                db.forEach((item)=>{
+                    if (name === item.name){
+                        console.log("ㄹㄹㄹㄹㄹㄹㄹ")
+                        item.game00Score += GAME0CORRECTSCORE
+                        item.scoreReason += "^game00_From_"+whos
+                        push = false
+                    }
+                })
+            }
+            if (push){
+                console.log("ㄹㄹㄹㄹㄹㄹㄹㅁ")
+                db.push ({"name": name, "game00Score" : GAME0CORRECTSCORE, "scoreReason": "^game00_From_"+whos})
+            }
+            fs.writeFileSync (tmpDB, JSON.stringify(db))
         }
-        
+        else if (correct === 2){
+            console.log("코렉트 투투투퉅투투투")
+            let push = true
+            var data
+            if (fs.existsSync(tmpDB)){
+                data = fs.readFileSync(tmpDB, {encoding:"utf-8"})
+            }
+            else {
+                db1 = []
+                db1.push ({"name": "a", "game00Score" : 0, "scoreReason": "^game00_Missing_"+count})
+                fs.writeFileSync (tmpDB, JSON.stringify(db1))
+                data = fs.readFileSync(tmpDB, {encoding:"utf-8"})
+            }
+            db = JSON.parse(data)
+            if (db.length){
+                db.forEach((item)=>{
+                    if (name === item.name){
+                        item.game00Score += GAME0MISSINGSCORE * count
+                        item.scoreReason += "^game00_Missing_"+count
+                        push = false
+                    }
+                })
+            }
+            if (push){
+                db.push ({"name": name, "game00Score" : GAME0MISSINGSCORE * count, "scoreReason": "^game00_Missing_"+count})
+            }
+            fs.writeFileSync (tmpDB, JSON.stringify(db))
+        }
+    })
 
-    });
-    console.log(data)
-    return res.send (data)
-
-})
+    
+    console.log("ff",yes)
+    return res.send (yes)
+});
     
 
 module.exports =router;

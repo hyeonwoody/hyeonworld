@@ -1,0 +1,849 @@
+Node.js Server is running on port 3001
+
+> hyeonworld@0.1.0 start /home/recr/Documents/hyeonworld
+> export PORT=1219 && concurrently "nodemon ./server/server.js" "react-scripts start"
+
+[0] [33m[nodemon] 2.0.20[39m
+[0] [33m[nodemon] to restart at any time, enter `rs`[39m
+[0] [33m[nodemon] watching path(s): *.*[39m
+[0] [33m[nodemon] watching extensions: js,mjs,json[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[1] (node:271049) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+[1] (Use `node --trace-deprecation ...` to show where the warning was created)
+[1] (node:271049) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+[1] Starting the development server...
+[1] 
+[1] Compiled successfully!
+[1] 
+[1] You can now view hyeonworld in the browser.
+[1] 
+[1]   Local:            http://localhost:1219
+[1]   On Your Network:  http://172.30.1.14:1219
+[1] 
+[1] Note that the development build is not optimized.
+[1] To create a production build, use npm run build.
+[1] 
+[1] webpack compiled successfully
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+[0] nodemon ./server/server.js exited with code SIGINT
+[1] react-scripts start exited with code SIGINT
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+Skipping adding existing rule
+Node.js Server is running on port 3001
+
+> hyeonworld@0.1.0 start /home/recr/Documents/hyeonworld
+> export PORT=1219 && concurrently "nodemon ./server/server.js" "react-scripts start"
+
+[0] [33m[nodemon] 2.0.20[39m
+[0] [33m[nodemon] to restart at any time, enter `rs`[39m
+[0] [33m[nodemon] watching path(s): *.*[39m
+[0] [33m[nodemon] watching extensions: js,mjs,json[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[1] (node:271217) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+[1] (Use `node --trace-deprecation ...` to show where the warning was created)
+[1] (node:271217) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+[1] Starting the development server...
+[1] 
+[1] Compiled successfully!
+[1] 
+[1] You can now view hyeonworld in the browser.
+[1] 
+[1]   Local:            http://localhost:1219
+[1]   On Your Network:  http://172.30.1.14:1219
+[1] 
+[1] Note that the development build is not optimized.
+[1] To create a production build, use npm run build.
+[1] 
+[1] webpack compiled successfully
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 3]
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+[1] Compiling...
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[1] Compiled with warnings.
+[1] 
+[1] [eslint] 
+[1] src/pages/Admin/Admin.js
+[1]   Line 3:10:   'Routes' is defined but never used                      no-unused-vars
+[1]   Line 3:18:   'Route' is defined but never used                       no-unused-vars
+[1]   Line 14:11:  'navigate' is assigned a value but never used           no-unused-vars
+[1]   Line 15:11:  'changeGameStage' is assigned a value but never used    no-unused-vars
+[1]   Line 22:11:  'changeCurrentGame' is assigned a value but never used  no-unused-vars
+[1]   Line 85:9:   Expected a default case                                 default-case
+[1] 
+[1] Search for the keywords to learn more about each warning.
+[1] To ignore, add // eslint-disable-next-line to the line before.
+[1] 
+[1] WARNING in [eslint] 
+[1] src/pages/Admin/Admin.js
+[1]   Line 3:10:   'Routes' is defined but never used                      no-unused-vars
+[1]   Line 3:18:   'Route' is defined but never used                       no-unused-vars
+[1]   Line 14:11:  'navigate' is assigned a value but never used           no-unused-vars
+[1]   Line 15:11:  'changeGameStage' is assigned a value but never used    no-unused-vars
+[1]   Line 22:11:  'changeCurrentGame' is assigned a value but never used  no-unused-vars
+[1]   Line 85:9:   Expected a default case                                 default-case
+[1] 
+[1] webpack compiled with 1 warning
+[1] Compiling...
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[1] Compiled with warnings.
+[1] 
+[1] [eslint] 
+[1] src/pages/Admin/Admin.js
+[1]   Line 3:10:   'Routes' is defined but never used                      no-unused-vars
+[1]   Line 3:18:   'Route' is defined but never used                       no-unused-vars
+[1]   Line 14:11:  'navigate' is assigned a value but never used           no-unused-vars
+[1]   Line 15:11:  'changeGameStage' is assigned a value but never used    no-unused-vars
+[1]   Line 22:11:  'changeCurrentGame' is assigned a value but never used  no-unused-vars
+[1]   Line 85:9:   Expected a default case                                 default-case
+[1] 
+[1] Search for the keywords to learn more about each warning.
+[1] To ignore, add // eslint-disable-next-line to the line before.
+[1] 
+[1] WARNING in [eslint] 
+[1] src/pages/Admin/Admin.js
+[1]   Line 3:10:   'Routes' is defined but never used                      no-unused-vars
+[1]   Line 3:18:   'Route' is defined but never used                       no-unused-vars
+[1]   Line 14:11:  'navigate' is assigned a value but never used           no-unused-vars
+[1]   Line 15:11:  'changeGameStage' is assigned a value but never used    no-unused-vars
+[1]   Line 22:11:  'changeCurrentGame' is assigned a value but never used  no-unused-vars
+[1]   Line 85:9:   Expected a default case                                 default-case
+[1] 
+[1] webpack compiled with 1 warning
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:33:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] (node:271202) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 exit listeners added to [Bus]. Use emitter.setMaxListeners() to increase limit
+[0] (Use `node --trace-warnings ...` to show where the warning was created)
+[0] internal/modules/cjs/loader.js:905
+[0]   throw err;
+[0]   ^
+[0] 
+[0] Error: Cannot find module './routes/fileManagement'
+[0] Require stack:
+[0] - /home/recr/Documents/hyeonworld/server/server.js
+[0]     at Function.Module._resolveFilename (internal/modules/cjs/loader.js:902:15)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:746:27)
+[0]     at Module.require (internal/modules/cjs/loader.js:974:19)
+[0]     at require (internal/modules/cjs/helpers.js:101:18)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:12:24)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12) {
+[0]   code: 'MODULE_NOT_FOUND',
+[0]   requireStack: [ '/home/recr/Documents/hyeonworld/server/server.js' ]
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] internal/modules/cjs/loader.js:905
+[0]   throw err;
+[0]   ^
+[0] 
+[0] Error: Cannot find module './routes/fileManagement'
+[0] Require stack:
+[0] - /home/recr/Documents/hyeonworld/server/server.js
+[0]     at Function.Module._resolveFilename (internal/modules/cjs/loader.js:902:15)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:746:27)
+[0]     at Module.require (internal/modules/cjs/loader.js:974:19)
+[0]     at require (internal/modules/cjs/helpers.js:101:18)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:12:24)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12) {
+[0]   code: 'MODULE_NOT_FOUND',
+[0]   requireStack: [ '/home/recr/Documents/hyeonworld/server/server.js' ]
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] /home/recr/Documents/hyeonworld/node_modules/express/lib/router/index.js:469
+[0]       throw new TypeError('Router.use() requires a middleware function but got a ' + gettype(fn))
+[0]       ^
+[0] 
+[0] TypeError: Router.use() requires a middleware function but got a Object
+[0]     at Function.use (/home/recr/Documents/hyeonworld/node_modules/express/lib/router/index.js:469:13)
+[0]     at Function.<anonymous> (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:227:21)
+[0]     at Array.forEach (<anonymous>)
+[0]     at Function.use (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:224:7)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:29:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] /home/recr/Documents/hyeonworld/server/routes/result.js:37
+[0]                     NAME: name
+[0]                         ^
+[0] 
+[0] SyntaxError: Unexpected token ':'
+[0]     at wrapSafe (internal/modules/cjs/loader.js:1001:16)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1049:27)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Module.require (internal/modules/cjs/loader.js:974:19)
+[0]     at require (internal/modules/cjs/helpers.js:101:18)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:11:16)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] /home/recr/Documents/hyeonworld/node_modules/express/lib/router/index.js:469
+[0]       throw new TypeError('Router.use() requires a middleware function but got a ' + gettype(fn))
+[0]       ^
+[0] 
+[0] TypeError: Router.use() requires a middleware function but got a Object
+[0]     at Function.use (/home/recr/Documents/hyeonworld/node_modules/express/lib/router/index.js:469:13)
+[0]     at Function.<anonymous> (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:227:21)
+[0]     at Array.forEach (<anonymous>)
+[0]     at Function.use (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:224:7)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:29:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] /home/recr/Documents/hyeonworld/node_modules/express/lib/router/index.js:469
+[0]       throw new TypeError('Router.use() requires a middleware function but got a ' + gettype(fn))
+[0]       ^
+[0] 
+[0] TypeError: Router.use() requires a middleware function but got a Object
+[0]     at Function.use (/home/recr/Documents/hyeonworld/node_modules/express/lib/router/index.js:469:13)
+[0]     at Function.<anonymous> (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:227:21)
+[0]     at Array.forEach (<anonymous>)
+[0]     at Function.use (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:224:7)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:29:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] /home/recr/Documents/hyeonworld/server/routes/fileManagement.js:41
+[0] })
+[0] ^
+[0] 
+[0] SyntaxError: Unexpected token '}'
+[0]     at wrapSafe (internal/modules/cjs/loader.js:1001:16)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1049:27)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Module.require (internal/modules/cjs/loader.js:974:19)
+[0]     at require (internal/modules/cjs/helpers.js:101:18)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:12:24)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] /home/recr/Documents/hyeonworld/server/routes/fileManagement.js:41
+[0] })
+[0] ^
+[0] 
+[0] SyntaxError: Unexpected token '}'
+[0]     at wrapSafe (internal/modules/cjs/loader.js:1001:16)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1049:27)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Module.require (internal/modules/cjs/loader.js:974:19)
+[0]     at require (internal/modules/cjs/helpers.js:101:18)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:12:24)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] /home/recr/Documents/hyeonworld/server/routes/fileManagement.js:41
+[0] })
+[0] ^
+[0] 
+[0] SyntaxError: Unexpected token '}'
+[0]     at wrapSafe (internal/modules/cjs/loader.js:1001:16)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1049:27)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Module.require (internal/modules/cjs/loader.js:974:19)
+[0]     at require (internal/modules/cjs/helpers.js:101:18)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:12:24)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] nodemon ./server/server.js exited with code SIGINT
+[1] react-scripts start exited with code SIGINT
+Rule added
+Rule added (v6)
+Rule added
+Rule added (v6)
+Rule added
+
+> hyeonworld@0.1.0 start /home/recr/Documents/hyeonworld
+> export PORT=1219 && concurrently "nodemon ./server/server.js" "react-scripts start"
+
+[0] [33m[nodemon] 2.0.20[39m
+[0] [33m[nodemon] to restart at any time, enter `rs`[39m
+[0] [33m[nodemon] watching path(s): *.*[39m
+[0] [33m[nodemon] watching extensions: js,mjs,json[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] /home/recr/Documents/hyeonworld/server/routes/fileManagement.js:41
+[0] })
+[0] ^
+[0] 
+[0] SyntaxError: Unexpected token '}'
+[0]     at wrapSafe (internal/modules/cjs/loader.js:1001:16)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1049:27)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Module.require (internal/modules/cjs/loader.js:974:19)
+[0]     at require (internal/modules/cjs/helpers.js:101:18)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:12:24)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[1] (node:272370) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+[1] (Use `node --trace-deprecation ...` to show where the warning was created)
+[1] (node:272370) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+[1] Starting the development server...
+[1] 
+[1] Proxy error: Could not proxy request /stage/get from 220.86.148.146:1219 to http://localhost:3001/.
+[1] See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+[1] 
+[1] Proxy error: Could not proxy request /stage/get from 220.86.148.146:1219 to http://localhost:3001/.
+[1] See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+[1] 
+[1] Compiled successfully!
+[1] 
+[1] You can now view hyeonworld in the browser.
+[1] 
+[1]   Local:            http://localhost:1219
+[1]   On Your Network:  http://172.30.1.14:1219
+[1] 
+[1] Note that the development build is not optimized.
+[1] To create a production build, use npm run build.
+[1] 
+[1] webpack compiled successfully
+[1] Proxy error: Could not proxy request /main.c878336f2b19b6a057e8.hot-update.json from 220.86.148.146:1219 to http://localhost:3001/.
+[1] See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+[1] 
+[1] Proxy error: Could not proxy request /main.c878336f2b19b6a057e8.hot-update.json from 220.86.148.146:1219 to http://localhost:3001/.
+[1] See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+[1] 
+[1] Proxy error: Could not proxy request /stage/get from 220.86.148.146:1219 to http://localhost:3001/.
+[1] See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+[1] 
+[1] Proxy error: Could not proxy request /stage/get from 220.86.148.146:1219 to http://localhost:3001/.
+[1] See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+[1] 
+[1] Proxy error: Could not proxy request /stage/get from 220.86.148.146:1219 to http://localhost:3001/.
+[1] See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+[1] 
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] Node.js Server is running on port 3001
+[0] nodemon ./server/server.js exited with code SIGINT
+[1] react-scripts start exited with code SIGINT
+Rule added
+Rule added (v6)
+Rule added
+Rule added (v6)
+Rule added
+Node.js Server is running on port 3001
+
+> hyeonworld@0.1.0 start /home/recr/Documents/hyeonworld
+> export PORT=1219 && concurrently "nodemon ./server/server.js" "react-scripts start"
+
+[0] [33m[nodemon] 2.0.20[39m
+[0] [33m[nodemon] to restart at any time, enter `rs`[39m
+[0] [33m[nodemon] watching path(s): *.*[39m
+[0] [33m[nodemon] watching extensions: js,mjs,json[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:36:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[1] (node:272774) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+[1] (Use `node --trace-deprecation ...` to show where the warning was created)
+[1] (node:272774) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+[1] Starting the development server...
+[1] 
+[1] Compiled successfully!
+[1] 
+[1] You can now view hyeonworld in the browser.
+[1] 
+[1]   Local:            http://localhost:1219
+[1]   On Your Network:  http://172.30.1.14:1219
+[1] 
+[1] Note that the development build is not optimized.
+[1] To create a production build, use npm run build.
+[1] 
+[1] webpack compiled successfully
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 1]
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+누구이름bb undefined
+데이터터 {"UNKNOWN":"error"}
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 1]
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 3]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 1]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 2]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 2]
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 3]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 3]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 3]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 2]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 2]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 1]
+누구이름aa 정양수
+누구이름bb undefined
+데이터터 {"NAME":"정양수","FIRST":"양수","SECOND":"134","THIRD":"234","AFALSE":"2","CONFIRM":"true"}
+누구이름bb undefined
+데이터터 {"NAME":"정양수","FIRST":"양수","SECOND":"134","THIRD":"234","AFALSE":"2","CONFIRM":"true"}
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 3]
+누구이름bb undefined
+데이터터 {"NAME":"정양수","FIRST":"양수","SECOND":"134","THIRD":"234","AFALSE":"2","CONFIRM":"true"}
+누구이름bb undefined
+데이터터 {"NAME":"정양수","FIRST":"양수","SECOND":"134","THIRD":"234","AFALSE":"2","CONFIRM":"true"}
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 1]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 1]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 1]
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+누구이름bb undefined
+데이터터 {"NAME":"정양수","FIRST":"양수","SECOND":"134","THIRD":"234","AFALSE":"2","CONFIRM":"true"}
+누구이름bb undefined
+데이터터 {"NAME":"정양수","FIRST":"양수","SECOND":"134","THIRD":"234","AFALSE":"2","CONFIRM":"true"}
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+#result/0/calculate 노답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate 노답 [첫번째 게임 제출답안 : 1]
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+누구이름bb undefined
+데이터터 {"NAME":"정양수","FIRST":"양수","SECOND":"134","THIRD":"234","AFALSE":"2","CONFIRM":"true"}
+#result/0/calculate  정답 [첫번째 게임 제출자 : 정인애]
+#result/0/calculate  정답 [첫번째 게임 제출답안 : 0]
+[ '정인애' ]
+[ '정인애' ]
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:36:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[0] [32m[nodemon] restarting due to changes...[39m
+[0] [32m[nodemon] starting `node ./server/server.js`[39m
+[0] events.js:377
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (net.js:1331:16)
+[0]     at listenInCluster (net.js:1379:12)
+[0]     at Server.listen (net.js:1465:7)
+[0]     at Function.listen (/home/recr/Documents/hyeonworld/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/home/recr/Documents/hyeonworld/server/server.js:36:5)
+[0]     at Module._compile (internal/modules/cjs/loader.js:1085:14)
+[0]     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+[0]     at Module.load (internal/modules/cjs/loader.js:950:32)
+[0]     at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+[0]     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (net.js:1358:8)
+[0]     at processTicksAndRejections (internal/process/task_queues.js:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[ '정인애' ]
+[0] nodemon ./server/server.js exited with code SIGINT
+[1] react-scripts start exited with code SIGINT

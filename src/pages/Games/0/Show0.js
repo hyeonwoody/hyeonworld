@@ -12,7 +12,9 @@ function Check0() {
 
     const {data, status} = useQuery('getShowMember',  ()=>{
         axios.post ('/show/0/get', null,{
+            params:{
 
+            }
         })
         //.then ((res)=> res.json())
         .then ((res)=> {
@@ -22,8 +24,7 @@ function Check0() {
         })
     },{
         enabled: true,
-        refetchInterval: 20000,
-        cacheTime: Infinity,
+        refetchInterval: 10000,
     });
     console.log("상태", status)
     if (status === 'loading'){

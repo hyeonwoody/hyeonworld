@@ -1,6 +1,6 @@
 import React from "react";
 
-import Scores from "../Part/Scores"
+
 
 import Game0 from "../Games/0/Result0"
 

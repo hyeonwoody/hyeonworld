@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import { useQuery } from "react-query";
 var obj =[]
 function Play0() {
-    const {buttonEnable, changeEnable} = useState("")
+  const [text, setText] = useState("")
     const {data, status} = useQuery('getPlayMember',  ()=>{
         axios.post ('/show/0/get', null,{
 
@@ -11,13 +11,17 @@ function Play0() {
         //.then ((res)=> res.json())
         .then ((res)=> {
             obj = (res.data)
-            console.log ("이거는 show",obj)
-            console.log ("이거는 show",obj.FIRST)
-            changeEnable(" ")
+            if (obj.FIRST !== undefined){
+              setText(" ")
+            }
+            else {
+              console.log("널")
+              setText("")
+            }
         })
     },{
         enabled: true,
-        refetchInterval: 20000,
+        refetchInterval: 10000,
         cacheTime: Infinity,
     });
     console.log("상태", status)
@@ -31,29 +35,33 @@ function Play0() {
         console.log("성공")
     }
     useEffect(()=>{
+      
     },[]);
 
     const jeChul = (e)=>{
         const value = Math.floor(Math.random() * 4) + 2
         const name = sessionStorage.getItem('memberName')
+        const answer = parseInt(e.target.getAttribute("id"))
         if (obj.AFALSE === e.target.getAttribute("id")){
-            console.log("정답 값",value*7)
             axios.post ('/result/0/calculate', null,{
                 params:{
                     NAME: name,
-                    VALUE: value*7
+                    ANSWER: 0,
+                    WHOS: obj.NAME
                 }
             })
-            console.log("키키",value*7%7)
         }
         else {
-            axios.post ('/result/0/calculate', null,{
+            if (0 < answer && answer <4) {
+              axios.post ('/result/0/calculate', null,{
                 params:{
                     NAME: name,
-                    VALUE: value*Math.floor(Math.random() * 6) + 2
+                    ANSWER: answer,
+                    WHOS: obj.NAME
                 }
-            })
-            console.log("키키",value%7)
+              })
+            }
+            
         }
     }
 
@@ -63,22 +71,22 @@ function Play0() {
                 
 
             <h2>거짓을 골라주세요</h2>
-                <div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <div class="accordion" id="accordionExample" >
+  <div class="accordion-item" >
+    <h2 class="accordion-header" id="headingOne" >
+      <button class="accordion-button collapsed" type="button" disabled={!text} data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
         {obj.FIRST}
       </button>
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
+      <div class="accordion-body" >
       <button class="btn btn-lg btn-primary" id={"1"}onClick={jeChul} style={{'font-size': "10px"}}>제출</button>
       </div>
     </div>
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+      <button class="accordion-button collapsed" type="button" disabled={!text} data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
         {obj.SECOND}
       </button>
     </h2>
@@ -90,7 +98,7 @@ function Play0() {
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header" id="headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+      <button class="accordion-button collapsed" type="button" disabled={!text} data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
       {obj.THIRD}
       </button>
     </h2>

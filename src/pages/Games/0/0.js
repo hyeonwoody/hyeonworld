@@ -9,7 +9,6 @@ import axios from 'axios';
 
 function Game0(props) {
   const special = sessionStorage.getItem('special')
-  console.log("여긴긴",props.param)
   const navigate = useNavigate();
   
   const game = 0

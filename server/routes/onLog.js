@@ -7,7 +7,26 @@ const onGoing = "./src/db/plays/onGoing/"
     let id = 0
     let double = false
 const file = onGoing + "logged.json";
+    let force = false
 
+router.post ('/admin', async (req,res)=>{
+    console.log("어드민 포스")
+    if (force){
+        force = false
+    }
+    else {
+        force = true
+    }
+    return res.send ({"RESULT_CODE": force})
+})
+
+router.post ('/force', async (req,res)=>{
+    let resultCode = 0
+    if (force){
+        resultCode = 1
+    }
+    return res.send ({"RESULT_CODE": resultCode})
+})
 
 router.post ('/in', async (req,res)=>{
     
@@ -38,10 +57,12 @@ router.post ('/in', async (req,res)=>{
             if (push){
                 db.players.push({   id:id++, 
                                     name:name, 
-                                    login: true, 
-                                    GAME0SCORE: 0,
-                                    GAME1SCORE: 0,
-                                    GAME2SCORE: 0, })
+                                    login: true,
+                                    bonusScore: 0, 
+                                    game00Score: 0,
+                                    game01Score: 0,
+                                    game02Score: 0, 
+                                    scoreReason: "^"})
                 double = false
             }
                     
@@ -68,7 +89,7 @@ router.post ('/out', (req,res)=>{
         for (j in db.players){
             if (db.players[j].name === name){
                 db.players[j].login = false
-                db.players.splice(j,1) //delete
+                db.players.splice(j,1) // delete
             }
         }
 

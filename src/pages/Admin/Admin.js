@@ -1,15 +1,15 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 
 import { Routes, Route, useNavigate} from 'react-router-dom';
 
 import axios from "axios";
-
+import Config from '../../config/config'
 //import { addToCart } from '../../actions/index'; // 액션 가져오기
 //import { useSelector, useDispatch } from 'react-redux'; // 리덕스 후크 가져오기
 
 
 function Admin(props) {
-    const menu = ["Init", "Open", "Tutorial", "Submit", "Check", "Show", "Play", "Result", "Terminate"];
+    const config = new Config()
     
     const navigate = useNavigate();
     const changeGameStage = (stage) => {
@@ -68,6 +68,12 @@ function onClickInit ()  {
             PLAYERS: players
         }
     })
+    axios.post ('/onLog/admin', null,{
+        
+    })
+        .then ((res)=>{
+            console.log("aaf",res.data.RESULT_CODE)
+        })
 }
 
     const onClickmenu = (e) => {
@@ -81,9 +87,16 @@ function onClickInit ()  {
         })
             .then ((res) => {
                 console.log ("Admin result ",res.data.RESULT_CODE)
+                
             });       
         switch (menu){
             case 0:
+                axios.post ('/onLog/admin', null,{
+        
+                })
+                    .then ((res)=>{
+                        console.log("aaf",res.data.RESULT_CODE)
+                    })
                 Init();
                 break;
             case 1:
@@ -105,6 +118,9 @@ function onClickInit ()  {
             case 6:
                 console.log("it is 6")
                 break;
+            case 9:
+                
+                break;
         }
         
 
@@ -114,13 +130,13 @@ function onClickInit ()  {
     
     useEffect(() => {
         
-    })
+    },)
     function process(){
         switch (props.game){
             case -1:
                 return <p>피는 물보다 진하다</p>
             case 0:
-                return <p>Tutorial Submit Check Show Play Result</p>
+                return <p>Tutorial Submit Check Show Play Result (Ranking)</p>
             default:
                 return <p>아직몰라</p>;
         }
@@ -129,7 +145,7 @@ function onClickInit ()  {
         
         <div>
             
-            {menu.map ((menu, index) => {
+            {config.stages.map ((menu, index) => {
                 return <button id={index}  onClick={onClickmenu} key={index}>{menu}</button>
             })}
         {/* <div>1 Open Tuturial Submit Check Show Submit |Play| Result

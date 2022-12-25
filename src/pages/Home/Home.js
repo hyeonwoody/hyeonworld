@@ -23,7 +23,7 @@ function Home (pros){
     const special = sessionStorage.getItem('special')
     console.log("스페셜"+special);
     //const state = useSelector(state => state.currentGameReducer)
-    console.log("놀러왔지지", SCORES.GAME0)
+
     const db = require ('../../db/games.json')
 
     function monitorGame(id){
