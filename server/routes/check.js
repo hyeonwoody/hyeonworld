@@ -15,6 +15,8 @@ router.post ('/0', async (req,res)=>{
         });
     
     var lia = []
+    const data2 = fs.readFileSync(onGoing+"tmp/"+"example.json", {encoding:"utf-8"})
+    lia.push (data2)
     names.forEach ((item)=>{
         if (fs.existsSync(onGoing+"tmp/"+item+".json")){
             const data1 = fs.readFileSync(onGoing+"tmp/"+item+".json", {encoding:"utf-8"})

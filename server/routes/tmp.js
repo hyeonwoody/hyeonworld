@@ -39,6 +39,7 @@ function timeStamp(){
 // })
 
 router.post('/submit/0/set', async(req, res)=>{
+    console.log("맞야냔")
     var obj = req.query
         if (fs.existsSync(dir+obj.NAME+".json")){
             if (!fs.existsSync(dir+"game0")){

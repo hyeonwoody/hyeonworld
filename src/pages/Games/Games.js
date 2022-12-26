@@ -132,7 +132,7 @@ function Games(props){
                     return <Show game={currentGame}/>
                 }
             case 9:
-                return <Terminate /> 
+                return <Terminate game={currentGame}/> 
             default:
                 return <div/>
         }

@@ -10,7 +10,7 @@ import Config from '../../config/config'
 
 function Admin(props) {
     const config = new Config()
-    
+    const [aa, setAA] = useState ('');
     const navigate = useNavigate();
     const changeGameStage = (stage) => {
         return {
@@ -47,15 +47,16 @@ function Init () {
         }
 }
 const onClickOpen = () => {
-    const game = parseInt(document.getElementById("game").value)
+    //const game = parseInt(document.getElementById("game").value)
+    console.log("다음은요",aa)
     axios.post ('/stage/game', null,{
         params:{
-            CURRENT_GAME: game
+            CURRENT_GAME: aa
         }
     })
-        .then ((res) => {
-            console.log ("Admin result ",res.data)
-        });
+        // .then ((res) => {
+        //     console.log ("Admin result ",res.data)
+        // });
 }
 
 function onClickInit ()  {
@@ -78,7 +79,7 @@ function onClickInit ()  {
 
     const onClickmenu = (e) => {
         
-        e.preventDefault()
+        //e.preventDefault()
         const menu = parseInt(e.target.getAttribute("id"))
         axios.post ('/stage/current', null,{
             params:{
@@ -119,7 +120,13 @@ function onClickInit ()  {
                 console.log("it is 6")
                 break;
             case 9:
-                
+                console.log("간다")
+                axios.post ('/terminate/'+props.game+'/set', null, {
+            
+                })
+                .then (()=>{
+                    console.log("보냈다고")
+                })
                 break;
         }
         
@@ -141,6 +148,20 @@ function onClickInit ()  {
                 return <p>아직몰라</p>;
         }
     };
+
+    const handleInput = (e) =>{
+        switch (e.target.id){
+            case 'game':
+                console.log("첫", aa)
+                setAA(e.target.value);
+                console.log("둘", aa)
+                break;
+            default:
+                break
+        }
+        
+    }
+
     return (
         
         <div>
@@ -176,7 +197,7 @@ function onClickInit ()  {
         </form>
         <form id="Open" style={{"display": "none"}}>
         <div className="form-floating">
-                <input  className="form-control" id="game"></input>
+                <input  className="form-control" id="game" value={aa|| ''} onChange={handleInput}></input>
                 <label htmlFor="floatingInput" style={{'color' : "#181717"}}>게임</label>
             </div>
             <button type="submit" onClick={onClickOpen} className="w-100 btn btn-lg btn-primary"  >제출</button>

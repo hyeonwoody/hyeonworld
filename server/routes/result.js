@@ -58,7 +58,7 @@ router.post('/0/get', async (req, res)=>{
             yes.push (name)
             let push = true
             var data
-            if (flag === 45678){
+            if (flag === 45678 && whos !== 'example'){
                 if (fs.existsSync(tmpDB)){
                     data = fs.readFileSync(tmpDB, {encoding:"utf-8"})
                 }

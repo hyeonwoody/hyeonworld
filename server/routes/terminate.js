@@ -3,19 +3,26 @@ const { flushSync } = require('react-dom');
 const fs = require ('fs');
 const router = express.Router();
 
-
-
-const dir = './src/db/plays/onGoing/tmp/'
-
-
-
-    //get post 차이
-let who 
 router.post('/0/set', async(req, res)=>{
-   
-    who = req.query.WHO
-    return res.send ({"RESULT_CODE": 1, "NAME": req.query.NAME})
-
+    const oldPath = './src/db/plays/onGoing/tmp/'
+    const newPath = './src/db/plays/onGoing/game0/'
+    var combined = []
+    if (!fs.existsSync(newPath)){
+        fs.mkdirSync(newPath)
+    }
+    fs.readdir (oldPath, (err, files)=>{
+        if (err){
+            console.log (err)
+        }
+        let data
+        files.forEach((file,i)=>{
+            if (i>2){
+                data = fs.readFileSync(oldPath+file, {encoding:"utf-8"})
+                combined.push (data)
+            }
+        })
+        fs.writeFileSync (newPath+"final.json", JSON.stringify(combined))   
+    })
 })
 
 router.post('/0/get', async(req, res)=>{

@@ -39,7 +39,7 @@ function Submit(){
     })
     // 
 
-    console.log("거짓은 ? : ",inputFalse)
+    console.log("aaaaㅠㅠ거짓은 ? : ",inputFalse)
 
     function confirmSubmit()  {
         console.log("fdfd")
@@ -52,15 +52,6 @@ function Submit(){
         //     THIRD: inputThird,
         //     AFLASE: inputFalse
         // }
-        
-        if (inputFalse === undefined){
-            alert('거짓 명제를 선택해주세요.')
-        }
-        else if (window.confirm(inputFalse+"번째 명제가 거짓인가요?")) {
-            confirm = true
-        }
-        else {
-        }
         axios.post ('/tmp/submit/0/set', null, {
             params: {
                 NAME: name,
@@ -71,6 +62,16 @@ function Submit(){
                 CONFIRM: confirm
             }
         })
+        .then(()=>{
+            console.log("보내봤다고요77777")
+        })
+        if (inputFalse === undefined){
+            
+            alert('거짓 명제를 선택해주세요.')
+        }
+        else if (window.confirm(inputFalse+"번째 명제가 거짓인가요?")) {
+            confirm = true
+        }
     };
     useEffect(() => {
         
@@ -115,19 +116,19 @@ function Submit(){
 
         <form>
             <div className="form-floating">
-                <input  className="form-control" id="1"  value={inputFirst} onChange={handleInput}></input>
+                <input  className="form-control" id="1"  value={inputFirst|| ''} onChange={handleInput}></input>
                 <label htmlFor="floatingInput" style={{'color' : "#181717"}} checked={inputFalse === '1'? "checked" : false}>첫번째 명제</label>
                 <div className="checkbox mb-3"></div>
                 <input type="radio" name="gener" id="1" onClick={onClickRadio}/>
             </div>
             <div className="form-floating">
-                <input  className="form-control" id="2"  value={inputSecond} onChange={handleInput}></input>
+                <input  className="form-control" id="2"  value={inputSecond|| ''} onChange={handleInput}></input>
                 <label htmlFor="floatingInput" style={{'color' : "#181717"}} checked={inputFalse === '2'? "checked" : false}>두번째 명제</label>
                 <div className="checkbox mb-3"></div>
                 <input type="radio" name="gener"  id="2" onClick={onClickRadio}/>
             </div>
             <div className="form-floating">
-                <input  className="form-control" id="3"  value={inputThird} onChange={handleInput}></input>
+                <input  className="form-control" id="3"  value={inputThird|| ''} onChange={handleInput}></input>
                 <label htmlFor="floatingInput" style={{'color' : "#181717"}} checked={inputFalse === '3'? "checked" : false}>세번째 명제</label>
                 <div className="checkbox mb-3"></div>
             <input type="radio" name="gener"  id="3" onClick={onClickRadio} />
