@@ -29,7 +29,7 @@ function Game4() {
       <div>
         game4<Games number="4" />
     </div>
-    {special==='2' && <Admin/>}
+    {special==='45678' && <Admin/>}
     <Buttons/>
     </main>
     

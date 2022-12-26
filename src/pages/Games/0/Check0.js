@@ -5,18 +5,23 @@ import { useQuery } from "react-query";
 var obj = []
 function Check0() {
   const addShow = (e) => {
-    console.log("누굴까",e.target.id)
+    var i = parseInt(e.target.id)
+    console.log("누굴까",obj[i].NAME)
+
     // fetch('/onLogin')
-    let a = document.getElementById(e.target.id+"1");
+    let a = document.getElementById(obj[i].NAME+"1");
     a.ariaExpanded = false
     console.log(a)
     axios.post ('/show/0/set', null,{
       params:{
-        WHO: e.target.id,
+        WHO: obj[i].NAME,
     }
     })
     axios.post ('/result/0/init', null,{
-      
+      params:{
+        WHOS: obj[i].NAME,
+        AFALSE: obj[i].AFALSE
+      }
     })
   }
 
@@ -78,7 +83,7 @@ function Check0() {
                       {item.AFALSE === "3"? (<p style={{color:"red"}}>{item.THIRD}</p>):(<p>{item.THIRD}</p>)}
                      
                       </div>
-                      <button class="btn btn-lg btn-primary" id={item.NAME}onClick={addShow}/>
+                      <button class="btn btn-lg btn-primary" id={i}onClick={addShow}/>
                     </div>
                   </div>
                 )

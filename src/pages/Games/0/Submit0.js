@@ -42,6 +42,7 @@ function Submit(){
     console.log("거짓은 ? : ",inputFalse)
 
     function confirmSubmit()  {
+        console.log("fdfd")
         let confirm = false
         //var newCount = count.toString()
         // let data ={

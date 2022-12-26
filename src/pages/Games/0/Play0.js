@@ -39,29 +39,16 @@ function Play0() {
     },[]);
 
     const jeChul = (e)=>{
-        const value = Math.floor(Math.random() * 4) + 2
         const name = sessionStorage.getItem('memberName')
-        const answer = parseInt(e.target.getAttribute("id"))
-        if (obj.AFALSE === e.target.getAttribute("id")){
-            axios.post ('/result/0/calculate', null,{
-                params:{
-                    NAME: name,
-                    ANSWER: 0,
-                    WHOS: obj.NAME
-                }
-            })
-        }
-        else {
-            if (0 < answer && answer <4) {
-              axios.post ('/result/0/calculate', null,{
-                params:{
-                    NAME: name,
-                    ANSWER: answer,
-                    WHOS: obj.NAME
-                }
-              })
+        const answer = e.target.getAttribute("id")
+        if (name !== obj.NAME){
+          axios.post ('/result/0/calculate', null,{
+            params:{
+                NAME: name,
+                ANSWER: answer,
+                WHOS: obj.NAME
             }
-            
+          })
         }
     }
 

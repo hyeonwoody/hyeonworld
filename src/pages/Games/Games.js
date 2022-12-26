@@ -23,14 +23,7 @@ function Games(props){
 
 
     //const stage = ["Init", "Open", Tutorial, Submit, Check, Show, Play, Result, Terminate];
-    function pressBack(){
-        const pressBack = document.getElementById('pressBack')
-        if (pressBack.style.display === 'none'){
-            pressBack.style.display = 'block'
-        }
-            
-        
-    }
+
 
 
     
@@ -62,11 +55,6 @@ function Games(props){
                     //currentStage = obj.currentStage
                 } 
                         
-                else{
-                }
-                if (data.CURRENT_GAME !== currentGame){
-                    pressBack()
-                }
                 else{
                 }
             })
@@ -102,14 +90,14 @@ function Games(props){
                 return <Submit game={currentGame}/>
             case 4: //check
                 
-                if (special === 2){
+                if (special === 45678){
                     return <Check game={currentGame}/>
                 }
                 else  {
                     return <Show game={currentGame}/>
                 }
             case 5: //show
-                if (special === 2){
+                if (special === 45678){
                     return <Check game={currentGame}/>
                 }
                 else if (special === 3){
@@ -123,7 +111,7 @@ function Games(props){
                 if (special === 1){
                     return <Play game={currentGame}/>
                 }
-                else if (special === 2){
+                else if (special === 45678){
                     return <Check game={currentGame}/>
                 }
                 else {
@@ -158,9 +146,6 @@ function Games(props){
             })}
 
             {currentStage === 1? <Spinner/>:renderStage()}
-
-        
-            <p id="pressBack" style={{"display": "none"}}>뒤로가기를 눌러주세요 </p>
         </div>
     )
 } 

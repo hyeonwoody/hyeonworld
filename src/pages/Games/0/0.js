@@ -31,7 +31,7 @@ function Game0(props) {
         <Games number={"0"}/>
     </div>
     
-    {special==='2' && <Admin game={0}/>}
+    {special==='45678' && <Admin game={0}/>}
     <Buttons/>
     </div>
     

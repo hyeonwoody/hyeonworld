@@ -18,10 +18,9 @@ router.post('/current', async(req, res)=>{
 
 //current game Set
 router.post ('/game', (req,res)=>{
-
+    
     currentGame = parseInt(req.query.CURRENT_GAME)
-    currentStage = 1
- 
+    console.log("게임셋",currentGame)
     return res.send ({"RESULT_CODE": 1})
         
 })

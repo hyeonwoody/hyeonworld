@@ -31,7 +31,7 @@ function Login (pros){
                     if (RESULT_CODE === 1)
                         sessionStorage.setItem ('special', 1) //players
                     else if (RESULT_CODE === 2)
-                        sessionStorage.setItem ('special', 2) //Admin
+                        sessionStorage.setItem ('special', 45678) //Admin
                     else if (RESULT_CODE === 3)
                         sessionStorage.setItem ('special', 3) //Monitor
                     else if (RESULT_CODE === 4){

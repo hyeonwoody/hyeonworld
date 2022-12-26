@@ -34,9 +34,11 @@ function Ranking(props){
                     <a className="nav-link active" key= "ff"aria-current="page" href="#" id={9999} onClick={clickA} style={{'font-size': "5px"}}>종합</a>
                 </li>
             {db.games.map((item, i)=>{
-                return (<li class="nav-item">
+                if (item.play){
+                    return (<li class="nav-item">
                 <a className="nav-link active" key="nique" aria-current="page" href="#" id={i} onClick={clickA} style={{'font-size': "5px"}}>{item.name}</a>
-            </li>)
+                    </li>)
+                }
             })}
             
             </ul>

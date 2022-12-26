@@ -17,8 +17,11 @@ function Check0() {
         axios.post ('/result/0/set/whos', null, {
 
         })
-
+        
         axios.post ('/result/0/get', null,{
+            params:{
+                FLAG: sessionStorage.getItem('special')
+            }
 
         })
         //.then ((res)=> res.json())

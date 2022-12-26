@@ -11,6 +11,7 @@ const show = require ('./routes/show');
 const result = require ('./routes/result');
 const fileManagement = require ('./routes/fileManagement');
 const ranking = require ('./routes/ranking')
+const terminate = require ('./routes/terminate')
 //const store = require('./routes/store')
 // app.use('/onLogin', (req,res)=>{
 
@@ -34,5 +35,6 @@ app.use ('/stage', stage)
     app.use ('/show', show)
     app.use ('/result', result)
     app.use ('/ranking', ranking)
+    app.use ('/terminate', terminate)
 
 app.listen(3001, ()=> console.log(`Node.js Server is running on port 3001`));

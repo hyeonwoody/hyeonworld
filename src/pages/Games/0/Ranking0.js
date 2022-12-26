@@ -43,6 +43,18 @@ function Ranking0() {
             })
     },[]);
 
+    function soonwi(number){
+
+      if (number === 0){
+      }
+      else if (ranking[number-1].game00Score === ranking[number].game00Score){
+        ranking[number].rank = ranking[number-1].rank
+        return ranking[number-1].rank
+      }
+      ranking[number].rank = number + 1
+      return ranking[number].rank
+    }
+
     return (
             <main>
                 <h2>진실 혹은 거짓</h2>
@@ -55,7 +67,7 @@ function Ranking0() {
                     return (<div className="accordion-item">
                     <h2 className="accordion-header collapsed" id="panelsStayOpen-headingOne">
                       <button id={item.name}key="fdd" className="btn btn-lg btn-primary" type="button" data-bs-toggle="collapse" data-bs-target={"#panelsStayOpen-"+String(i)} aria-controls={"#panelsStayOpen-"+String(i)}>
-                        {i+1}등 {item.name} {item.game00Score}점
+                        {soonwi(i)}등 {item.name} {item.game00Score}점
                       </button>
                     </h2>
                     <div id={"panelsStayOpen-"+String(i)} key="aa" className="accordion-collapse collapse collapsed" aria-labelledby={"#panelsStayOpen-heading"+String(i)} data-bs-parent="#accordionFlushExample">      
