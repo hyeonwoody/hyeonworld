@@ -20,6 +20,9 @@
 <br>
 
  ## ✅: Implementation
+- **프록시** : 외부 네트워크에서 서버에 접근하기 위해 프록시 설정.
+- **방화벽** : node_modules/react-scripts/config/webpackDevServer.config.js 에서 disableFirewall 옵션을 true로 설정.
+- **포트포워딩** : 외부 네트워크에서 접속하기 위해 공유기 설정.
 - **로그인** :  사용자가 입력한 성함과 파일로 저장된 가족 구성원 성함 목록과 비교하여 목록에 있을 경우 로그인 허용.  
 
 <br>
