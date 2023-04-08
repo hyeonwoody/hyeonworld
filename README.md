@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# hyeonworld
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+## 🧑‍💻: 소개
+가족의 단합을 도모하는 레크레이션 게임 모음.
 
-### `npm start`
+문제점 : 명절날 오랜만에 모인 가족과 함께 즐길거리가 없다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+아이디어 : 온 가족 구성원과 가까워질 수 있는 아이스브레이커 게임을 만들기.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+해결 : 온 세대가 즐길 수 있는 웹 기반 레크레이션 게임.
 
-### `npm test`
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🗓️: 진행기간
+2022년 8월 ~ 현재 (약 6개월), 개발 1명.
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ ## ✅: 구현내용
+- **로그인** :  사용자가 입력한 성함과 파일로 저장된 가족 구성원 성함 목록과 비교하여 목록에 있을 경우 로그인 허용.  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 사용자는 다음과 같이 정의  :
+|**정의**|**사용자 성함**|**설명**|
+|:---:|:---:|:---:|
+|서버 사용자|어드min|게임을 진행하는 사회자.|
+|모니터 사용자|화면monitor|게임의 현재 진행 상황을 보여주는 전광판.|
+|클라이언트|가족 성함|게임 참가자.|  
 
-### `npm run eject`
+<br>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 사회자는 참가자가 볼수 없는 메뉴를 선택하여 레크레이션 진행 : 
+|**메뉴**|**설명**|**구현**|
+|:---:|:---:|:---:|
+|Init|친가/외가에서 플레이하는지 설정, 참여 인원을 설정하며 로그인을 활성화.|X|
+|Open|사회자가 open 메뉴를 눌러 플레이할 게임 초기화.|O|
+|Terminate|모든 게임을 종료. 참가자는 메인 화면으로 강제 이동.|O|  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 각 게임에는 단계가 있으며 이를 state 관리로 구현 ex) 진실혹은거짓 :  
+|**단계**|**설명**|**구현**|
+|:---:|:---:|:---:|
+|Tutorial|게임에 대한 설명 영상 재생.|X|
+|Submit|참가자에게 본인에 대한 2개의 진실 명제와 1개의 거짓 명제를 제출.|O|
+|Check|사회자는 제출된 명제 확인 후, 흥미로운 명제를 제출한 참가자 선택.|O|
+|Show|모든 참가자와 전광판 기기에 사회자가 선택한 참가자에 대한 3가지 명제를 보여 줌.|O|
+|Play|제출한 참가자를 제외한 모든 참가자는 3개의 명제 중 1개의 거짓 명제를 골라 답 제출.|O|
+|Result|모든 참가자가 답을 제출하면 모니터 사용자 기기에 정답자를 공개 후 점수 합산.|O|
+|Ranking|현재 점수 순위를 전광판에 보여 줌.|O|  
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<br>
 
-## Learn More
+사회자는 단계를 변경할 수 있으며,  
+모든 참가자에서도 변경이 적용.  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+한번 이상의 단계를 거친 게임을 사회자 판단 하에 종료(Terminate)할 수 있으며  
+게임이 끝날 때마다 점수 게임 내용에 대한 기록(src/db/plays/onGoing)이 done(src/db/plays/done)으로 이동하여 다음 게임 진행 시 점수 연계.
 
-### Code Splitting
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📞: Contact
+- 이메일: hyeonwoody@gmail.com
+- 블로그: https://velog.io/@hyeonwoody
+- 깃헙: https://github.com/hyeonwoody
 
-### Analyzing the Bundle Size
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🧱: 기술 스택
+>Javascript (react.js, express.js)
 
-### Making a Progressive Web App
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📖: 라이브러리
+>react-query (현재 단계가 무엇인지 6초 간격으로 서버에게 요청, 사회자가 선택한 참가자에 대한 정보를 10초 간격으로 서버에게 요청)  
+>axios (사회자 <=> 서버 <=> 참가자)  
+>useState (게임 단계)  
+>Bootstrap
+ 
+<br>
 
-### Advanced Configuration
+ ## 🔥: 성과
+- GET / POST의 차이 이해.
+- 웹 서버와 비동기 처리에 대한 이해.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br>
