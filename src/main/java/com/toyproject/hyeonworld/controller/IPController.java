@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class IPController {
 
+
     @PostMapping("/ip")
     public ResponseEntity<String> ip (HttpServletRequest request){
         System.out.println("여기 왔다");
