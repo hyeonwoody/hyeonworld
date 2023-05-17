@@ -42,3 +42,5 @@ out/
 
 ### Various properties ###
 *.properties
+
+/src/main/frontend/tsconfig.json

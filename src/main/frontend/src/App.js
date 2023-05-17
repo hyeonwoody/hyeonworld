@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import {useState, useEffect } from 'react';
+import {Routes, Route, BrowserRouter} from 'react-router-dom'
 import './App.css';
-import customAxios from './customAxios.ts';
+import customAxios from './customAxios';
+
+import Root from './pages/Root/Root'
+
 
 function App() {
   // IP주소 변수 선언
@@ -23,17 +27,22 @@ function App() {
   return (
 
       <div className="App">
-        <header className="App-header">
-          이 기기의 IP주소는 {ip}입니다.
-            <button class="btn btn-green mr-4">Button</button>
-            <button className="btn btn-blue">Button</button>
-            <button className="py-2 px-4 rounded-lg shadow-md text-white bg-green-500 hover:bg-green-700">
-                Hello, Tailwind CSS!
-            </button>
-            <div className="bg-blue-500"> Tailwind Css 적용 테스트 </div>
+        {/*<header className="App-header">*/}
+        {/*  이 기기의 IP주소는 {ip}입니다.*/}
+        {/*    <button class="btn btn-green mr-4">Button</button>*/}
+        {/*    <button className="btn btn-blue">Button</button>*/}
+        {/*    <button className="py-2 px-4 rounded-lg shadow-md text-white bg-green-500 hover:bg-green-700">*/}
+        {/*        Hello, Tailwind CSS!*/}
+        {/*    </button>*/}
+        {/*    <div className="bg-blue-500"> Tailwind Css 적용 테스트 </div>*/}
 
-        </header>
+        {/*</header>*/}
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Root />}/>
 
+            </Routes>
+        </BrowserRouter>
 
       </div>
   );
