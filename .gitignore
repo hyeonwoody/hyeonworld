@@ -37,8 +37,8 @@ out/
 .vscode/
 
 ### Web Configuration ###
-./src/main/java/com/toyproject/hyeonworld/configuration/web/WebConfig.java
-./src/main/frontend/src/configuration/web/WebConfig.ts
+/src/main/java/com/toyproject/hyeonworld/configuration/web/WebConfig.java
+/src/main/frontend/src/configuration/web/WebConfig.ts
 
 ### Various properties ###
 *.properties
