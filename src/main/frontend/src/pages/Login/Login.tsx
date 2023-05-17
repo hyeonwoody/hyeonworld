@@ -11,6 +11,14 @@ function Login (){
 
     const onClickLogin = (event : React.MouseEvent<HTMLButtonElement>) => {
         console.log ("FFF");
+        event.preventDefault();
+        function callback(data : number) {
+            console.log("dsdsdsd"+data);
+
+            document.location.href = '/';
+        }
+
+        LoginAxios ('/member/login-confirm', inputName, callback);
         // fetch('/onLogin')
         //     .then((res) => res.json())
         //     .then (data=>{setData(data); console.log("THIS : ",data.last)}, ()=>{console.log ("THAT : ",data)})
@@ -25,7 +33,7 @@ function Login (){
             <button className="py-2 px-4 rounded-lg shadow-md text-white bg-green-500 hover:bg-green-700">
                 Hello, Tailwind CSS!
             </button>
-
+            <button className="py-2 px-4 rounded-lg shadow-md text-white bg-green-500 hover:bg-blue-700" type="submit" onClick={onClickLogin}>로그인</button>
             <form>
                 <h1  className="h3 mb-3 fw-normal" >해주세요 로그인.</h1>
                 <div className="form-floating">
@@ -33,7 +41,7 @@ function Login (){
                     <label htmlFor="floatingInput" style={{'color' : "#181717", "textAlign": "center"}}>성함</label>
                 </div>
                 <div className="checkbox mb-3"></div>
-                <button className="py-2 px-4 rounded-lg shadow-md text-white bg-green-500 hover:bg-blue-700" type="submit" onClick={onClickLogin}>로그인</button>
+
                 <div className="checkbox mb-3"></div>
                 <Copyright/>
             </form>
