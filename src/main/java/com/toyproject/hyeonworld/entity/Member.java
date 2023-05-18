@@ -7,8 +7,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
+@Data
 @Table (name="member")
 public class Member {
     @jakarta.persistence.Id
@@ -28,5 +30,12 @@ public class Member {
     @Column(nullable = false)
     private Boolean proposition; //0 : 은 이, 1 : 는 가
 
+    @Column(nullable = false)
+    private Boolean login;
+
     private long score;
+
+    public Member(){
+        this.login = false;
+    }
 }

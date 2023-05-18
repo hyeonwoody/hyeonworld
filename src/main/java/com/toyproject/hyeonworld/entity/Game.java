@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Entity
+@Data
 @Table (name="game")
 public class Game {
     @jakarta.persistence.Id

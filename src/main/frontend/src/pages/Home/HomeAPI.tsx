@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {My} from '../../configuration/web/WebConfig';
 
-export default function LoginAxios(url: string, loginName : string ,callback: (data: any) => void) {
+export default function HomeAxios(url: string, callback: (data: any) => void, logoutName : string) {
     const my = new My();
     axios({
         url: "/member/" + url,
@@ -9,9 +9,9 @@ export default function LoginAxios(url: string, loginName : string ,callback: (d
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
         params: {
-            loginName : loginName
+            logoutName : logoutName
         }
     }).then(function (response) {
-        callback(response.data);
+            callback (response.data);
     });
 };
