@@ -5,7 +5,7 @@ import Login from '../Login/Login';
 
 function Root(){
 
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
     const [memberName, setMemberName] = useState("");
 
     useEffect(()=>{
@@ -23,10 +23,11 @@ function Root(){
     },[isLogin]);
     return (
         <div className="Root">
-            {isLogin? <Home rootCall={handleLogin} name={memberName}/>:
-                        <Login rootCall={handleLogin}/>}
-
+            <div className="h-screen from-sky-100 via-sky-300 to-blue-200 bg-gradient-to-br">
+                {isLogin? <Home rootCall={handleLogin} name={memberName}/>:
+                            <Login rootCall={handleLogin}/>}
             </div>
+        </div>
     );
 }
 

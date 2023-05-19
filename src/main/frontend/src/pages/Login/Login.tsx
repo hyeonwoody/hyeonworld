@@ -43,9 +43,9 @@ function Login (props : LoginProps){
 
     return (
         <body>
-            <div className={styles.container}>
-                <div className="h-screen bg-sky-600 p-12">
-                    <ul className="p-5 space-y-40"/>
+            <div className="Login">
+                <div className="h-screen">
+                    <ul className="p-20 space-y-0"/>
                     <div className="rounded-lg bg-blue-200 p-10">
                         <div className="grid grid-cols-1">
                             <input  className="form-control text-1xl p-4" id="floatingInput" placeholder='성함을 입력해주세요' value={inputName} onChange={handleInputName}></input>

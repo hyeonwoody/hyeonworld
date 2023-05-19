@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {My} from '../../configuration/web/WebConfig';
 
-export default function HomeAxios(url: string, callback: (data: any) => void, logoutName : string) {
+export function LogoutAxios(url: string, callback: (data: any) => void, logoutName : string) {
     const my = new My();
     axios({
         url: "/member/" + url,
@@ -13,5 +13,17 @@ export default function HomeAxios(url: string, callback: (data: any) => void, lo
         }
     }).then(function (response) {
             callback (response.data);
+    });
+};
+
+export function HomeAxios(url: string, callback: (data: any) => void) {
+    const my = new My();
+    axios({
+        url: "/home/" + url,
+        method: 'get',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+    }).then(function (response) {
+        callback (response.data);
     });
 };

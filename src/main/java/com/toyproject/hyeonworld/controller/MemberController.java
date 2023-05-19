@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/member")
 public class MemberController {
@@ -19,7 +21,6 @@ public class MemberController {
 
     @GetMapping("/login-confirm")
     public ResponseEntity<Boolean> loginConfirm (HttpServletRequest request, @RequestParam String loginName){
-        System.out.println("여기 왔다aaaaa");
 
         Member loginMember = memberService.login (loginName);
 
@@ -31,8 +32,6 @@ public class MemberController {
 
     @GetMapping("/logout-confirm")
     public ResponseEntity<Boolean> logoutConfirm (HttpServletRequest request, @RequestParam String logoutName){
-        System.out.println("여기 왔다aaaaa");
-
         Member logoutMember = memberService.logout (logoutName);
         return ResponseEntity.ok (true);
     }

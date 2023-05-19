@@ -35,14 +35,16 @@ function App() {
         {/*        Hello, Tailwind CSS!*/}
         {/*    </button>*/}
         {/*    <div className="bg-blue-500"> Tailwind Css 적용 테스트 </div>*/}
+        <div className={"container"}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Root />}/>
 
+                </Routes>
+            </BrowserRouter>
+        </div>
         {/*</header>*/}
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Root />}/>
 
-            </Routes>
-        </BrowserRouter>
 
       </div>
   );
