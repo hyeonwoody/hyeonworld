@@ -3,8 +3,8 @@ import {Routes, Route, BrowserRouter} from 'react-router-dom'
 import './App.css';
 import customAxios from './customAxios';
 
-import Root from './pages/Root/Root'
-
+import Root from './pages/Root/Root';
+import Game from './pages/Game/Game';
 
 function App() {
   // IP주소 변수 선언
@@ -39,7 +39,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Root />}/>
-
+                    <Route path="/game" element={<Game />}/>
                 </Routes>
             </BrowserRouter>
         </div>
@@ -49,36 +49,4 @@ function App() {
       </div>
   );
 }
-
-
-
 export default App;
-
-// import React, {useState, useEffect} from 'react';
-//
-// function App() {
-//     const [message, setMessage]=useState([]);
-//     useEffect(()=>{
-//         fetch("/hello")
-//             .then((res)=>{
-//                 console.log(res.json());
-//                 return res.json();
-//             })
-//             .then((data)=>{
-//
-//                 setMessage(data);
-//             });
-//     },[]);
-//     return (
-//         <div className="App">
-//             <header className="App-header">
-//                 // 기본코드
-//                 <ul>
-//                     {message.map((v,idx)=><li key={`${idx}-${v}`}>{v}</li>)}
-//                 </ul>
-//             </header>
-//         </div>
-//     );
-// }
-//
-// export default App;

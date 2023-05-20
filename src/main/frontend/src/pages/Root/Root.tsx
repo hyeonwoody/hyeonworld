@@ -15,12 +15,12 @@ function Root(){
         // else {
         //     setIsLogin(true);
         // }
-    },[])
+    },[]);
     const handleLogin = useCallback ((data : boolean, loginName :string)=>{
-        console.log("뉴뉴");
         setIsLogin(data);
         setMemberName(loginName);
     },[isLogin]);
+
     return (
         <div className="Root">
             <div className="h-screen from-sky-100 via-sky-300 to-blue-200 bg-gradient-to-br">
@@ -30,5 +30,6 @@ function Root(){
         </div>
     );
 }
+
 
 export default Root;
