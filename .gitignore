@@ -40,6 +40,9 @@ out/
 /src/main/java/com/toyproject/hyeonworld/configuration/web/WebConfig.java
 /src/main/frontend/src/configuration/web/WebConfig.ts
 
+### Special ###
+/src/main/frontend/src/configuration/special/SpecialConfig.ts
+
 ### Various properties ###
 *.properties
 

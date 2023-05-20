@@ -6,6 +6,8 @@ import {useNavigate} from "react-router-dom";
 import MenuBar from "../../parts/menuBar/MenuBar";
 
 import Game from "../Game/Game";
+import AdminMenu from "../../parts/adminMenu/AdminMenu";
+import {Special} from "../../configuration/special/SpecialConfig";
 
 interface HomeProps{
     rootCall: (data: boolean, userName: string) => void;
@@ -22,7 +24,7 @@ function Home (props : HomeProps){
     const [gameList, setGameList] = useState <Game[]>([]);
     const [enterGame, setEnterGame] = useState <number> (-1);
 
-    const navigate = useNavigate();
+    const special = new Special();
 
 
 
@@ -78,6 +80,7 @@ function Home (props : HomeProps){
                 </ul>}
 
             </div>
+            {special.adminName === props.name &&  <AdminMenu/>}
         </div>
     );
 }
