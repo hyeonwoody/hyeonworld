@@ -10,7 +10,7 @@ export function StageAPI(url: string, getStage: (stage: string) => void) {
     eventSource.addEventListener('connect', (e)=>{
         const {data: receivedConnectData} = e;
         console.log('connect event data11 : ',receivedConnectData);
-        getStage("ㄹㄹ");
+        getStage(receivedConnectData);
     })
 
 

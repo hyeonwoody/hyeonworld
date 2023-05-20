@@ -48,8 +48,8 @@ function Game(props : GameProps) {
         setGame (props.id);
         console.log('aaa');
         function getStage (stage : string){
-            console.log("어왔")
-            console.log(stage);
+            const currentStage = parseInt(stage);
+            setStage(currentStage);
         }
         StageAPI ("/api/gameStage", getStage);
 
@@ -69,6 +69,7 @@ function Game(props : GameProps) {
                 return null;
             })}
             </div>
+            <p>{stage}</p>
         </div>
     )
 }
