@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 
-import Game0 from './0/Main';
-import Game1 from "./1/Main";
-import Game2 from "./2/Main";
-import Game3 from "./3/Main";
-import Game4 from "./4/Main";
-import Game5 from "./5/Main";
-import MenuBar from "../../parts/menuBar/MenuBar";
+import {GameProps} from "./GameProps/GameProps";
+
+import Game0 from './0/Game0Main';
+import Game1 from "./1/Game1Main";
+import Game2 from "./2/Game2Main";
+import Game3 from "./3/Game3Main";
+import Game4 from "./4/Game4Main";
+import Game5 from "./5/Game5Main";
+
+import {StageAPI} from "./StageAPI";
+
 
 export const Games = {
     "진실혹은거짓": Game0,
@@ -24,14 +28,11 @@ type stateData = {
     name: string;
 }
 
-interface GameProps{
-    id: number;
-}
-
 function Game(props : GameProps) {
     // IP주소 변수 선언
     const location = useLocation();
     const [game, setGame] = useState<number>(props.id);
+    const [stage, setStage] = useState<number> (0);
 
     console.log("Game : "+props.id);
 
@@ -42,8 +43,17 @@ function Game(props : GameProps) {
 
     }
 
+
     useEffect(()=>{
         setGame (props.id);
+        console.log('aaa');
+        function getStage (stage : string){
+            console.log("어왔")
+            console.log(stage);
+        }
+        StageAPI ("/api/gameStage", getStage);
+
+
     },[])
 
     return (
@@ -54,7 +64,7 @@ function Game(props : GameProps) {
                 if (game == index){
                     const Component = gameComponent;
                     console.log("다왔");
-                    return <Component key={index}/>;
+                    return <Component id={props.id} stage={props.stage} key={index}/>;
                 }
                 return null;
             })}

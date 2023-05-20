@@ -67,7 +67,7 @@ function Home (props : HomeProps){
             <MenuBar moveBack={onClickBack} rootCall={props.rootCall} name={props.name}/>
             <ul className="p-2 space-y-1"/>
             <div className="flex mx-2 items-center justify-center rounded-xl group sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
-                {enterGame!=-1 ? <Game id={enterGame}/> : <ul className="cards">
+                {enterGame!=-1 ? <Game id={enterGame} stage={0}/> : <ul className="cards">
                     {gameList.map((game: Game, i: number) => {
                         console.log(i);
                         return <li id={(i).toString()} className={"card"+i%7} key={i} onClick={onClickGame}>
