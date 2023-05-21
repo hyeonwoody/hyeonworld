@@ -9,7 +9,6 @@ import Game2 from "./2/Game2Main";
 import Game3 from "./3/Game3Main";
 import Game4 from "./4/Game4Main";
 import Game5 from "./5/Game5Main";
-
 import {StageAPI} from "./StageAPI";
 
 
@@ -46,14 +45,13 @@ function Game(props : GameProps) {
 
     useEffect(()=>{
         setGame (props.id);
-        console.log('aaa');
-        function getStage (stage : string){
-            const currentStage = parseInt(stage);
+        function getStage (currentStage : number){
             setStage(currentStage);
         }
-        StageAPI ("/api/gameStage", getStage);
-
-
+        const stageApi = StageAPI ("/api/game-stage/players", getStage);
+        return () => {
+            stageApi.closeConnection();
+        }
     },[])
 
     return (

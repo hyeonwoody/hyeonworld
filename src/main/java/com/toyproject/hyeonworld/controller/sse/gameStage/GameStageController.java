@@ -19,9 +19,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/game-stage")
 public class GameStageController extends HttpServlet {
-
+    private static final long SSE_SESSION_TIMEOUT = 1000L;
     private final SseEmitters sseEmitters;
     static AtomicInteger counter;
 
@@ -30,36 +30,48 @@ public class GameStageController extends HttpServlet {
         this.counter = new AtomicInteger(0);
     }
 
-    @GetMapping(value = "/gameStage", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/empty")
+    public ResponseEntity<Boolean> empty() {
+
+        return ResponseEntity.ok(true);
+    }
+
+    @GetMapping(value = "/players", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> connect() throws InterruptedException {
+        System.out.println("되냐");
+        SseEmitter emitter = new SseEmitter(SSE_SESSION_TIMEOUT);
+        sseEmitters.add(emitter);
+        sseEmitters.send ("currentGameStage");
+
+        return ResponseEntity.ok(emitter);
 
 
 
-        ExecutorService executor = Executors.newFixedThreadPool(20); //Number of family members.
-        SseEmitter emitter = new SseEmitter();
-        StopWatch main = new StopWatch();
-        main.start();
-        for (int i = 0; i < 20; ++i){
-            executor.execute(()->{
-                int cnt = counter.addAndGet(1);
-                sseEmitters.add(emitter);
-                try{
 
-                    emitter.send(SseEmitter.event()
-                            .name("connect")
-                            .data(cnt));
-                    System.out.println("보냅");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
-        executor.shutdown();
-        executor.awaitTermination(20, TimeUnit.SECONDS);
-        main.stop();
+
+//        StopWatch main = new StopWatch();
+//        main.start();
+//        for (int i = 0; i < 20; ++i){
+//            executor.execute(()->{
+//                int cnt = counter.addAndGet(1);
+//                sseEmitters.add(emitter);
+//                try{
+//
+//                    emitter.send(SseEmitter.event()
+//                            .name("connect")
+//                            .data(cnt));
+//                    System.out.println("보냅");
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            });
+//        }
+//        executor.shutdown();
+//        executor.awaitTermination(20, TimeUnit.SECONDS);
+//        main.stop();
 
         // Start an asynchronous task to send SSE events
         // You can customize this task based on your requirements
-        return ResponseEntity.ok(emitter);
+        //return ResponseEntity.ok(emitter);
     }
 }

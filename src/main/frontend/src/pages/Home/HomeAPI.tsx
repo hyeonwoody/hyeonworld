@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {My} from '../../configuration/web/WebConfig';
 
+const my = new My();
 export function LogoutAxios(url: string, callback: (data: any) => void, logoutName : string) {
-    const my = new My();
     axios({
         url: "/member/" + url,
         method: 'get',
@@ -17,7 +17,6 @@ export function LogoutAxios(url: string, callback: (data: any) => void, logoutNa
 };
 
 export function HomeAxios(url: string, callback: (data: any) => void) {
-    const my = new My();
     axios({
         url: "/home/" + url,
         method: 'get',

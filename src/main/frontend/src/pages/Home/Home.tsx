@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {HomeAxios, LogoutAxios} from "./HomeAPI";
+import {HomeAxios} from "./HomeAPI";
 import './Home.css';
 import {useNavigate} from "react-router-dom";
 
