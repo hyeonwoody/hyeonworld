@@ -50,9 +50,7 @@ function Home (props : HomeProps){
     const onClickGame = (event : React.MouseEvent<HTMLLIElement>) => {
         console.log("d");
         const target = event.target as HTMLLIElement;
-
         const value : any = target.getAttribute("id");
-        let parsedId : number = parseInt(value);
 
         openGame(value);
     }
