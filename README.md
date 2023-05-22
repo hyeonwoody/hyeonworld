@@ -22,6 +22,7 @@
 ## ✅: Implementation
 - **포트포워딩** : 외부 네트워크에서 접속하기 위해 공유기 설정.
 - **CORS 설정** : WebMvcConfigurer 활용.
+- **SSE** : 어드min이 설정한 현재 게임의 stage 전송.
 
 <br>
 

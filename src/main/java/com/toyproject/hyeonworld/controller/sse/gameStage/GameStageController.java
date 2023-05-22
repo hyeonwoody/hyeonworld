@@ -4,6 +4,7 @@ import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 import jakarta.servlet.http.HttpServlet;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,14 +40,25 @@ public class GameStageController extends HttpServlet {
     @GetMapping(value = "/players", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> connect() throws InterruptedException {
         System.out.println("되냐");
+
+
+
+
+        /*
+        Singleprocess
+         */
         SseEmitter emitter = new SseEmitter(SSE_SESSION_TIMEOUT);
         sseEmitters.add(emitter);
         sseEmitters.send ("currentGameStage");
 
-        return ResponseEntity.ok(emitter);
-
-
-
+        /*
+        MultiThread
+         */
+//        ExecutorService executor = Executors.newFixedThreadPool(20);
+//        SseEmitter emitter = new SseEmitter(SSE_SESSION_TIMEOUT);
+//        sseEmitters.add(emitter);
+//        sseEmitters.send ("currentGameStage");
+//
 //        StopWatch main = new StopWatch();
 //        main.start();
 //        for (int i = 0; i < 20; ++i){
@@ -54,13 +66,17 @@ public class GameStageController extends HttpServlet {
 //                int cnt = counter.addAndGet(1);
 //                sseEmitters.add(emitter);
 //                try{
-//
 //                    emitter.send(SseEmitter.event()
 //                            .name("connect")
 //                            .data(cnt));
+//
+////                    sseEmitters.send("currentGameStage");
 //                    System.out.println("보냅");
-//                } catch (IOException e) {
+//                } catch (Exception e) {
 //                    throw new RuntimeException(e);
+//                } finally {
+//                    System.out.println("emitter.complete()");
+//                    emitter.complete();
 //                }
 //            });
 //        }
@@ -70,6 +86,6 @@ public class GameStageController extends HttpServlet {
 
         // Start an asynchronous task to send SSE events
         // You can customize this task based on your requirements
-        //return ResponseEntity.ok(emitter);
+        return ResponseEntity.ok(emitter);
     }
 }

@@ -45,13 +45,11 @@ public class SseEmitters {
     }
 
     public void send (String eventName, Map<String, Integer> data ){
-
         emitterList.forEach( emitter->{
             try {
-                emitter.send(
-                        SseEmitter.event()
-                                .name(eventName)
-                                .data(data)
+                emitter.send(SseEmitter.event()
+                        .name(eventName)
+                        .data(data)
                 );
             } catch (IOException e) {
                 throw new RuntimeException(e);

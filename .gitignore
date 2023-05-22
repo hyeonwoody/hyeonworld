@@ -47,3 +47,6 @@ out/
 *.properties
 
 /src/main/frontend/tsconfig.json
+
+### Test ###
+/src/test/*
