@@ -57,7 +57,7 @@ function AdminMenu (){
             {Object.entries(AdminMenuList).map(([menuName, index]) =>{
                 return <button
                         type={"button"}
-                        className={"bg-red-200 mx-1 my-1 text-gray-900 bg-white hover:bg-gray-100" }
+                        className={"bg-green-200 rounded-2xl mx-1 my-1 text-gray-900 hover:bg-gray-100" }
                         data-modal-target={"init-modal"}
                         data-modal-toggle={"init-modal"}
                         id={index.toString()}
