@@ -1,9 +1,10 @@
 import React, {ChangeEvent, useState} from "react";
 import {OpenGameAxios} from "../open/OpenAPI";
+import {type} from "@testing-library/user-event/dist/type";
 
 interface Game{
+    id: number;
     name: string;
-    description: string;
 }
 
 interface OpenModalProps{
@@ -36,8 +37,9 @@ const OpenModal = ( props: OpenModalProps) => {
     }
 
     const commitOpen = (event : React.MouseEvent<HTMLButtonElement>) => {
-        console.log("ffff"+props.gameList.length);
-        OpenGameAxios(openGame);
+        console.log("ff"+props.gameList[openGame].id);
+        OpenGameAxios(props.gameList[openGame].id);
+        props.onOpen();
     }
 
 
@@ -45,7 +47,7 @@ const OpenModal = ( props: OpenModalProps) => {
         <div className={"h-screen w-full fixed left-0 top-0 flex justify-center bg-black bg-opacity-70"}>
             <div className={"bg-white fixed top-1/3 rounded-2xl w-10/12 h-2/7"}>
                 <div className={"border-b px-4 flex justify-between items-center"}>
-                    <h3 className={"font-extrabold"}>Init</h3>
+                    <h3 className={"font-extrabold"}>Open</h3>
                 </div>
 
                 <label htmlFor="family-slider"

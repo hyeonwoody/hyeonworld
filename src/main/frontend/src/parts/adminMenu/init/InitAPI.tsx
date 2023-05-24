@@ -5,8 +5,8 @@ import axios from "axios";
 export function InitAxios(partyType : number, persons : number) {
     const my = new My();
     axios({
-        url: "party/init/",
-        method: 'get',
+        url: "party/" + "init",
+        method: 'post',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
         params: {

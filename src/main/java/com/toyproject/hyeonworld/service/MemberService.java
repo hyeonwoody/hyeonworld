@@ -15,7 +15,7 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Member login (String memberName){
+    public Long login (String memberName){
 
         Optional<Member> member = memberRepository.findByName(memberName);
 
@@ -25,25 +25,25 @@ public class MemberService {
                 pMember.setLogin(true);
                 memberRepository.save(pMember);
             }
-            return pMember;
+            return pMember.getId();
         }
         return null;
     }
 
 
-    public Member logout (String memberName){
+    public Long logout (Long logoutId){
 
-        Optional<Member> member = memberRepository.findByName(memberName);
+        Optional<Member> member = memberRepository.findById(logoutId);
 
         if (member.isPresent()){
             Member pMember = member.get();
-            if (pMember.getName().equals (memberName)){
-                pMember.setLogin(false);
-                memberRepository.save(pMember);
-            }
-            return pMember;
+            pMember.setLogin(false);
+            memberRepository.save(pMember);
+            return pMember.getId();
         }
         return null;
     }
+
+
 
 }

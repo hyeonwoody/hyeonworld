@@ -4,10 +4,7 @@ import com.toyproject.hyeonworld.entity.Party;
 import com.toyproject.hyeonworld.service.PartyService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/party")
@@ -19,8 +16,15 @@ public class PartyController {
         this.partyService = partyService;
     }
 
+    @PutMapping("/current-game")
+    public ResponseEntity<Boolean> openGame (HttpServletRequest request, @RequestParam Integer game){
+        System.out.println("왔ㄷ자");
+        partyService.open(game);
 
-    @GetMapping("/init")
+        return ResponseEntity.ok (true);
+    }
+
+    @PostMapping("/init")
     public ResponseEntity<Boolean> initParty (HttpServletRequest request, @RequestParam Integer partyType, @RequestParam Integer persons){
         System.out.println("party init");
         Party party =new Party();
@@ -33,5 +37,15 @@ public class PartyController {
 
         return ResponseEntity.ok (true);
     }
+
+    @GetMapping("/current-game")
+    public ResponseEntity<Integer> getCurrentGame (HttpServletRequest request){
+        System.out.println("send current-game");
+        Integer currentGame = partyService.getCurrentGame();
+
+        return ResponseEntity.ok (currentGame);
+    }
+
+
 
 }

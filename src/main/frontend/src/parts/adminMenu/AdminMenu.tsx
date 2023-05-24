@@ -5,8 +5,8 @@ import OpenModal from "./open/OpenModal";
 import {type} from "@testing-library/user-event/dist/type";
 
 interface Game{
+    id: number;
     name: string;
-    description: string;
 }
 
 interface AdminMenuProps{

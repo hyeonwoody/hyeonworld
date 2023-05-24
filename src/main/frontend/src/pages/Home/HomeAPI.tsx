@@ -3,6 +3,17 @@ import {My} from '../../configuration/web/WebConfig';
 
 const my = new My();
 
+export function CurrentGameAxios(callback: (data: any) => void) {
+    axios({
+        url: "party/" + "current-game",
+        method: 'get',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+    }).then(function (response) {
+        callback(response.data);
+    });
+};
+
 export function DisplayGameAxios(callback: (data: any) => void) {
     axios({
         url: "game/" + "playable",
@@ -14,14 +25,14 @@ export function DisplayGameAxios(callback: (data: any) => void) {
     });
 };
 
-export function LogoutAxios(callback: (data: any) => void, logoutName : string) {
+export function LogoutAxios(callback: (data: any) => void, logoutId : number) {
     axios({
         url: "member/" + "logout-confirm",
-        method: 'get',
+        method: 'put',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
         params: {
-            logoutName : logoutName
+            logoutId : logoutId
         }
     }).then(function (response) {
             callback (response.data);

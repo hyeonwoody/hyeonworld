@@ -1,12 +1,9 @@
 package com.toyproject.hyeonworld.controller;
 
-import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/member")
@@ -19,21 +16,16 @@ public class MemberController {
     }
 
 
-    @GetMapping("/login-confirm")
-    public ResponseEntity<Boolean> loginConfirm (HttpServletRequest request, @RequestParam String loginName){
-
-        Member loginMember = memberService.login (loginName);
-
-        boolean success = false;
-        if (loginMember != null)
-            success = true;
-        return ResponseEntity.ok (success);
+    @PutMapping("/login-confirm")
+    public ResponseEntity<Long> loginConfirm (HttpServletRequest request, @RequestParam String loginName){
+        Long loginMemberId = memberService.login (loginName);
+        return ResponseEntity.ok (loginMemberId);
     }
 
-    @GetMapping("/logout-confirm")
-    public ResponseEntity<Boolean> logoutConfirm (HttpServletRequest request, @RequestParam String logoutName){
-        Member logoutMember = memberService.logout (logoutName);
-        return ResponseEntity.ok (true);
+    @PutMapping("/logout-confirm")
+    public ResponseEntity<Long> logoutConfirm (HttpServletRequest request, @RequestParam Long logoutId){
+        Long logoutMemberId = memberService.logout (logoutId);
+        return ResponseEntity.ok (logoutMemberId);
     }
 
 }

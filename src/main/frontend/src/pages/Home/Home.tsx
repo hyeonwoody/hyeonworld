@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {DisplayGameAxios} from "./HomeAPI";
+import {DisplayGameAxios, CurrentGameAxios} from "./HomeAPI";
 import './Home.css';
 
 
@@ -10,7 +10,8 @@ import AdminMenu from "../../parts/adminMenu/AdminMenu";
 import {Special} from "../../configuration/special/SpecialConfig";
 
 interface HomeProps{
-    rootCall: (data: boolean, userName: string) => void;
+    rootCall: (data : boolean, loginId: number, loginName :string) => void;
+    id: number;
     name: string;
 }
 
@@ -23,8 +24,8 @@ interface Game{
 function Home (props : HomeProps){
 
     const [gameList, setGameList] = useState <Game[]>([]);
-    const [enterGame, setEnterGame] = useState <number> (-1);
-
+    const [enterGameId, setEnterGame] = useState <number> (-1);
+    const [currentGameId, setCurrentGame] = useState <number> (-2);
     const special = new Special();
 
 
@@ -34,23 +35,27 @@ function Home (props : HomeProps){
         function getGameList (data : Game[]){
             setGameList(data);
         }
+
         DisplayGameAxios (getGameList);
     },[])
 
 
     const openGame = (id : number) => {
-
-
         setEnterGame(id);
-        //const data = {id : parsedId, name: props.name};
-
-        //navigate('game', {state : data});
     }
+
+    const getCurrentGame = () => {
+        CurrentGameAxios(setCurrentGame);
+    }
+
 
     const onClickGame = (event : React.MouseEvent<HTMLLIElement>) => {
         const target = event.target as HTMLLIElement;
         const value : any = target.getAttribute("id");
+        console.log("aaaaa"+currentGameId);
+        console.log("Bbbbb"+value);
         openGame(value);
+        getCurrentGame();
     }
 
     const onClickBack = () => {
@@ -58,14 +63,13 @@ function Home (props : HomeProps){
     }
 
 
-
     // @ts-ignore
     return (
         <div className="Home">
-            <MenuBar moveBack={onClickBack} rootCall={props.rootCall} name={props.name}/>
+            <MenuBar moveBack={onClickBack} rootCall={props.rootCall} loginId={props.id} loginName={props.name}/>
             <ul className="p-2 space-y-1"/>
             <div className="flex mx-2 items-center justify-center rounded-xl party sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
-                {enterGame!=-1 ? <Game id={enterGame} stage={0}/> : <ul className="cards">
+                {enterGameId == currentGameId ? <Game id={currentGameId} stage={0}/> : <ul className="cards">
                     {gameList.map((game: Game, i: number) => {
                         return <li id={(game.id).toString()} className={"card"+i%7} key={i} onClick={onClickGame}>
                             <h3 className="card-title">{game.name}</h3>
@@ -75,7 +79,7 @@ function Home (props : HomeProps){
                 </ul>}
 
             </div>
-            {special.adminName === props.name &&  <AdminMenu gameList={gameList}/>}
+            {special.adminId === props.id &&  <AdminMenu gameList={gameList}/>}
         </div>
     );
 }

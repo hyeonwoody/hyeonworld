@@ -5,8 +5,8 @@ import axios from "axios";
 export function OpenGameAxios(game : number) {
     const my = new My();
     axios({
-        url: "game/init/",
-        method: 'get',
+        url: "party/" + "current-game",
+        method: 'put',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
         params: {

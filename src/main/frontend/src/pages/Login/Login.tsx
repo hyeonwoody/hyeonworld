@@ -6,7 +6,7 @@ import Copyright from "../../parts/copyright/Copyright";
 import styles from './Login.css';
 
 interface LoginProps{
-    rootCall: (data: boolean, userName: string) => void;
+    rootCall: (data : boolean, loginId: number, loginName :string) => void;
 }
 
 function Login (props : LoginProps){
@@ -19,19 +19,14 @@ function Login (props : LoginProps){
     const onClickLogin = (event : React.MouseEvent<HTMLButtonElement>) => {
         console.log ("FFF");
         event.preventDefault();
-        function checkSuccess(success : boolean) {
-            console.log("dsdsdsd"+success);
+        function checkSuccess(id : number) {
+            console.log("dsdsdsd"+id);
 
-            if (success)
-               console.log("성공");
-            else {
-                console.log("실패");
-            }
-            props.rootCall(success, inputName);
-            // document.location.href = '/';
+            if (id)
+                props.rootCall(true, id, inputName);
         }
 
-        LoginAxios ("login-confirm", inputName, checkSuccess);
+        LoginAxios (inputName, checkSuccess);
         // fetch('/onLogin')
         //     .then((res) => res.json())
         //     .then (data=>{setData(data); console.log("THIS : ",data.last)}, ()=>{console.log ("THAT : ",data)})

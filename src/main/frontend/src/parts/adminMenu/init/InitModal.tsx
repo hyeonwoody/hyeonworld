@@ -35,7 +35,8 @@ const InitModal = ({onInit}: any) => {
     };
 
     const commitInit = (event : React.MouseEvent<HTMLButtonElement>) => {
-        InitAxios(partyType, persons)
+        InitAxios(partyType, persons);
+        onInit();
     }
 
     return (
