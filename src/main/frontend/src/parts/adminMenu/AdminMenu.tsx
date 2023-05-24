@@ -1,6 +1,17 @@
 import React, {useEffect, useState} from "react";
 
-import InitModal from "./init/InitModal"
+import InitModal from "./init/InitModal";
+import OpenModal from "./open/OpenModal";
+import {type} from "@testing-library/user-event/dist/type";
+
+interface Game{
+    name: string;
+    description: string;
+}
+
+interface AdminMenuProps{
+    gameList: Game[];
+}
 
 export const AdminMenuList = {
     Init: 0,
@@ -15,24 +26,20 @@ export const AdminMenuList = {
     Done: 9,
 };
 
-function ModalInit(props: { onOpenAlert: void }) {
-    return null;
-}
+function AdminMenu (props: AdminMenuProps){
 
-function AdminMenu (){
-    const [year, setYear] = useState(0);
-
-    const [init, setInit] = useState<boolean>(false);
+    const [initModal, setInit] = useState<boolean>(false);
+    const [openModal, setOpen] = useState<boolean>(false);
 
     useEffect(()=>{
-        const d = new Date();
-        setYear(d.getFullYear());
     },[])
 
     const onInit = () => {
-        console.log(init);
-        setInit(!init);
-        console.log(init);
+        setInit(!initModal);
+    }
+    const onOpen = () => {
+        console.log(props.gameList.length);
+        setOpen(!openModal);
     }
 
 
@@ -42,10 +49,16 @@ function AdminMenu (){
         const target = event.target as HTMLLIElement;
         const value : any = target.getAttribute("id");
         const parsedValue : number = parseInt(value);
-        console.log(parsedValue);
+
         switch (parsedValue) {
             case AdminMenuList["Init"]:
                 onInit();
+                break;
+            case AdminMenuList["Open"]:
+                onOpen();
+                break;
+            default:
+                console.log("ㅁㄹ");
         }
 
     }
@@ -53,7 +66,8 @@ function AdminMenu (){
     return (
         <div className="AdminMenu">
             <div className={"grid grid-cols-5"}>
-                {init && <InitModal onInit={onInit}/>}
+                {initModal && <InitModal onInit={onInit}/>}
+                {openModal && <OpenModal onOpen={onOpen} gameList={props.gameList}/>}
             {Object.entries(AdminMenuList).map(([menuName, index]) =>{
                 return <button
                         type={"button"}
@@ -65,8 +79,6 @@ function AdminMenu (){
                         onClick={onClickButton}>
                         {menuName}
                         </button>;
-
-                return null;
             })}
             </div>
         </div>

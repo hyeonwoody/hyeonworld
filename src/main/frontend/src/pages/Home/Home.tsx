@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {HomeAxios} from "./HomeAPI";
+import {DisplayGameAxios} from "./HomeAPI";
 import './Home.css';
-import {useNavigate} from "react-router-dom";
+
 
 import MenuBar from "../../parts/menuBar/MenuBar";
 
@@ -34,7 +34,7 @@ function Home (props : HomeProps){
             setGameList(data);
             console.log(gameList);
         }
-        HomeAxios ("games/playable", getGameList);
+        DisplayGameAxios (getGameList);
     },[])
 
 
@@ -66,7 +66,7 @@ function Home (props : HomeProps){
         <div className="Home">
             <MenuBar moveBack={onClickBack} rootCall={props.rootCall} name={props.name}/>
             <ul className="p-2 space-y-1"/>
-            <div className="flex mx-2 items-center justify-center rounded-xl group sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
+            <div className="flex mx-2 items-center justify-center rounded-xl party sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
                 {enterGame!=-1 ? <Game id={enterGame} stage={0}/> : <ul className="cards">
                     {gameList.map((game: Game, i: number) => {
                         console.log(i);
@@ -78,7 +78,7 @@ function Home (props : HomeProps){
                 </ul>}
 
             </div>
-            {special.adminName === props.name &&  <AdminMenu/>}
+            {special.adminName === props.name &&  <AdminMenu gameList={gameList}/>}
         </div>
     );
 }

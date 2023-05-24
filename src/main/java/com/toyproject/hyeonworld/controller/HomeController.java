@@ -26,7 +26,6 @@ public class HomeController {
 
     @GetMapping("/games/playable")
     public ResponseEntity<List<Game>> displayGame (HttpServletRequest request){
-        System.out.println("여기 왔다 games/playable");
 
         List<Game> gameList = gameService.displayGame();
 

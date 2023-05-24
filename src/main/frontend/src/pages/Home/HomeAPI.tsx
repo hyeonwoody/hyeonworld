@@ -2,9 +2,21 @@ import axios from 'axios';
 import {My} from '../../configuration/web/WebConfig';
 
 const my = new My();
-export function LogoutAxios(url: string, callback: (data: any) => void, logoutName : string) {
+
+export function DisplayGameAxios(callback: (data: any) => void) {
     axios({
-        url: "/member/" + url,
+        url: "game/" + "playable",
+        method: 'get',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+    }).then(function (response) {
+        callback (response.data);
+    });
+};
+
+export function LogoutAxios(callback: (data: any) => void, logoutName : string) {
+    axios({
+        url: "member/" + "logout-confirm",
         method: 'get',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,

@@ -17,13 +17,12 @@ function MenuBar (props : MenuBarProps){
 
     const onClickLogout = (event : React.MouseEvent<HTMLButtonElement>) => {
         function checkName(name: string) {
-            console.log("dsdsdsd" + name);
 
             // document.location.href = '/';
             props.rootCall(false, name);
         }
 
-        LogoutAxios("logout-confirm", checkName, props.name);
+        LogoutAxios(checkName, props.name);
     }
 
     const onClickScore = (event : React.MouseEvent<HTMLButtonElement>) => {

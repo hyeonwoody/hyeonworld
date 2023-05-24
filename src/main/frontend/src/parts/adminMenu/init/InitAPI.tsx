@@ -2,15 +2,15 @@ import {My} from "../../../configuration/web/WebConfig";
 
 import axios from "axios";
 
-export function InitAxios(group : number, persons : number) {
+export function InitAxios(partyType : number, persons : number) {
     const my = new My();
     axios({
-        url: "/group/init",
+        url: "party/init/",
         method: 'get',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
         params: {
-            group : group,
+            partyType : partyType,
             persons : persons,
         }
     }).then(function (response) {
