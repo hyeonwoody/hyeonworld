@@ -11,7 +11,6 @@ import Game4 from "./4/Game4Main";
 import Game5 from "./5/Game5Main";
 import {StageAPI} from "./StageAPI";
 
-
 export const Games = {
     "진실혹은거짓": Game0,
     "무작위세단어": Game1,
@@ -29,9 +28,8 @@ type stateData = {
 
 function Game(props : GameProps) {
     // IP주소 변수 선언
-    const location = useLocation();
     const [game, setGame] = useState<number>(props.id);
-    const [stage, setStage] = useState<number> (0);
+    const [stage, setStage] = useState<number> (props.stage);
 
     console.log("Game : "+props.id);
 
@@ -39,7 +37,6 @@ function Game(props : GameProps) {
         console.log("!true");
     else {
         console.log("!false");
-
     }
 
 

@@ -15,6 +15,7 @@ interface HomeProps{
 }
 
 interface Game{
+    id : number;
     name: string;
     description: string;
 }
@@ -32,7 +33,6 @@ function Home (props : HomeProps){
 
         function getGameList (data : Game[]){
             setGameList(data);
-            console.log(gameList);
         }
         DisplayGameAxios (getGameList);
     },[])
@@ -48,10 +48,8 @@ function Home (props : HomeProps){
     }
 
     const onClickGame = (event : React.MouseEvent<HTMLLIElement>) => {
-        console.log("d");
         const target = event.target as HTMLLIElement;
         const value : any = target.getAttribute("id");
-
         openGame(value);
     }
 
@@ -69,8 +67,7 @@ function Home (props : HomeProps){
             <div className="flex mx-2 items-center justify-center rounded-xl party sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
                 {enterGame!=-1 ? <Game id={enterGame} stage={0}/> : <ul className="cards">
                     {gameList.map((game: Game, i: number) => {
-                        console.log(i);
-                        return <li id={(i).toString()} className={"card"+i%7} key={i} onClick={onClickGame}>
+                        return <li id={(game.id).toString()} className={"card"+i%7} key={i} onClick={onClickGame}>
                             <h3 className="card-title">{game.name}</h3>
                             <ul className="p-2 space-y-1"/>
                             {game.description}</li>
