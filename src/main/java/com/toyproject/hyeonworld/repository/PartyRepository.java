@@ -10,9 +10,12 @@ import java.util.Optional;
 @Repository
 public interface PartyRepository extends JpaRepository<Party, Long> {
 
-    @Query ("SELECT e FROM Party e WHERE e.id = (SELECT MAX(id) FROM Party)")
-    Optional<Party> findOne();
+    @Query ("SELECT e FROM Party e WHERE e.createdAt = (SELECT MAX(createdAt) FROM Party)")
+    Optional<Party> findRecentOne();
 
-    @Query ("SELECT e.currentGame FROM Party e WHERE e.id = (SELECT MAX(id) FROM Party)")
+    @Query ("SELECT e.currentGame FROM Party e WHERE e.createdAt = (SELECT MAX(createdAt) FROM Party)")
     Integer getCurrentGame();
+
+    @Query ("SELECT e.currentGameStage FROM Party e WHERE e.createdAt = (SELECT MAX(createdAt) FROM Party)")
+    Integer getCurrentGameStage();
 }

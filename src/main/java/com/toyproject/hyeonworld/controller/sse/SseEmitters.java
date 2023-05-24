@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.controller.sse;
 
+import com.toyproject.hyeonworld.service.PartyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -13,6 +14,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j //로깅이 유용
 public class SseEmitters {
     private final List<SseEmitter> emitterList = new CopyOnWriteArrayList<>();
+    private final PartyService partyService;
+
+    public SseEmitters (PartyService partyService){
+        this.partyService = partyService;
+    }
 
     static int currentStageCnt = 0;
     public SseEmitter add(SseEmitter emitter){
@@ -34,7 +40,8 @@ public class SseEmitters {
         DataMap dataMap = new DataMap();
         switch (eventName){
             case "currentGameStage" :
-                send (eventName, dataMap.mapOf("cnt", currentStageCnt++, "currentStage", 1));
+                Integer value = partyService.getCurrentGameStageQuery();
+                send (eventName, dataMap.mapOf("cnt", currentStageCnt++, "currentStage", value));
                 break;
             case "other" :
                 send (eventName, dataMap.mapOf("cnt", currentStageCnt, "currentStage", 5));

@@ -43,9 +43,11 @@ function Game(props : GameProps) {
     useEffect(()=>{
         setGame (props.id);
         function getStage (currentStage : number){
+            console.log (currentStage);
             setStage(currentStage);
         }
-        const stageApi = StageAPI ("/api/game-stage/players", getStage);
+        console.log ("aa");
+        const stageApi = StageAPI (getStage);
         return () => {
             stageApi.closeConnection();
         }
@@ -59,7 +61,7 @@ function Game(props : GameProps) {
                 if (game == index){
                     const Component = gameComponent;
                     console.log("다왔");
-                    return <Component id={props.id} stage={props.stage} key={index}/>;
+                    return <Component id={props.id} stage={stage} key={index}/>;
                 }
                 return null;
             })}

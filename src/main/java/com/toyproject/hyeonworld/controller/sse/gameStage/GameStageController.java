@@ -1,14 +1,15 @@
 package com.toyproject.hyeonworld.controller.sse.gameStage;
 
 import com.toyproject.hyeonworld.controller.sse.SseEmitters;
+import com.toyproject.hyeonworld.service.PartyService;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.Part;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.StopWatch;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -22,13 +23,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RestController
 @RequestMapping("/api/game-stage")
 public class GameStageController extends HttpServlet {
+
+    private PartyService partyService;
     private static final long SSE_SESSION_TIMEOUT = 1000L;
     private final SseEmitters sseEmitters;
     static AtomicInteger counter;
 
-    public GameStageController(SseEmitters sseEmitters) {
+    public GameStageController(SseEmitters sseEmitters, PartyService partyService) {
         this.sseEmitters = sseEmitters;
         this.counter = new AtomicInteger(0);
+        this.partyService = partyService;
     }
 
     @GetMapping(value = "/empty")
@@ -37,13 +41,15 @@ public class GameStageController extends HttpServlet {
         return ResponseEntity.ok(true);
     }
 
+    @PutMapping(value = "admin")
+    public ResponseEntity<Integer> setStage(@RequestParam Integer currentStage) {
+        System.out.println("rrrrrrrr");
+        partyService.setCurrentGameStage(currentStage);
+        return ResponseEntity.ok (currentStage);
+    }
+
     @GetMapping(value = "/players", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> connect() throws InterruptedException {
-        System.out.println("되냐");
-
-
-
-
         /*
         Singleprocess
          */

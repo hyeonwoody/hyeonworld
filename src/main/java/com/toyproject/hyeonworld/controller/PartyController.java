@@ -41,7 +41,7 @@ public class PartyController {
     @GetMapping("/current-game")
     public ResponseEntity<Integer> getCurrentGame (HttpServletRequest request){
         System.out.println("send current-game");
-        Integer currentGame = partyService.getCurrentGame();
+        Integer currentGame = partyService.getCurrentGameQuery();
 
         return ResponseEntity.ok (currentGame);
     }

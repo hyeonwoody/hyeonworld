@@ -24,16 +24,30 @@ public class PartyService {
 
     public void open(Integer game) {
 
-        Optional<Party> party = partyRepository.findOne();
+        Optional<Party> party = partyRepository.findRecentOne();
         if (party.isPresent()){
             Party pParty = party.get();
             pParty.setCurrentGame(game);
             partyRepository.save(pParty);
         }
-        System.out.println("DFFFFF");
     }
 
-    public Integer getCurrentGame() {
+    public Integer getCurrentGameQuery() {
         return partyRepository.getCurrentGame();
+    }
+
+    public Integer setCurrentGameStage(Integer gameStage) {
+        Optional<Party> party = partyRepository.findRecentOne();
+        if (party.isPresent()){
+            Party pParty = party.get();
+            pParty.setCurrentGameStage(gameStage);
+            partyRepository.save(pParty);
+            return gameStage;
+        }
+        return -1;
+    }
+
+    public Integer getCurrentGameStageQuery() {
+        return partyRepository.getCurrentGameStage();
     }
 }

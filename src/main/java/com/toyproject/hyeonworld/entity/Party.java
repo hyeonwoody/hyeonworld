@@ -1,14 +1,12 @@
 package com.toyproject.hyeonworld.entity;
 
 import com.toyproject.hyeonworld.repository.GameRepository;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.Date;
 
 @Entity
 @Data
@@ -28,5 +26,16 @@ public class Party {
 
     @Column(name="current_game", nullable = false)
     private Integer currentGame;
+
+    @Column(name="current_game_stage", nullable = false)
+    private Integer currentGameStage;
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @PrePersist
+    public void prePersist(){
+        createdAt = new Date();
+    }
 
 }

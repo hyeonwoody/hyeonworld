@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import InitModal from "./init/InitModal";
 import OpenModal from "./open/OpenModal";
+import {AdminMenuAxios} from "../adminMenu/AdminMenuAPI";
 import {type} from "@testing-library/user-event/dist/type";
 
 interface Game{
@@ -49,7 +50,9 @@ function AdminMenu (props: AdminMenuProps){
         const target = event.target as HTMLLIElement;
         const value : any = target.getAttribute("id");
         const parsedValue : number = parseInt(value);
+        console.log("fdffff"+parsedValue);
 
+        AdminMenuAxios(parsedValue);
         switch (parsedValue) {
             case AdminMenuList["Init"]:
                 onInit();
