@@ -13,6 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByName (String name);
 
 
+
 //    @Modifying
 //    @Query("UPDATE Member e SET e.login =:true WHERE e.id = :id")
 //    void updateLoginById (Long id);

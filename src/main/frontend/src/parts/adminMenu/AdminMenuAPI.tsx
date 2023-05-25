@@ -5,7 +5,7 @@ import axios from "axios";
 export function AdminMenuAxios(stage : number) {
     const my = new My();
     axios({
-        url: "/api/game-stage/" + "admin",
+        url: "/api/game-stage",
         method: 'put',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,

@@ -4,7 +4,7 @@ export default function Game2(props : GameProps) {
     return (
         <div className="Game2">
 
-            <p>HERE2</p>
+            <p>HERE2s</p>
         </div>
     );
 }

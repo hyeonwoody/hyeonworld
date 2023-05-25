@@ -1,10 +1,13 @@
 package com.toyproject.hyeonworld.service;
 
+import com.toyproject.hyeonworld.entity.Game;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -27,7 +30,7 @@ public class MemberService {
             }
             return pMember.getId();
         }
-        return null;
+        return -1L;
     }
 
 
@@ -41,9 +44,40 @@ public class MemberService {
             memberRepository.save(pMember);
             return pMember.getId();
         }
-        return null;
+        return -1L;
     }
 
 
+    public Long enterGame(Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        if (member.isPresent()){
+            System.out.println("enter GAME");
+            Member pMember = member.get();
+            pMember.setEnterGame(true);
+            memberRepository.save(pMember);
+            return pMember.getId();
+        }
+        return -1L;
+    }
+
+    public Long exitGame(Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        if (member.isPresent()){
+            System.out.println("exit GAME");
+            Member pMember = member.get();
+            pMember.setEnterGame(false);
+            memberRepository.save(pMember);
+            return pMember.getId();
+        }
+        return -1L;
+    }
+
+    public List<String> getWaitingList() {
+        return memberRepository.findAll().stream()
+                .filter(member -> member.isLogin())
+                .filter(member -> !member.getEnterGame())
+                .map(Member::getName)
+                .collect(Collectors.toList());
+    }
 
 }

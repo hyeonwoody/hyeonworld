@@ -13,15 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 @RestController
-@RequestMapping("/api/game-stage")
+@RequestMapping("/api")
 public class GameStageController extends HttpServlet {
 
     private PartyService partyService;
@@ -41,18 +38,19 @@ public class GameStageController extends HttpServlet {
         return ResponseEntity.ok(true);
     }
 
-    @PutMapping(value = "admin")
+    @PutMapping(value = "/game-stage")
     public ResponseEntity<Integer> setStage(@RequestParam Integer currentStage) {
         System.out.println("rrrrrrrr");
         partyService.setCurrentGameStage(currentStage);
         return ResponseEntity.ok (currentStage);
     }
 
-    @GetMapping(value = "/players", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<SseEmitter> connect() throws InterruptedException {
+    @GetMapping(value = "/game-stage", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public ResponseEntity<SseEmitter> getStage() throws InterruptedException {
         /*
         Singleprocess
          */
+        System.out.println("Players");
         SseEmitter emitter = new SseEmitter(SSE_SESSION_TIMEOUT);
         sseEmitters.add(emitter);
         sseEmitters.send ("currentGameStage");

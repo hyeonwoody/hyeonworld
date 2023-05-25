@@ -1,21 +1,21 @@
 import {My} from "../../configuration/web/WebConfig";
 import {type} from "@testing-library/user-event/dist/type";
 
-export function WaitingAPI(getStage: (stage: number) => void) {
+export function WaitingAPI(getList: (stage: string[]) => void, memberId: number) {
     const my = new My();
     let eventSource : EventSource;
 
-    eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+"/api/game-stage/players");
+    eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+`/member/waiting-list?param=${memberId}`);
     eventSource.addEventListener('connect', (e)=>{
         const {data: receivedConnectData} = e;
         console.log('connect event data101 : ',receivedConnectData);
         //getStage(receivedConnectData);
     });
-    eventSource.addEventListener('currentGameStage', async (e)=>{
+    eventSource.addEventListener('gameEnterWaitingList', async (e)=>{
         const {data: receivedData} = e;
         const jsonObject = await JSON.parse(receivedData);
 
-        getStage(jsonObject.currentStage);
+        getList(jsonObject.currentStage);
     });
 
     function closeConnection(){
@@ -28,15 +28,14 @@ export function WaitingAPI(getStage: (stage: number) => void) {
     }
 };
 
-export function StageAPI(getStage: (stage: number) => void) {
+export function GameAPI(getStage: (stage: number) => void) {
     const my = new My();
     let eventSource : EventSource;
 
-        eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+"/api/game-stage/players");
+        eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+"/api/game-stage");
         eventSource.addEventListener('connect', (e)=>{
             const {data: receivedConnectData} = e;
             console.log('connect event data101 : ',receivedConnectData);
-            //getStage(receivedConnectData);
         });
         eventSource.addEventListener('currentGameStage', async (e)=>{
             const {data: receivedData} = e;

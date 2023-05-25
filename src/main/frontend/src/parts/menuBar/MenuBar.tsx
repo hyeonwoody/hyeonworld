@@ -4,7 +4,7 @@ import {LogoutAxios} from "../../pages/Home/HomeAPI";
 interface MenuBarProps{
     moveBack: ()=> void;
     rootCall: (data : boolean, loginId: number, loginName :string) => void;
-    loginId: number;
+    memberId: number;
     loginName: string;
 }
 
@@ -20,10 +20,10 @@ function MenuBar (props : MenuBarProps){
         function checkName(name: string) {
 
             // document.location.href = '/';
-            props.rootCall(false, props.loginId, props.loginName);
+            props.rootCall(false, props.memberId, props.loginName);
         }
 
-        LogoutAxios(checkName, props.loginId);
+        LogoutAxios(checkName, props.memberId);
     }
 
     const onClickScore = (event : React.MouseEvent<HTMLButtonElement>) => {

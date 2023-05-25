@@ -9,7 +9,7 @@ import Game2 from "./2/Game2Main";
 import Game3 from "./3/Game3Main";
 import Game4 from "./4/Game4Main";
 import Game5 from "./5/Game5Main";
-import {StageAPI} from "./StageAPI";
+import {GameAPI, WaitingAPI} from "./GameAPI";
 
 export const Games = {
     "진실혹은거짓": Game0,
@@ -28,45 +28,54 @@ type stateData = {
 
 function Game(props : GameProps) {
     // IP주소 변수 선언
-    const [game, setGame] = useState<number>(props.id);
+    const [game, setGame] = useState<number>(props.gameId);
     const [stage, setStage] = useState<number> (props.stage);
+    const [waitingList, setList] = useState <string[]> ();
 
-    console.log("Game : "+props.id);
 
-    if (game === props.id)
-        console.log("!true");
-    else {
-        console.log("!false");
-    }
+
+    console.log("Game : "+props.gameId);
+
 
 
     useEffect(()=>{
-        setGame (props.id);
+        setGame (props.gameId);
+
         function getStage (currentStage : number){
             console.log (currentStage);
+            if (currentStage != 1)
+                waitingApi.closeConnection();
             setStage(currentStage);
         }
+
+        function getWaitingList (list : string[]){
+            setList(list);
+        }
+
         console.log ("aa");
-        const stageApi = StageAPI (getStage);
+            const stageApi = GameAPI (getStage);
+            const waitingApi = WaitingAPI (getWaitingList, props.memberId);
         return () => {
             stageApi.closeConnection();
+            waitingApi.closeConnection();
         }
     },[])
 
     return (
         <div className="Game">
             <ul className="p-2 space-y-1"/>
+            <p>{}</p>
             <div className="flex mx-2 items-center justify-center rounded-xl group sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
-            {Object.entries(Games).map(([gameName, gameComponent], index) =>{
+
+                {Object.entries(Games).map(([gameName, gameComponent], index) =>{
                 if (game == index){
                     const Component = gameComponent;
-                    console.log("다왔");
-                    return <Component id={props.id} stage={stage} key={index}/>;
+                    return <Component memberId={props.memberId} gameId={props.gameId} stage={stage} key={index}/>;
                 }
                 return null;
             })}
             </div>
-            <p>{stage}</p>
+
         </div>
     )
 }

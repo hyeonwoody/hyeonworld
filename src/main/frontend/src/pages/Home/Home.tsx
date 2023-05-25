@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {DisplayGameAxios, CurrentGameAxios} from "./HomeAPI";
+import {DisplayGameAxios, CurrentGameAxios, EnterGameAxios, ExitGameAxios} from "./HomeAPI";
 import './Home.css';
 
 
@@ -11,7 +11,7 @@ import {Special} from "../../configuration/special/SpecialConfig";
 
 interface HomeProps{
     rootCall: (data : boolean, loginId: number, loginName :string) => void;
-    id: number;
+    memberId: number;
     name: string;
 }
 
@@ -37,7 +37,11 @@ function Home (props : HomeProps){
         }
 
         DisplayGameAxios (getGameList);
-    },[])
+
+        if (enterGameId == currentGameId)
+            onEnterGame();
+
+    },[enterGameId])
 
 
     const openGame = (id : number) => {
@@ -47,7 +51,6 @@ function Home (props : HomeProps){
     const getCurrentGame = () => {
         CurrentGameAxios(setCurrentGame);
     }
-
 
     const onClickGame = (event : React.MouseEvent<HTMLLIElement>) => {
         const target = event.target as HTMLLIElement;
@@ -59,17 +62,22 @@ function Home (props : HomeProps){
     }
 
     const onClickBack = () => {
+        ExitGameAxios(props.memberId);
         setEnterGame(-1);
     }
 
+    const onEnterGame = () => {
+        console.log("ENTER")
+        EnterGameAxios(props.memberId);
+    }
 
     // @ts-ignore
     return (
         <div className="Home">
-            <MenuBar moveBack={onClickBack} rootCall={props.rootCall} loginId={props.id} loginName={props.name}/>
+            <MenuBar moveBack={onClickBack} rootCall={props.rootCall} memberId={props.memberId} loginName={props.name}/>
             <ul className="p-2 space-y-1"/>
             <div className="flex mx-2 items-center justify-center rounded-xl party sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
-                {enterGameId == currentGameId ? <Game id={currentGameId} stage={0}/> : <ul className="cards">
+                {enterGameId == currentGameId ? <Game memberId={props.memberId} gameId={currentGameId} stage={0}/> : <ul className="cards">
                     {gameList.map((game: Game, i: number) => {
                         return <li id={(game.id).toString()} className={"card"+i%7} key={i} onClick={onClickGame}>
                             <h3 className="card-title">{game.name}</h3>
@@ -79,7 +87,7 @@ function Home (props : HomeProps){
                 </ul>}
 
             </div>
-            {special.adminId === props.id &&  <AdminMenu gameList={gameList}/>}
+            {special.adminId === props.memberId &&  <AdminMenu gameList={gameList}/>}
         </div>
     );
 }

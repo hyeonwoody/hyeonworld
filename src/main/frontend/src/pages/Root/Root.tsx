@@ -10,13 +10,8 @@ function Root(){
     const [memberId, setMemberId] = useState(-1);
 
     useEffect(()=>{
-        // if (false){
-        //
-        // }
-        // else {
-        //     setIsLogin(true);
-        // }
     },[]);
+
     const handleLogin = useCallback ((data : boolean, loginId: number, loginName :string)=>{
         setIsLogin(data);
         setMemberName(loginName);
@@ -26,7 +21,7 @@ function Root(){
     return (
         <div className="Root">
             <div className="h-screen from-sky-100 via-sky-300 to-blue-200 bg-gradient-to-br">
-                {isLogin? <Home rootCall={handleLogin} id={memberId} name={memberName} />:
+                {isLogin? <Home rootCall={handleLogin} memberId={memberId} name={memberName} />:
                             <Login rootCall={handleLogin}/>}
             </div>
         </div>

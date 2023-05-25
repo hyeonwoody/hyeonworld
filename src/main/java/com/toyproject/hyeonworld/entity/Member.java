@@ -1,10 +1,6 @@
 package com.toyproject.hyeonworld.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,7 +8,7 @@ import lombok.Data;
 @Data
 @Table (name="member")
 public class Member {
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id", unique = true, nullable = false)
     private Long id;
@@ -38,11 +34,16 @@ public class Member {
     @Column(name="nick_name_proposition", nullable = false)
     private Boolean nickNameProposition;
 
-
+    @Column(name="enter_game", nullable = false)
+    private Boolean enterGame;
 
     private long score;
 
     public Member(){
         this.login = false;
+    }
+
+    public boolean isLogin() {
+        return this.login;
     }
 }

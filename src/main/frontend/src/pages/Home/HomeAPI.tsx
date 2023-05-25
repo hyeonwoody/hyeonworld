@@ -1,7 +1,41 @@
 import axios from 'axios';
 import {My} from '../../configuration/web/WebConfig';
+import {list} from "postcss";
 
 const my = new My();
+
+export function EnterGameAxios(memberId: number) {
+    axios({
+        url: "member/" + "enter-game",
+        method: 'post',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+        params: {
+            memberId: memberId,
+        }
+    }).then(function (response) {
+        console.log("결과");
+        console.log("ff :"+response.data);
+    });
+};
+
+export function ExitGameAxios(memberId: number) {
+    axios({
+        url: "member/" + "exit-game",
+        method: 'post',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+        params: {
+            memberId: memberId,
+        }
+    }).then(function (response) {
+        console.log("결과");
+        console.log("ff :"+response.data);
+    });
+};
+
+
+
 
 export function CurrentGameAxios(callback: (data: any) => void) {
     axios({

@@ -27,14 +27,6 @@ function App() {
   return (
 
       <div className="App">
-        {/*<header className="App-header">*/}
-        {/*  이 기기의 IP주소는 {ip}입니다.*/}
-        {/*    <button class="btn btn-green mr-4">Button</button>*/}
-        {/*    <button className="btn btn-blue">Button</button>*/}
-        {/*    <button className="py-2 px-4 rounded-lg shadow-md text-white bg-green-500 hover:bg-green-700">*/}
-        {/*        Hello, Tailwind CSS!*/}
-        {/*    </button>*/}
-        {/*    <div className="bg-blue-500"> Tailwind Css 적용 테스트 </div>*/}
         <div className={"container"}>
             <BrowserRouter>
                 <Routes>
