@@ -17,7 +17,6 @@ function Login (props : LoginProps){
     }
 
     const onClickLogin = (event : React.MouseEvent<HTMLButtonElement>) => {
-        console.log ("FFF");
         event.preventDefault();
         function checkSuccess(id : number) {
             console.log("dsdsdsd"+id);
@@ -37,7 +36,7 @@ function Login (props : LoginProps){
     }
 
     return (
-        <body>
+        <div>
             <div className="Login">
                 <div className="h-screen">
                     <ul className="p-20 space-y-0"/>
@@ -51,7 +50,7 @@ function Login (props : LoginProps){
                     </div>
                 </div>
             </div>
-        </body>
+        </div>
 
     );
 }

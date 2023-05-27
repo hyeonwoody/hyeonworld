@@ -4,19 +4,21 @@ import com.toyproject.hyeonworld.service.MemberService;
 import com.toyproject.hyeonworld.service.PartyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Component
 @Slf4j //로깅이 유용
 public class SseEmitters {
-    private final List<SseEmitter> emitterList = new CopyOnWriteArrayList<>();
+    private final List<CustomSseEmitter> emitterList = new CopyOnWriteArrayList<>();
     private final PartyService partyService;
     private final MemberService memberService;
+
 
     public SseEmitters (PartyService partyService, MemberService memberService){
         this.partyService = partyService;
@@ -25,7 +27,8 @@ public class SseEmitters {
 
     static int currentStageCnt = 0;
     static int waitingListCnt = 0;
-    public SseEmitter add(SseEmitter emitter){
+    static int prevWaitingListSize = 0;
+    public CustomSseEmitter add(CustomSseEmitter emitter){
         this.emitterList.add(emitter);
 
         emitter.onCompletion(()->{
@@ -43,16 +46,16 @@ public class SseEmitters {
     public void send (String eventName){
         DataMap dataMap = new DataMap();
         System.out.println("The SIZE : "+ this.emitterList.size());
-        System.out.println("The TTTT : "+ this.emitterList.get(2));
         switch (eventName){
             case "currentGameStage" :
-                Integer value = partyService.getCurrentGameStageQuery();
-                send (eventName, dataMap.mapOf("cnt", currentStageCnt++, "currentStage", value));
+                System.out.println("qk");
+                Integer value = partyService.getCurrentGameStage();
+                send (eventName, dataMap.mapOf("stage", value));
                 break;
-            case "initWaitingList" :
+            case "WaitingList" :
+                //Integer partyType = partyService.getCurrentPartyType();
                 List<String> waitingList = memberService.getWaitingList();
-                send (eventName, dataMap.mapOf("cnt", waitingListCnt++, "list", waitingList));
-                //remove("initWaitList");
+                send (eventName, dataMap.mapOf("list", waitingList));
                 break;
             default :
                 break;
@@ -60,26 +63,21 @@ public class SseEmitters {
     }
 
     public void send (String eventName, Map<String, Integer> data ){
-        emitterList.forEach( emitter->{
-            try {
-                emitter.send(SseEmitter.event()
-                        .name(eventName)
-                        .data(data)
-                );
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
+        ExecutorService executorService = Executors.newFixedThreadPool(emitterList.size());
 
-    public void remove(String eventName) {
-//        emitterList.forEach ( emitter->{
-//            try {
-//                emitter.send(SseEmitter.event()
-//                        .id())
-//            }
-//        })
-        if (!this.emitterList.isEmpty())
-            this.emitterList.clear();
+        emitterList.forEach( emitter->{
+            executorService.submit(()->{
+                try {
+                    emitter.send(CustomSseEmitter.event()
+                            .name(eventName)
+                            .data(data)
+                    );
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        });
+
+        executorService.shutdown();
     }
 }

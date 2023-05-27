@@ -32,6 +32,7 @@ public class PartyController {
         party.setPartyType(partyType);
         party.setPersons(persons);
         party.setCurrentGame(-1);
+        party.setCurrentGameStage(0);
 
         partyService.init(party);
 

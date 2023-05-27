@@ -22,7 +22,7 @@ public class GameController {
     }
 
     @GetMapping("/playable")
-    public ResponseEntity<List<Game>> displayGame (HttpServletRequest request){
+    public ResponseEntity<List<Game>> displayGame (){
 
         List<Game> gameList = gameService.displayGame();
 

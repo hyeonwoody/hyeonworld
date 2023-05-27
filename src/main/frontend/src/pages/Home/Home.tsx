@@ -35,7 +35,7 @@ function Home (props : HomeProps){
         function getGameList (data : Game[]){
             setGameList(data);
         }
-
+        console.log("FFFF")
         DisplayGameAxios (getGameList);
 
         if (enterGameId == currentGameId)
@@ -48,17 +48,14 @@ function Home (props : HomeProps){
         setEnterGame(id);
     }
 
-    const getCurrentGame = () => {
-        CurrentGameAxios(setCurrentGame);
-    }
-
     const onClickGame = (event : React.MouseEvent<HTMLLIElement>) => {
         const target = event.target as HTMLLIElement;
         const value : any = target.getAttribute("id");
         console.log("aaaaa"+currentGameId);
         console.log("Bbbbb"+value);
+        CurrentGameAxios(setCurrentGame);
         openGame(value);
-        getCurrentGame();
+
     }
 
     const onClickBack = () => {
@@ -74,6 +71,7 @@ function Home (props : HomeProps){
     // @ts-ignore
     return (
         <div className="Home">
+            <p>{props.name}</p>
             <MenuBar moveBack={onClickBack} rootCall={props.rootCall} memberId={props.memberId} loginName={props.name}/>
             <ul className="p-2 space-y-1"/>
             <div className="flex mx-2 items-center justify-center rounded-xl party sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">

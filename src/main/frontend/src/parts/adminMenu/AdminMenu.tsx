@@ -39,7 +39,7 @@ function AdminMenu (props: AdminMenuProps){
         setInit(!initModal);
     }
     const onOpen = () => {
-        console.log(props.gameList.length);
+        console.log("GAME LEngth : " + props.gameList.length);
         setOpen(!openModal);
     }
 

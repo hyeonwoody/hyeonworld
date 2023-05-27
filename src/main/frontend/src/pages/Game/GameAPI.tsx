@@ -4,22 +4,22 @@ import {type} from "@testing-library/user-event/dist/type";
 export function WaitingAPI(getList: (stage: string[]) => void, memberId: number) {
     const my = new My();
     let eventSource : EventSource;
-
-    eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+`/member/waiting-list?param=${memberId}`);
+    console.log("WAAAAAA")
+    eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+`/member/waiting-list?memberId=${memberId}`);
     eventSource.addEventListener('connect', (e)=>{
         const {data: receivedConnectData} = e;
         console.log('connect event data101 : ',receivedConnectData);
         //getStage(receivedConnectData);
     });
-    eventSource.addEventListener('gameEnterWaitingList', async (e)=>{
+    eventSource.addEventListener('WaitingList', async (e)=>{
+        console.log("WaitingLIST : LISTENER");
         const {data: receivedData} = e;
         const jsonObject = await JSON.parse(receivedData);
-
-        getList(jsonObject.currentStage);
+        getList(jsonObject.list);
     });
 
     function closeConnection(){
-        console.log("Close Event Source");
+        console.log("Close Event Source Waiting");
         eventSource.close();
     }
 
@@ -28,24 +28,24 @@ export function WaitingAPI(getList: (stage: string[]) => void, memberId: number)
     }
 };
 
-export function GameAPI(getStage: (stage: number) => void) {
+export function StageAPI(getStage: (stage: number) => void, memberId: number) {
     const my = new My();
     let eventSource : EventSource;
 
-        eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+"/api/game-stage");
+        eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+`/api/game-stage?memberId=${memberId}`);
         eventSource.addEventListener('connect', (e)=>{
             const {data: receivedConnectData} = e;
             console.log('connect event data101 : ',receivedConnectData);
         });
         eventSource.addEventListener('currentGameStage', async (e)=>{
+            console.log("currentGameStage : LISTENER");
             const {data: receivedData} = e;
             const jsonObject = await JSON.parse(receivedData);
-            console.log("음ㅁ다"+jsonObject.currentStage);
-            getStage(jsonObject.currentStage);
+            getStage(jsonObject.stage);
         });
 
     function closeConnection(){
-        console.log("Close Event Source");
+        console.log("Close Event Source STAGE");
         eventSource.close();
     }
 

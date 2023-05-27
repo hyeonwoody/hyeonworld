@@ -34,8 +34,8 @@ public class Member {
     @Column(name="nick_name_proposition", nullable = false)
     private Boolean nickNameProposition;
 
-    @Column(name="enter_game", nullable = false)
-    private Boolean enterGame;
+    @Column(name="in_game", nullable = false)
+    private Boolean inGame;
 
     private long score;
 
@@ -45,5 +45,8 @@ public class Member {
 
     public boolean isLogin() {
         return this.login;
+    }
+    public boolean isInGame() {
+        return this.inGame;
     }
 }

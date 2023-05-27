@@ -1,6 +1,7 @@
 package com.toyproject.hyeonworld.service;
 
 import com.toyproject.hyeonworld.entity.Game;
+import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Party;
 import com.toyproject.hyeonworld.repository.PartyRepository;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PartyService {
@@ -47,7 +49,17 @@ public class PartyService {
         return -1;
     }
 
+    public Integer getCurrentGameStage(){
+        Optional <Party> recentParty = partyRepository.findFirstByOrderByCreatedAtDesc();
+        System.out.println("STAGE : "+ recentParty.get().getCurrentGameStage());
+        return recentParty.get().getCurrentGameStage();
+    }
+
     public Integer getCurrentGameStageQuery() {
         return partyRepository.getCurrentGameStage();
+    }
+
+    public Integer getCurrentPartyType (){
+        return partyRepository.getCurrentPartyType();
     }
 }

@@ -1,9 +1,11 @@
 package com.toyproject.hyeonworld.controller.sse.gameStage;
 
+import com.toyproject.hyeonworld.controller.sse.CustomSseEmitter;
 import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 import com.toyproject.hyeonworld.service.PartyService;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.Part;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
@@ -22,7 +24,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class GameStageController extends HttpServlet {
 
     private PartyService partyService;
-    private static final long SSE_SESSION_TIMEOUT = 1000L;
+
+    private static final long SSE_SESSION_TIMEOUT = 1500L;
+
     private final SseEmitters sseEmitters;
     static AtomicInteger counter;
 
@@ -46,50 +50,15 @@ public class GameStageController extends HttpServlet {
     }
 
     @GetMapping(value = "/game-stage", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<SseEmitter> getStage() throws InterruptedException {
+    public ResponseEntity<SseEmitter> getStage(@RequestParam Long memberId) throws InterruptedException {
         /*
         Singleprocess
          */
         System.out.println("Players");
-        SseEmitter emitter = new SseEmitter(SSE_SESSION_TIMEOUT);
+        CustomSseEmitter emitter = new CustomSseEmitter (SSE_SESSION_TIMEOUT);
         sseEmitters.add(emitter);
         sseEmitters.send ("currentGameStage");
 
-        /*
-        MultiThread
-         */
-//        ExecutorService executor = Executors.newFixedThreadPool(20);
-//        SseEmitter emitter = new SseEmitter(SSE_SESSION_TIMEOUT);
-//        sseEmitters.add(emitter);
-//        sseEmitters.send ("currentGameStage");
-//
-//        StopWatch main = new StopWatch();
-//        main.start();
-//        for (int i = 0; i < 20; ++i){
-//            executor.execute(()->{
-//                int cnt = counter.addAndGet(1);
-//                sseEmitters.add(emitter);
-//                try{
-//                    emitter.send(SseEmitter.event()
-//                            .name("connect")
-//                            .data(cnt));
-//
-////                    sseEmitters.send("currentGameStage");
-//                    System.out.println("보냅");
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                } finally {
-//                    System.out.println("emitter.complete()");
-//                    emitter.complete();
-//                }
-//            });
-//        }
-//        executor.shutdown();
-//        executor.awaitTermination(20, TimeUnit.SECONDS);
-//        main.stop();
-
-        // Start an asynchronous task to send SSE events
-        // You can customize this task based on your requirements
         return ResponseEntity.ok(emitter);
     }
 }

@@ -9,15 +9,16 @@ import Game2 from "./2/Game2Main";
 import Game3 from "./3/Game3Main";
 import Game4 from "./4/Game4Main";
 import Game5 from "./5/Game5Main";
-import {GameAPI, WaitingAPI} from "./GameAPI";
+import {StageAPI, WaitingAPI} from "./GameAPI";
+import {wait} from "@testing-library/user-event/dist/utils";
 
 export const Games = {
-    "진실혹은거짓": Game0,
-    "무작위세단어": Game1,
-    "소수결게임": Game2,
+    "진실 혹은 거짓": Game0,
+    "무작위 세 단어": Game1,
+    "소수결 게임": Game2,
     "퀴즈퀴즈": Game3,
-    "떡먹은현우찾기": Game4,
-    "선택지게임": Game5,
+    "떡 먹은 현우 찾기": Game4,
+    "선택지 게임": Game5,
 }
 
 type stateData = {
@@ -30,51 +31,63 @@ function Game(props : GameProps) {
     // IP주소 변수 선언
     const [game, setGame] = useState<number>(props.gameId);
     const [stage, setStage] = useState<number> (props.stage);
-    const [waitingList, setList] = useState <string[]> ();
-
-
-
-    console.log("Game : "+props.gameId);
-
-
+    const [waitingList, setList] = useState <string[]> ([]);
 
     useEffect(()=>{
         setGame (props.gameId);
 
         function getStage (currentStage : number){
-            console.log (currentStage);
-            if (currentStage != 1)
-                waitingApi.closeConnection();
+            console.log ("current stage : "+currentStage);
+
             setStage(currentStage);
         }
 
         function getWaitingList (list : string[]){
-            setList(list);
+            console.log("Game : "+list);
+            if (list.length != waitingList.length)
+                setList(list);
+            console.log("Game1 : "+waitingList);
+
         }
 
         console.log ("aa");
-            const stageApi = GameAPI (getStage);
-            const waitingApi = WaitingAPI (getWaitingList, props.memberId);
+        const waitingApi = WaitingAPI (getWaitingList, props.memberId);
+        const stageApi = StageAPI (getStage, props.memberId);
+
         return () => {
             stageApi.closeConnection();
             waitingApi.closeConnection();
         }
-    },[])
+    },[waitingList])
 
     return (
         <div className="Game">
             <ul className="p-2 space-y-1"/>
-            <p>{}</p>
-            <div className="flex mx-2 items-center justify-center rounded-xl group sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
+            <div className="flex mx-2 items-center justify-center rounded-xl group sm:flex space-x-2">
 
                 {Object.entries(Games).map(([gameName, gameComponent], index) =>{
                 if (game == index){
                     const Component = gameComponent;
-                    return <Component memberId={props.memberId} gameId={props.gameId} stage={stage} key={index}/>;
+                    return (
+                        <div>
+                            <p>{gameName}</p>
+                            <Component memberId={props.memberId} gameId={props.gameId} stage={stage} key={index}/>
+                        </div>
+
+                    );
                 }
-                return null;
             })}
+
             </div>
+            {stage == 1 && <div className={"waitngList"}>
+                {
+                    waitingList.map((memberName :string)=>{
+                        return (
+                            <p>{memberName} 님</p>
+                        );
+                    })  }
+                <p>기다리고 있습니다.</p>
+            </div>}
 
         </div>
     )

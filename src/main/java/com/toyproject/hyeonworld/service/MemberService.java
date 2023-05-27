@@ -1,6 +1,5 @@
 package com.toyproject.hyeonworld.service;
 
-import com.toyproject.hyeonworld.entity.Game;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -53,7 +52,7 @@ public class MemberService {
         if (member.isPresent()){
             System.out.println("enter GAME");
             Member pMember = member.get();
-            pMember.setEnterGame(true);
+            pMember.setInGame(true);
             memberRepository.save(pMember);
             return pMember.getId();
         }
@@ -65,17 +64,32 @@ public class MemberService {
         if (member.isPresent()){
             System.out.println("exit GAME");
             Member pMember = member.get();
-            pMember.setEnterGame(false);
+            pMember.setInGame(false);
             memberRepository.save(pMember);
             return pMember.getId();
         }
         return -1L;
     }
 
+    public List<String> getAllList() {
+        return memberRepository.findAll().stream()
+                .map(Member::getName)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getWaitingListWithPartyType(Integer partyType) {
+        return memberRepository.findAll().stream()
+                .filter(member -> member.getPartyType().intValue() == partyType || member.getPartyType().intValue() == 0)
+                .filter(member -> member.isLogin())
+                .filter(member -> !member.isInGame())
+                .map(Member::getName)
+                .collect(Collectors.toList());
+    }
+
     public List<String> getWaitingList() {
         return memberRepository.findAll().stream()
                 .filter(member -> member.isLogin())
-                .filter(member -> !member.getEnterGame())
+                .filter(member -> !member.isInGame())
                 .map(Member::getName)
                 .collect(Collectors.toList());
     }

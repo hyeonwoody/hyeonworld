@@ -15,7 +15,7 @@ export function EnterGameAxios(memberId: number) {
         }
     }).then(function (response) {
         console.log("결과");
-        console.log("ff :"+response.data);
+        console.log("ENTER :"+response.data);
     });
 };
 
@@ -30,7 +30,7 @@ export function ExitGameAxios(memberId: number) {
         }
     }).then(function (response) {
         console.log("결과");
-        console.log("ff :"+response.data);
+        console.log("EXIt :"+response.data);
     });
 };
 
@@ -49,12 +49,14 @@ export function CurrentGameAxios(callback: (data: any) => void) {
 };
 
 export function DisplayGameAxios(callback: (data: any) => void) {
+    console.log("Display");
     axios({
         url: "game/" + "playable",
         method: 'get',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
     }).then(function (response) {
+        console.log("THEN")
         callback (response.data);
     });
 };

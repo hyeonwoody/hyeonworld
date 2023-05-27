@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.controller;
 
+import com.toyproject.hyeonworld.controller.sse.CustomSseEmitter;
 import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 import com.toyproject.hyeonworld.service.MemberService;
 import org.springframework.http.MediaType;
@@ -14,7 +15,9 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private static final long SSE_SESSION_TIMEOUT = 1000L;
+
+    private static final long SSE_SESSION_TIMEOUT = 3500L;
+
     private final SseEmitters sseEmitters;
     public MemberController(MemberService memberService, SseEmitters sseEmitters) {
         this.memberService = memberService;
@@ -47,13 +50,11 @@ public class MemberController {
     }
 
     @GetMapping(value = "/waiting-list", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<SseEmitter> waitingList (){
+    public ResponseEntity<CustomSseEmitter> waitingList (@RequestParam Long memberId){
         System.out.println("Waiting List ");
-        SseEmitter emitter = new SseEmitter(SSE_SESSION_TIMEOUT);
+        CustomSseEmitter emitter = new CustomSseEmitter (SSE_SESSION_TIMEOUT);
         sseEmitters.add(emitter);
-        sseEmitters.send ("init");
-        sseEmitters.add(emitter);
-        sseEmitters.send ("additionalList");
+        sseEmitters.send ("WaitingList");
         return ResponseEntity.ok(emitter);
     }
 }
