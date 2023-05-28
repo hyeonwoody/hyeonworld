@@ -42,12 +42,18 @@ function Game(props : GameProps) {
             setStage(currentStage);
         }
 
-        function getWaitingList (list : string[]){
+        function getWaitingList (list : any){
             console.log("Game : "+list);
-            if (list.length != waitingList.length)
-                setList(list);
-            console.log("Game1 : "+waitingList);
+            if (typeof list === "string"){
+                const removedList: string[] = waitingList.filter((item) => item !== list);
+                setList(removedList);
+            }
 
+            else {
+                setList(list);
+            }
+            if (stage != 1)
+                stageApi.closeConnection();
         }
 
         console.log ("aa");
@@ -73,7 +79,6 @@ function Game(props : GameProps) {
                             <p>{gameName}</p>
                             <Component memberId={props.memberId} gameId={props.gameId} stage={stage} key={index}/>
                         </div>
-
                     );
                 }
             })}

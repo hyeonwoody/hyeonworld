@@ -15,7 +15,14 @@ export function WaitingAPI(getList: (stage: string[]) => void, memberId: number)
         console.log("WaitingLIST : LISTENER");
         const {data: receivedData} = e;
         const jsonObject = await JSON.parse(receivedData);
-        getList(jsonObject.list);
+        getList(jsonObject.waitingList);
+    });
+
+    eventSource.addEventListener('additionalList', async (e)=>{
+        console.log("WaitingLIST : LISTENER");
+        const {data: receivedData} = e;
+        const jsonObject = await JSON.parse(receivedData);
+        getList(jsonObject.additionalList);
     });
 
     function closeConnection(){
@@ -41,7 +48,8 @@ export function StageAPI(getStage: (stage: number) => void, memberId: number) {
             console.log("currentGameStage : LISTENER");
             const {data: receivedData} = e;
             const jsonObject = await JSON.parse(receivedData);
-            getStage(jsonObject.stage);
+            var jsonString = JSON.stringify(jsonObject, null, 2);
+            getStage(jsonObject.gameStage);
         });
 
     function closeConnection(){

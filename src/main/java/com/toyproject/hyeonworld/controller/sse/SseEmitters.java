@@ -11,56 +11,50 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Slf4j //로깅이 유용
 public class SseEmitters {
-    private final List<CustomSseEmitter> emitterList = new CopyOnWriteArrayList<>();
-    private final PartyService partyService;
-    private final MemberService memberService;
 
+    public enum DataType {
+        CURRENT_GAME_STAGE(0),
+        WAITING_LIST(1);
 
-    public SseEmitters (PartyService partyService, MemberService memberService){
-        this.partyService = partyService;
-        this.memberService = memberService;
+        private final int value;
+
+        DataType (int value){
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
-    static int currentStageCnt = 0;
-    static int waitingListCnt = 0;
-    static int prevWaitingListSize = 0;
+    private List<CustomSseEmitter> emitterList = new CopyOnWriteArrayList<>();
+
+    static AtomicInteger counter;
+
+    public SseEmitters (){
+        this.counter = new AtomicInteger(0);
+    }
+
     public CustomSseEmitter add(CustomSseEmitter emitter){
         this.emitterList.add(emitter);
 
         emitter.onCompletion(()->{
             System.out.println("삭제된다");
-            this.emitterList.remove(emitter);
+            this.emitterList.remove(emitter); //Emitter 객체 다시 생성 되기 때문에 자기 자신 지우기.
         });
         emitter.onTimeout(()->{
-            System.out.println("타임아웃");
-            emitter.complete();
+            emitter.complete(); //타임아웃 발생 시, 브라우저에서 재연결 요청 & 새로운 Emitter 객체 다시 생성.
         });
 
         return emitter;
     }
 
-    public void send (String eventName){
-        DataMap dataMap = new DataMap();
-        System.out.println("The SIZE : "+ this.emitterList.size());
-        switch (eventName){
-            case "currentGameStage" :
-                System.out.println("qk");
-                Integer value = partyService.getCurrentGameStage();
-                send (eventName, dataMap.mapOf("stage", value));
-                break;
-            case "WaitingList" :
-                //Integer partyType = partyService.getCurrentPartyType();
-                List<String> waitingList = memberService.getWaitingList();
-                send (eventName, dataMap.mapOf("list", waitingList));
-                break;
-            default :
-                break;
-        }
-    }
+    public void send (String eventName){}
 
     public void send (String eventName, Map<String, Integer> data ){
         ExecutorService executorService = Executors.newFixedThreadPool(emitterList.size());
@@ -68,7 +62,7 @@ public class SseEmitters {
         emitterList.forEach( emitter->{
             executorService.submit(()->{
                 try {
-                    System.out.println("출력"+emitter);
+                    System.out.println("출력"+eventName);
                     emitter.send(CustomSseEmitter.event()
                             .name(eventName)
                             .data(data)

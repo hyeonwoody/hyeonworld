@@ -46,29 +46,32 @@ public class MemberService {
         return -1L;
     }
 
-
-    public Long enterGame(Long memberId) {
+    public String enterGame_String(Long memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
-        if (member.isPresent()){
-            System.out.println("enter GAME");
-            Member pMember = member.get();
+        return member.map (pMember -> {
+            pMember.setInGame(true);
+            memberRepository.save(pMember);
+            return pMember.getName();
+        }).orElse("");
+    }
+
+    public Long enterGame_Long(Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        return member.map (pMember -> {
             pMember.setInGame(true);
             memberRepository.save(pMember);
             return pMember.getId();
-        }
-        return -1L;
+        }).orElse(-1L);
     }
 
     public Long exitGame(Long memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
-        if (member.isPresent()){
-            System.out.println("exit GAME");
-            Member pMember = member.get();
+
+        return member.map (pMember -> {
             pMember.setInGame(false);
             memberRepository.save(pMember);
             return pMember.getId();
-        }
-        return -1L;
+        }).orElse(-1L);
     }
 
     public List<String> getAllList() {

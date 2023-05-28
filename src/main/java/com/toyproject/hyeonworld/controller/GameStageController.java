@@ -1,21 +1,21 @@
-package com.toyproject.hyeonworld.controller.sse.gameStage;
+package com.toyproject.hyeonworld.controller;
 
 import com.toyproject.hyeonworld.controller.sse.CustomSseEmitter;
+import com.toyproject.hyeonworld.controller.sse.DataMap;
 import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 import com.toyproject.hyeonworld.service.PartyService;
+import com.toyproject.hyeonworld.service.ThreadService;
 import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.Part;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.StopWatch;
+
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -24,29 +24,46 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class GameStageController extends HttpServlet {
 
     private PartyService partyService;
+    private final ThreadService threadService;
 
     private static final long SSE_SESSION_TIMEOUT = 1500L;
 
-    private final SseEmitters sseEmitters;
-    static AtomicInteger counter;
 
-    public GameStageController(SseEmitters sseEmitters, PartyService partyService) {
-        this.sseEmitters = sseEmitters;
-        this.counter = new AtomicInteger(0);
+
+
+    private class GameStageEmitters extends SseEmitters {
+        @Override
+        public void send (String eventName){
+            DataMap dataMap = new DataMap();
+            Integer currentGameStage = partyService.getCurrentGameStageQuery();
+            send (eventName, dataMap.mapOf("gameStage", currentGameStage));
+        }
+    }
+
+    private final GameStageEmitters sseEmitters = new GameStageEmitters();
+
+    public GameStageController(PartyService partyService, ThreadService threadService) {
+        this.threadService = threadService;
         this.partyService = partyService;
     }
 
     @GetMapping(value = "/empty")
     public ResponseEntity<Boolean> empty() {
-
         return ResponseEntity.ok(true);
     }
 
     @PutMapping(value = "/game-stage")
     public ResponseEntity<Integer> setStage(@RequestParam Integer currentStage) {
         System.out.println("rrrrrrrr");
-        partyService.setCurrentGameStage(currentStage);
-        return ResponseEntity.ok (currentStage);
+
+        Integer ret = partyService.setCurrentGameStage(currentStage);
+
+        threadService.executorService.execute(()->{
+            sseEmitters.send("currentGameStage");
+        });
+
+        return ResponseEntity.ok (ret);
+
     }
 
     @GetMapping(value = "/game-stage", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -55,9 +72,8 @@ public class GameStageController extends HttpServlet {
         Singleprocess
          */
         System.out.println("Players");
-        CustomSseEmitter emitter = new CustomSseEmitter (SSE_SESSION_TIMEOUT);
+        CustomSseEmitter emitter = new CustomSseEmitter ();
         sseEmitters.add(emitter);
-        sseEmitters.send ("currentGameStage");
 
         return ResponseEntity.ok(emitter);
     }
