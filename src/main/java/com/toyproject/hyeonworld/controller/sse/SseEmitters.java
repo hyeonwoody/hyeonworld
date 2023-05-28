@@ -68,6 +68,7 @@ public class SseEmitters {
         emitterList.forEach( emitter->{
             executorService.submit(()->{
                 try {
+                    System.out.println("출력"+emitter);
                     emitter.send(CustomSseEmitter.event()
                             .name(eventName)
                             .data(data)
