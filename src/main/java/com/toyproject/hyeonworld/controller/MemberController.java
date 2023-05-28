@@ -25,16 +25,18 @@ public class MemberController {
 
     private class WaitingListEmitters extends SseEmitters {
         @Override
-        public void send (String eventName){
+        public void send (String eventName){ //WaintingList
             DataMap dataMap = new DataMap();
             List<String> waitngList = memberService.getWaitingList();
             send (eventName, dataMap.mapOf("waitingList", waitngList));
         }
 
-        public void send (String eventName, String memberName){
+        public void send (String eventName, String memberName){ //AdditionalWaitingList
             DataMap dataMap = new DataMap();
-            send (eventName, dataMap.mapOf("additionalList", memberName));
+            send (eventName, dataMap.mapOf("memberName", memberName));
         }
+
+
     }
 
     private final WaitingListEmitters sseEmitters = new WaitingListEmitters();
@@ -47,17 +49,10 @@ public class MemberController {
 
     @PutMapping("/login-confirm")
     public ResponseEntity<Long> loginConfirm (@RequestParam String loginName){
-
-        Future< Long> futureResult =  threadService.executorService.submit(()->{
-            return memberService.login (loginName);
-        });
-
-        try {
-            Long loginMemberId  = futureResult.get();
-            return ResponseEntity.ok (loginMemberId);
-        }catch (InterruptedException | ExecutionException e ){
-            return ResponseEntity.status(500).build();
-        }
+        Long loginMemberId  = memberService.login (loginName);
+        if (loginMemberId != -1L && !sseEmitters.empty())
+            sseEmitters.send ("AddWaitingList", loginName);
+        return ResponseEntity.ok (loginMemberId);
     }
 
     @PutMapping("/logout-confirm")
@@ -78,21 +73,36 @@ public class MemberController {
     @PostMapping("/enter-game")
     public ResponseEntity<Long> enterGame (@RequestParam Long memberId){
         String enterMemeberName = memberService.enterGame_String(memberId);
-        sseEmitters.send ("WaitingList", enterMemeberName);
+        CustomSseEmitter emitter = new CustomSseEmitter ();
+        sseEmitters.add(emitter);
+        sseEmitters.send ("RemoveWaitingList", enterMemeberName);
         return ResponseEntity.ok (memberId);
     }
 
     @PostMapping("/exit-game")
     public ResponseEntity<Long> exitGame (@RequestParam Long memberId){
-        Long enterMemberId = memberService.exitGame(memberId);
-        return ResponseEntity.ok (enterMemberId);
+        String enterMemberName = memberService.exitGame_String(memberId);
+        sseEmitters.send ("AddWaitingList", enterMemberName);
+        return ResponseEntity.ok (memberId);
     }
 
-    @GetMapping(value = "/waiting-list", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/waiting-list/init")
+    public ResponseEntity<List<String>> initWaitingList (@RequestParam Long memberId){
+        List<String> waitngList = memberService.getWaitingList();
+        System.out.println("Waiting List aaa");
+        return ResponseEntity.ok (waitngList);
+    }
+
+    @GetMapping(value = "/waiting-list/additional", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<CustomSseEmitter> waitingList (@RequestParam Long memberId){
-        System.out.println("Waiting List ");
+        System.out.println("Waiting List bb");
+
+        /*
+        Init Waiting List.
+         */
         CustomSseEmitter emitter = new CustomSseEmitter ();
         sseEmitters.add(emitter);
+
         return ResponseEntity.ok(emitter);
     }
 }

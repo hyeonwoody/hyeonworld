@@ -26,11 +26,6 @@ public class GameStageController extends HttpServlet {
     private PartyService partyService;
     private final ThreadService threadService;
 
-    private static final long SSE_SESSION_TIMEOUT = 1500L;
-
-
-
-
     private class GameStageEmitters extends SseEmitters {
         @Override
         public void send (String eventName){
@@ -53,8 +48,7 @@ public class GameStageController extends HttpServlet {
     }
 
     @PutMapping(value = "/game-stage")
-    public ResponseEntity<Integer> setStage(@RequestParam Integer currentStage) {
-        System.out.println("rrrrrrrr");
+    public ResponseEntity<Integer> setGameStage(@RequestParam Integer currentStage) {
 
         Integer ret = partyService.setCurrentGameStage(currentStage);
 
@@ -67,14 +61,24 @@ public class GameStageController extends HttpServlet {
     }
 
     @GetMapping(value = "/game-stage", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<SseEmitter> getStage(@RequestParam Long memberId) throws InterruptedException {
+    public ResponseEntity<SseEmitter> getGameStage(@RequestParam Long memberId) throws InterruptedException {
         /*
         Singleprocess
          */
         System.out.println("Players");
+
+        /*
+        Init Waiting List.
+         */
         CustomSseEmitter emitter = new CustomSseEmitter ();
         sseEmitters.add(emitter);
 
         return ResponseEntity.ok(emitter);
+    }
+
+    @GetMapping(value = "/game-stage/init")
+    public ResponseEntity<Integer> initGameStage() {
+        Integer ret = partyService.getCurrentGameStage();
+        return ResponseEntity.ok(ret);
     }
 }

@@ -64,7 +64,17 @@ public class MemberService {
         }).orElse(-1L);
     }
 
-    public Long exitGame(Long memberId) {
+    public String exitGame_String (Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+
+        return member.map (pMember -> {
+            pMember.setInGame(false);
+            memberRepository.save(pMember);
+            return pMember.getName();
+        }).orElse("");
+    }
+
+    public Long exitGame_Long (Long memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
 
         return member.map (pMember -> {

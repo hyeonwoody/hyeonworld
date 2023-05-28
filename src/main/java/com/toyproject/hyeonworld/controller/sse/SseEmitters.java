@@ -40,11 +40,18 @@ public class SseEmitters {
         this.counter = new AtomicInteger(0);
     }
 
+    public Integer size (){
+        return this.emitterList.size();
+    }
+
+    public boolean empty() {
+        return (this.emitterList.size() == 0);
+    }
+
     public CustomSseEmitter add(CustomSseEmitter emitter){
         this.emitterList.add(emitter);
 
         emitter.onCompletion(()->{
-            System.out.println("삭제된다");
             this.emitterList.remove(emitter); //Emitter 객체 다시 생성 되기 때문에 자기 자신 지우기.
         });
         emitter.onTimeout(()->{
@@ -72,7 +79,6 @@ public class SseEmitters {
                 }
             });
         });
-
         executorService.shutdown();
     }
 }

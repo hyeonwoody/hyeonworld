@@ -59,7 +59,8 @@ function Home (props : HomeProps){
     }
 
     const onClickBack = () => {
-        ExitGameAxios(props.memberId);
+        if (enterGameId != -1)
+            ExitGameAxios(props.memberId);
         setEnterGame(-1);
     }
 

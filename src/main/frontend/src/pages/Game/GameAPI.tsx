@@ -1,28 +1,44 @@
 import {My} from "../../configuration/web/WebConfig";
-import {type} from "@testing-library/user-event/dist/type";
+import axios from "axios"
 
-export function WaitingAPI(getList: (stage: string[]) => void, memberId: number) {
+export function WaitingAPI(getList: (stage: string[]) => void, removeWaitingList: ( memberName: string) =>void, addWaitingList: ( memberName: string) =>void, memberId : number) {
     const my = new My();
+
+    axios({
+        url: "member/" + "waiting-list/init",
+        method: 'get',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+        params: {
+            memberId: memberId,
+        }
+    }).then(function (response) {
+        console.log(":ㅇ");
+        console.log(response.data);
+        getList(response.data);
+    });
+
+
     let eventSource : EventSource;
-    console.log("WAAAAAA")
-    eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+`/member/waiting-list?memberId=${memberId}`);
+
+    eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+`/member/waiting-list/additional?memberId=${memberId}`);
     eventSource.addEventListener('connect', (e)=>{
         const {data: receivedConnectData} = e;
         console.log('connect event data101 : ',receivedConnectData);
         //getStage(receivedConnectData);
     });
-    eventSource.addEventListener('WaitingList', async (e)=>{
+    eventSource.addEventListener('RemoveWaitingList', async (e)=>{
         console.log("WaitingLIST : LISTENER");
         const {data: receivedData} = e;
         const jsonObject = await JSON.parse(receivedData);
-        getList(jsonObject.waitingList);
+        removeWaitingList(jsonObject.memberName);
     });
 
-    eventSource.addEventListener('additionalList', async (e)=>{
+    eventSource.addEventListener('AddWaitingList', async (e)=>{
         console.log("WaitingLIST : LISTENER");
         const {data: receivedData} = e;
         const jsonObject = await JSON.parse(receivedData);
-        getList(jsonObject.additionalList);
+        addWaitingList(jsonObject.memberName);
     });
 
     function closeConnection(){
@@ -35,8 +51,19 @@ export function WaitingAPI(getList: (stage: string[]) => void, memberId: number)
     }
 };
 
-export function StageAPI(getStage: (stage: number) => void, memberId: number) {
+export function StageAPI(setStage: (stage: number) => void, memberId: number) {
     const my = new My();
+
+    axios({
+        url: "api/game-stage/" + "init",
+        method: 'get',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+    }).then(function (response) {
+        setStage(response.data);
+    });
+
+
     let eventSource : EventSource;
 
         eventSource = new EventSource('http://'+my.ipAddress+":"+my.backEndPort+`/api/game-stage?memberId=${memberId}`);
@@ -48,8 +75,8 @@ export function StageAPI(getStage: (stage: number) => void, memberId: number) {
             console.log("currentGameStage : LISTENER");
             const {data: receivedData} = e;
             const jsonObject = await JSON.parse(receivedData);
-            var jsonString = JSON.stringify(jsonObject, null, 2);
-            getStage(jsonObject.gameStage);
+            //var jsonString = JSON.stringify(jsonObject, null, 2);
+            setStage(jsonObject.gameStage);
         });
 
     function closeConnection(){

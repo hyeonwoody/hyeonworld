@@ -14,8 +14,6 @@ export function EnterGameAxios(memberId: number) {
             memberId: memberId,
         }
     }).then(function (response) {
-        console.log("결과");
-        console.log("ENTER :"+response.data);
     });
 };
 
