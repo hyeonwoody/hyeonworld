@@ -16,26 +16,14 @@ import java.util.concurrent.Future;
 @RequestMapping("/game")
 public class GameController {
     private GameService gameService;
-    private final ThreadService threadService;
 
-    public GameController (GameService gameService, ThreadService threadService){
+    public GameController (GameService gameService){
         this.gameService = gameService;
-        this.threadService = threadService;
     }
 
     @GetMapping("/playable")
     public ResponseEntity<List<Game>> displayGame (){
-
-        Future<List<Game>> futureResult = threadService.executorService.submit(()->{
-            return gameService.displayGame();
-        });
-
-        try {
-            List<Game> gameList = futureResult.get();
-            return ResponseEntity.ok (gameList);
-        }catch (InterruptedException | ExecutionException e ){
-            return ResponseEntity.status(500).build();
-        }
-
+        List<Game> gameList = gameService.displayGame();
+        return ResponseEntity.ok (gameList);
     }
 }

@@ -9,8 +9,7 @@ import Game2 from "./2/Game2Main";
 import Game3 from "./3/Game3Main";
 import Game4 from "./4/Game4Main";
 import Game5 from "./5/Game5Main";
-import {StageAPI, WaitingAPI, InitWaitingAPI} from "./GameAPI";
-import {wait} from "@testing-library/user-event/dist/utils";
+import {GameAPI} from "./GameAPI";
 
 export const Games = {
     "진실 혹은 거짓": Game0,
@@ -37,35 +36,55 @@ function Game(props : GameProps) {
         setGame (props.gameId);
 
         function removeWaitingList (memberName : string){
-                const removedList: string[] = waitingList.filter((item) => item !== memberName);
+            console.log("리무브 : " +memberName);
+            console.log ("STAGE : "+stage);
+
+                // @ts-ignore
+            const removedList: string[] = waitingList.filter((item) => item !== memberName);
                 setList(removedList);
-            if (stage != 1)
-                stageApi.closeConnection();
+            if (stage != 1){
+                console.log("REMOVE if ");
+                //stageApi.closeConnection();
+            }
+
+            else {
+                console.log("REMOVE else ");
+            }
         }
 
         function addWaitingList (memberName : string){
-
-                setList((prevList) => {
-                    if (!prevList.includes(memberName)){
-                        return [...prevList, memberName];
+                setList((waitingList) => {
+                    if (!waitingList.includes(memberName)){
+                        console.log("함포");
+                        return [...waitingList, memberName];
                     }
-                    return prevList;
+                    console.log("미포");
+                    return waitingList;
                 });
-            if (stage != 1)
-                stageApi.closeConnection();
+            if (stage != 1){
+                console.log("ADD if ");
+                //stageApi.closeConnection();
+            }
+
+            else {
+                 console.log("ADD else ");
+            }
         }
 
         function changeStage (stage :number){
+            console.log("CHANGE STAGE : "+stage);
             setStage(stage);
-
         }
 
-        const waitingApi = WaitingAPI (setList, removeWaitingList, addWaitingList, props.memberId);
-        const stageApi = StageAPI (changeStage, props.memberId);
+        // const waitingApi = WaitingAPI (setList, removeWaitingList, addWaitingList, props.memberId);
+        // const stageApi = StageAPI (changeStage, props.memberId);
+
+        const GameApi = GameAPI (changeStage, setList, removeWaitingList, addWaitingList, props.memberId);
 
         return () => {
-            stageApi.closeConnection();
-            waitingApi.closeConnection();
+            GameApi.closeConnection();
+            // stageApi.closeConnection();
+            // waitingApi.closeConnection();
         }
     },[])
 
@@ -80,7 +99,7 @@ function Game(props : GameProps) {
                     return (
                         <div>
                             <p>{gameName}</p>
-                            <Component memberId={props.memberId} gameId={props.gameId} stage={stage} key={index}/>
+                            <Component memberId={props.memberId} memberName={props.memberName} gameId={props.gameId} stage={stage} key={index}/>
                         </div>
                     );
                 }

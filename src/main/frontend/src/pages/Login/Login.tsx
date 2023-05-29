@@ -20,9 +20,17 @@ function Login (props : LoginProps){
         event.preventDefault();
         function checkSuccess(id : number) {
             console.log("dsdsdsd"+id);
-
-            if (id)
-                props.rootCall(true, id, inputName);
+            switch (id){
+                case -1:
+                    console.log("There is no member called" + inputName);
+                    break;
+                case -2:
+                    console.log("IS already Logged in");
+                    break;
+                default :
+                    props.rootCall(true, id, inputName);
+                    break;
+            }
         }
 
         LoginAxios (inputName, checkSuccess);

@@ -4,6 +4,7 @@ import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,17 +18,31 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+
+    public Long init() {
+        List<Member> members = memberRepository.findAll().stream()
+                .collect(Collectors.toList());
+
+        members.forEach(member -> {
+            member.setLogin(false);
+            member.setInGame(false);
+        });
+        memberRepository.saveAll(members);
+
+        return -1L;
+    }
     public Long login (String memberName){
 
         Optional<Member> member = memberRepository.findByName(memberName);
 
         if (member.isPresent()){
             Member pMember = member.get();
-            if (pMember.getName().equals (memberName)){
+            if (pMember.getLogin().equals (false)){
                 pMember.setLogin(true);
                 memberRepository.save(pMember);
+                return pMember.getId();
             }
-            return pMember.getId();
+            return -2L;
         }
         return -1L;
     }
@@ -106,5 +121,6 @@ public class MemberService {
                 .map(Member::getName)
                 .collect(Collectors.toList());
     }
+
 
 }

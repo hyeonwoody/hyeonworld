@@ -15,11 +15,10 @@ import java.util.concurrent.Future;
 public class PartyController {
 
     private final PartyService partyService;
-    private final ThreadService threadService;
 
-    public PartyController(PartyService partyService, ThreadService threadService) {
+
+    public PartyController(PartyService partyService) {
         this.partyService = partyService;
-        this.threadService = threadService;
     }
 
     @PutMapping("/current-game")
@@ -34,8 +33,6 @@ public class PartyController {
     public ResponseEntity<Boolean> initParty (HttpServletRequest request, @RequestParam Integer partyType, @RequestParam Integer persons){
         System.out.println("party init");
         Party party =new Party();
-
-        threadService.setPoolSize(persons);
 
         party.setPartyType(partyType);
         party.setPersons(persons);
@@ -53,17 +50,11 @@ public class PartyController {
         System.out.println("send current-game");
 
 
-        Future <Integer> futureResult = threadService.executorService.submit(()->{
-            return partyService.getCurrentGameQuery();
-        });
 
-        try {
-            Integer currentGame = futureResult.get();
+            Integer currentGame = partyService.getCurrentGameQuery();
             System.out.println("CURRENTGAME VALUE : "+currentGame);
             return ResponseEntity.ok(currentGame);
-        }catch (InterruptedException | ExecutionException e ){
-            return ResponseEntity.status(500).build();
-        }
+
 
 
 //        System.out.println("HTTP Method: " + request.getMethod());

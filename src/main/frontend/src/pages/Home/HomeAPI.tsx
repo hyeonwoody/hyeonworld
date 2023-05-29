@@ -5,6 +5,7 @@ import {list} from "postcss";
 const my = new My();
 
 export function EnterGameAxios(memberId: number) {
+    console.log("SEND ENTER GAME AXIOS")
     axios({
         url: "member/" + "enter-game",
         method: 'post',
@@ -13,7 +14,6 @@ export function EnterGameAxios(memberId: number) {
         params: {
             memberId: memberId,
         }
-    }).then(function (response) {
     });
 };
 

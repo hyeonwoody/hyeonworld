@@ -15,3 +15,13 @@ export function AdminMenuAxios(stage : number) {
     }).then(function (response) {
     });
 };
+
+export function AdminDoneAxios() {
+    const my = new My();
+    axios({
+        url: "/member/init",
+        method: 'put',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+    });
+};

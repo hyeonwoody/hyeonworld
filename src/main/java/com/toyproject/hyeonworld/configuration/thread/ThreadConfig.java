@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 @Configuration
 public class ThreadConfig {
-    private int poolSize = 20;
+    private int poolSize = 200;
 
     @Bean
     public ExecutorService executorService() {

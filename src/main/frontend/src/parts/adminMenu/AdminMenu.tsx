@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import InitModal from "./init/InitModal";
 import OpenModal from "./open/OpenModal";
-import {AdminMenuAxios} from "../adminMenu/AdminMenuAPI";
+import {AdminMenuAxios, AdminDoneAxios} from "../adminMenu/AdminMenuAPI";
 import {type} from "@testing-library/user-event/dist/type";
 
 interface Game{
@@ -42,6 +42,9 @@ function AdminMenu (props: AdminMenuProps){
         console.log("GAME LEngth : " + props.gameList.length);
         setOpen(!openModal);
     }
+    const onDone = () => {
+        AdminDoneAxios();
+    }
 
 
 
@@ -59,6 +62,9 @@ function AdminMenu (props: AdminMenuProps){
                 break;
             case AdminMenuList["Open"]:
                 onOpen();
+                break;
+            case AdminMenuList["Done"]:
+                onDone();
                 break;
             default:
                 console.log("ㅁㄹ");

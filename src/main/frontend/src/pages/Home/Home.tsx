@@ -38,34 +38,34 @@ function Home (props : HomeProps){
         console.log("FFFF")
         DisplayGameAxios (getGameList);
 
-        if (enterGameId == currentGameId)
-            onEnterGame();
 
-    },[enterGameId])
+
+    },[])
 
 
     const openGame = (id : number) => {
         setEnterGame(id);
+
     }
 
     const onClickGame = (event : React.MouseEvent<HTMLLIElement>) => {
         const target = event.target as HTMLLIElement;
         const value : any = target.getAttribute("id");
-        console.log("aaaaa"+currentGameId);
-        console.log("Bbbbb"+value);
-        CurrentGameAxios(setCurrentGame);
-        openGame(value);
 
+        CurrentGameAxios(setCurrentGame);
+        console.log("커렌"+currentGameId);
+        console.log("선택"+enterGameId);
+        openGame(value);
     }
 
     const onClickBack = () => {
+
         if (enterGameId != -1)
             ExitGameAxios(props.memberId);
         setEnterGame(-1);
     }
 
     const onEnterGame = () => {
-        console.log("ENTER")
         EnterGameAxios(props.memberId);
     }
 
@@ -76,7 +76,12 @@ function Home (props : HomeProps){
             <MenuBar moveBack={onClickBack} rootCall={props.rootCall} memberId={props.memberId} loginName={props.name}/>
             <ul className="p-2 space-y-1"/>
             <div className="flex mx-2 items-center justify-center rounded-xl party sm:flex space-x-2 space-y-0.1 bg-white bg-opacity-20 shadow-xl hover:rounded-2xl">
-                {enterGameId == currentGameId ? <Game memberId={props.memberId} gameId={currentGameId} stage={0}/> : <ul className="cards">
+                {enterGameId == currentGameId ?(
+                    <>
+                    {onEnterGame()}
+                    <Game memberId={props.memberId} memberName={props.name} gameId={currentGameId} stage={0}/>
+                    </>)
+                : <ul className="cards">
                     {gameList.map((game: Game, i: number) => {
                         return <li id={(game.id).toString()} className={"card"+i%7} key={i} onClick={onClickGame}>
                             <h3 className="card-title">{game.name}</h3>
