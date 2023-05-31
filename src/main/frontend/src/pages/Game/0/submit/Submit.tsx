@@ -2,8 +2,9 @@ import React, {useState} from "react";
 
 import ConfirmModal from "./confirm/ConfirmModal";
 import {SubmitAPI} from "./SubmitAPI";
+import {GameStageProps} from "../../GameProps/GameProps";
 
-export default function Submit(){
+export default function Submit(props : GameStageProps){
 
     const [inputFalse, setFalse] = useState<number>(-1);
 
@@ -30,7 +31,7 @@ export default function Submit(){
     const onConfirm = (val : boolean)=>{
         if (val) {
             console.log("FFF");
-            SubmitAPI(onSend, input, inputFalse);
+            SubmitAPI(props.memberId, onSend, input, inputFalse);
         }
 
         setConfirm(!modalConfirm);
@@ -42,7 +43,7 @@ export default function Submit(){
 
     const handleSubmit = (event : React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (buttonTitle == '제출하기')
+        if (buttonTitle == '제출하기' || buttonTitle == '다시 제출하기')
             onModal();
     };
 
@@ -55,13 +56,21 @@ export default function Submit(){
     }
 
     const handleInputChange = (index: number, event : React.ChangeEvent<HTMLInputElement>) => {
-        const value : any = event.target.value;
+        let value : string = event.target.value;
 
-        setInput((prevInput)=> {
-            const updatedInput = [...prevInput];
-            updatedInput[index] = value;
-            return updatedInput;
-        })
+        if (value.includes(';')){
+
+        }
+
+        else {
+            setInput((prevInput)=> {
+                const updatedInput = [...prevInput];
+                updatedInput[index] = value;
+                return updatedInput;
+            })
+        }
+
+
 
     }
 

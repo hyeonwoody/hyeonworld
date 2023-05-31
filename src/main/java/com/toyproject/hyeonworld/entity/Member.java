@@ -1,8 +1,12 @@
 package com.toyproject.hyeonworld.entity;
 
+import com.toyproject.hyeonworld.service.SubmissionService;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,6 +32,9 @@ public class Member {
     @Column(nullable = false)
     private Boolean proposition; //0 : 은 이, 1 : 는 가
 
+    @Column(nullable = false)
+    private Byte relation;
+
     @Column(name="nick_name", nullable = false)
     private String nickName;
 
@@ -38,6 +45,11 @@ public class Member {
     private Boolean inGame;
 
     private long score;
+
+    @OneToMany (mappedBy = "member")
+    private List<Submission> submissionList = new ArrayList<>();
+
+
 
     public Member(){
         this.login = false;

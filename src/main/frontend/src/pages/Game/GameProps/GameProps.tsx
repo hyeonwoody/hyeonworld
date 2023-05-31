@@ -4,3 +4,7 @@ export interface GameProps {
     gameId: number;
     stage: number;
 }
+
+export interface GameStageProps {
+    memberId: number;
+}

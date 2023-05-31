@@ -1,6 +1,7 @@
 import React from "react";
+import {GameProps, GameStageProps} from "../GameProps/GameProps";
 
-export default function Show() {
+export default function Show(props : GameStageProps) {
     return (
         <div className="Game0">
 

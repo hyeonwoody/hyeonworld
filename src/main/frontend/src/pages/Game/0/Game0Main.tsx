@@ -37,7 +37,7 @@ export default function Game0(props : GameProps) {
                     const Component = stageComponent;
                     return (
                         <div>
-                            <Component/>
+                            <Component memberId={props.memberId}/>
                         </div>
                     );
                 }

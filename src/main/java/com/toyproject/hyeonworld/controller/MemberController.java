@@ -17,8 +17,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
-
     private final SseEmitters sseEmitters;
 
     public MemberController(MemberService memberService, SseEmitters sseEmitters) {
