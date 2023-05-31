@@ -20,8 +20,6 @@ public class GameStageController extends HttpServlet {
 
     private PartyService partyService;
 
-
-
     private final SseEmitters sseEmitters;
 
     public GameStageController(PartyService partyService, SseEmitters sseEmitters) {

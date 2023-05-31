@@ -3,7 +3,7 @@ import {GameProps} from "../GameProps/GameProps";
 
 import Tutorial from "./Tutorial";
 import Submit from "./submit/Submit";
-import Check from "./Check";
+import Check from "./check/Check";
 import Show from "./Show";
 import Play from "./Play";
 import Result from "./Result";

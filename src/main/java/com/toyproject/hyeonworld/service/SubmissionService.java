@@ -7,8 +7,8 @@ import com.toyproject.hyeonworld.repository.SubmissionRepository;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SubmissionService {
@@ -27,11 +27,40 @@ public class SubmissionService {
             String str = String.join(";", input);
         submission.setText(str);
             Optional<Member> member = memberRepository.findById(memberId);
-        Member foundMember = member.orElseThrow(() -> new IllegalArgumentException("Member not found"));
+        Member foundMember = member.orElseThrow(() -> new IllegalArgumentException("Member not found"+memberId));
         submission.setMember(foundMember);
         submissionRepository.save(submission);
         memberRepository.save(foundMember);
         return foundMember.getId();
     }
 
+    public Map<String, Submission>  get(int game) {
+        Map<String, Submission> ret = new HashMap<>();
+        List<Submission> ret1 = new ArrayList<>();
+        List <Member> loginMemberList = memberRepository.findAll().stream()
+                                            .filter(member -> member.getLogin())
+                                            .collect(Collectors.toList());
+
+        for (Member member : loginMemberList){
+            List <Submission> submissionList = member.getSubmissionList();
+
+            if (!submissionList.isEmpty()){
+                System.out.println("FFFFFFF");
+                Submission submission = new Submission();
+                Submission recentlyAddedSubmission = submissionList.get(submissionList.size() - 1);
+
+                submission.setAll(recentlyAddedSubmission);
+                ret1.add(submission);
+
+
+                ret.put(member.getName(), submission);
+            }
+
+//            submission.setText("WORKING");
+//            submission.setId(22L);
+
+        }
+
+        return ret;
+    }
 }
