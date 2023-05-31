@@ -26,7 +26,7 @@ public class MemberController {
         this.sseEmitters = sseEmitters;
     }
     @PutMapping("/init")
-    public ResponseEntity<Long> initMember(){
+    public ResponseEntity<Long> init(){
         System.out.println("INIT MEMBER");
         Long ret = memberService.init ();
         return ResponseEntity.ok (ret);
@@ -35,7 +35,7 @@ public class MemberController {
     @PutMapping("/login-confirm")
     public ResponseEntity<Long> loginConfirm (@RequestParam String loginName){
         Long loginMemberId  = memberService.login (loginName);
-        if (loginMemberId != -1L && !sseEmitters.empty())
+        if (loginMemberId > 0 && !sseEmitters.empty())
             sseEmitters.send ("AddWaitingList", loginName);
         return ResponseEntity.ok (loginMemberId);
     }
@@ -50,7 +50,8 @@ public class MemberController {
     public ResponseEntity<Long> enterGame (@RequestParam Long memberId){
         String enterMemeberName = memberService.enterGame_String(memberId);
         System.out.println("Enter Game 길이 : "+sseEmitters.size());
-        if (!sseEmitters.empty())
+        System.out.println("멤버 아이디 : "+memberId);
+        if (memberId > 0 && !sseEmitters.empty())
             sseEmitters.send ("RemoveWaitingList", enterMemeberName);
         return ResponseEntity.ok (memberId);
     }
@@ -59,30 +60,18 @@ public class MemberController {
     public ResponseEntity<Long> exitGame (@RequestParam Long memberId){
         String enterMemberName = memberService.exitGame_String(memberId);
 
-        if (!sseEmitters.empty()) {
+        if (memberId > 0 && !sseEmitters.empty()) {
             sseEmitters.send ("AddWaitingList", enterMemberName);
+            //sseEmitters.send (SseEmitters.DataType.WAITING_LIST)
         }
 
         return ResponseEntity.ok (memberId);
     }
 
     @GetMapping(value = "/waiting-list/init")
-    public ResponseEntity<List<String>> initWaitingList (@RequestParam Long memberId){
+    public ResponseEntity<List<String>> WaitingListInit (@RequestParam Long memberId){
         List<String> waitngList = memberService.getWaitingList();
         System.out.println("Waiting List aaa");
         return ResponseEntity.ok (waitngList);
-    }
-
-    @GetMapping(value = "/waiting-list/additional", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<CustomSseEmitter> waitingList (@RequestParam Long memberId){
-        System.out.println("Waiting List bb"+ memberId);
-
-        /*
-        Init Waiting List.
-         */
-        CustomSseEmitter emitter = new CustomSseEmitter (memberId, "AddWaitingList");
-        System.out.println("Waiting List Additional 길이 : "+sseEmitters.size());
-
-        return ResponseEntity.ok(emitter);
     }
 }

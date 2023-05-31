@@ -19,14 +19,12 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class GameStageController extends HttpServlet {
 
     private PartyService partyService;
-    private final ThreadService threadService;
 
 
 
     private final SseEmitters sseEmitters;
 
-    public GameStageController(PartyService partyService, ThreadService threadService, SseEmitters sseEmitters) {
-        this.threadService = threadService;
+    public GameStageController(PartyService partyService, SseEmitters sseEmitters) {
         this.partyService = partyService;
         this.sseEmitters = sseEmitters;
     }

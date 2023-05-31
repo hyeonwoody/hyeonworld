@@ -18,18 +18,6 @@ public class CustomSseEmitter extends SseEmitter{
         this.eventName = eventName;
     }
 
-
-    public CustomSseEmitter(Long timeout) {super(timeout);}
-    public CustomSseEmitter(Long timeout, Long id) {
-        super(timeout);
-        this.id = id;
-    }
-    public CustomSseEmitter(Long timeout, Long id, String eventName) {
-        super(timeout);
-        this.id = id;
-        this.eventName = eventName;
-    }
-
     public Long getId(){
         return this.id;
     }

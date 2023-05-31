@@ -19,8 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j //로깅이 유용
 public class SseEmitters {
 
-    private MemberService memberService;
-    private PartyService partyService;
+    private final MemberService memberService;
+    private final PartyService partyService;
 
     public enum DataType {
         CURRENT_GAME_STAGE(0),
@@ -80,16 +80,17 @@ public class SseEmitters {
     public void send (String eventName){
         DataMap dataMap = new DataMap();
         switch (eventName){
-            case "WaitingList" :
-                List<String> waitngList = memberService.getWaitingList();
-                System.out.println("SEND : : :"+ waitngList.toString());
-                send (eventName, dataMap.mapOf("waitingList", waitngList));
-                break;
             case "currentGameStage":
                 Integer currentGameStage = partyService.getCurrentGameStageQuery();
                 System.out.println("SEND : :"+currentGameStage);
                 send (eventName, dataMap.mapOf("gameStage", currentGameStage));
                 break;
+            case "WaitingList" :
+                List<String> waitngList = memberService.getWaitingList();
+                System.out.println("SEND : : :"+ waitngList.toString());
+                send (eventName, dataMap.mapOf("waitingList", waitngList));
+                break;
+
             default:
                 break;
         }
@@ -99,8 +100,6 @@ public class SseEmitters {
         DataMap dataMap = new DataMap();
         switch (eventName){
             case "AddWaitingList":
-                send (eventName, dataMap.mapOf("memberName", memberName));
-                break;
             case "RemoveWaitingList":
                 send (eventName, dataMap.mapOf("memberName", memberName));
                 break;

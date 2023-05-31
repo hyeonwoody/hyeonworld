@@ -23,7 +23,6 @@ export function GameAPI(setStage: (stage: number) => void, getList: (stage: stri
             memberId: memberId,
         }
     }).then(function (response) {
-        console.log(":ㅇ");
         console.log(response.data);
         getList(response.data);
     });
