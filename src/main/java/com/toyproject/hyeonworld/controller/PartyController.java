@@ -1,5 +1,7 @@
 package com.toyproject.hyeonworld.controller;
 
+import com.toyproject.hyeonworld.DTO.PartyInitDTO;
+import com.toyproject.hyeonworld.DTO.SubmissionDTO;
 import com.toyproject.hyeonworld.entity.Party;
 import com.toyproject.hyeonworld.service.PartyService;
 import com.toyproject.hyeonworld.service.ThreadService;
@@ -30,17 +32,9 @@ public class PartyController {
     }
 
     @PostMapping("/init")
-    public ResponseEntity<Boolean> initParty (HttpServletRequest request, @RequestParam Integer partyType, @RequestParam Integer persons){
+    public ResponseEntity<Boolean> initParty (@RequestBody PartyInitDTO partyInitDTO){
         System.out.println("party init");
-        Party party =new Party();
-
-        party.setPartyType(partyType);
-        party.setPersons(persons);
-        party.setCurrentGame(-1);
-        party.setCurrentGameStage(0);
-
-        partyService.init(party);
-
+        partyService.init(partyInitDTO);
         return ResponseEntity.ok (true);
     }
 

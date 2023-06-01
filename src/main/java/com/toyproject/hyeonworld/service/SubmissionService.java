@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.service;
 
+import com.toyproject.hyeonworld.DTO.SubmissionDTO;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Submission;
 import com.toyproject.hyeonworld.repository.MemberRepository;
@@ -18,6 +19,20 @@ public class SubmissionService {
     public SubmissionService(SubmissionRepository submissionRepository, MemberRepository memberRepository) {
         this.submissionRepository = submissionRepository;
         this.memberRepository = memberRepository;
+    }
+
+    public Long post(SubmissionDTO submissionDTO) {
+        Submission submission = new Submission();
+        submission.setGame(submissionDTO.getGame());
+        submission.setNumber(submissionDTO.getNumber());
+
+        submission.setText(submissionDTO.getText());
+        Optional<Member> member = memberRepository.findById(submissionDTO.getMemberId());
+        Member foundMember = member.orElseThrow(() -> new IllegalArgumentException("Member not found"+submissionDTO.getMemberId()));
+        submission.setMember(foundMember);
+        submissionRepository.save(submission);
+        memberRepository.save(foundMember);
+        return foundMember.getId();
     }
 
     public Long post(int game, Long memberId, List<String> input, Integer inputFalse) {

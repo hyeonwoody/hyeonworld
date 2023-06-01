@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.controller;
 
+import com.toyproject.hyeonworld.DTO.SubmissionDTO;
 import com.toyproject.hyeonworld.entity.Game;
 import com.toyproject.hyeonworld.entity.Submission;
 import com.toyproject.hyeonworld.service.SubmissionService;
@@ -20,11 +21,8 @@ public class SubmissionController {
 
 
     @PostMapping("/0")
-    public ResponseEntity<Long> submission0 (@RequestParam Long memberId, @RequestParam List<String> input, @RequestParam Integer inputFalse){
-        System.out.println("memberId: "+ memberId);
-        System.out.println("INput: "+ input);
-        System.out.println("inputFalse : "+ inputFalse);
-        Long Id = submissionService.post(0, memberId, input, inputFalse);
+    public ResponseEntity<Long> submission0 (@RequestBody SubmissionDTO submissionDTO){
+        Long Id = submissionService.post(submissionDTO);
         return ResponseEntity.ok (Id);
     }
 

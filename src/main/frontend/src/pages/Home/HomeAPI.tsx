@@ -11,8 +11,8 @@ export function EnterGameAxios(memberId: number) {
         method: 'post',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
-        params: {
-            memberId: memberId,
+        data : {
+            memberId : memberId,
         }
     });
 };
@@ -23,8 +23,8 @@ export function ExitGameAxios(memberId: number) {
         method: 'post',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
-        params: {
-            memberId: memberId,
+        data : {
+            memberId : memberId,
         }
     }).then(function (response) {
         console.log("결과");

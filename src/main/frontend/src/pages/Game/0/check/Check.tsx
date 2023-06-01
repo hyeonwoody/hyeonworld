@@ -24,8 +24,10 @@ export default function Check (props : GameStageProps) {
             };
 
             setPlayerName((prevPlayerNameList) => {
+                console.log("QQQ"+player.name);
                 if (!prevPlayerNameList.includes(player.name)){
                     setPlayer([...playerList, player]);
+                    console.log("vcvvvv"+prevPlayerNameList);
                     console.log("zzz"+player.name);
                     return [...prevPlayerNameList, player.name];
                 }

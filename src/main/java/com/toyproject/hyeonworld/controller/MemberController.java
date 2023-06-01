@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -45,25 +47,24 @@ public class MemberController {
     }
 
     @PostMapping("/enter-game")
-    public ResponseEntity<Long> enterGame (@RequestParam Long memberId){
-        String enterMemeberName = memberService.enterGame_String(memberId);
-        System.out.println("Enter Game 길이 : "+sseEmitters.size());
-        System.out.println("멤버 아이디 : "+memberId);
-        if (memberId > 0 && !sseEmitters.empty())
+    public ResponseEntity<Long> enterGame (@RequestBody HashMap<String, Long> request){
+
+        String enterMemeberName = memberService.enterGame_String(request.get("memberId"));
+
+        if (request.get("memberId") > 0 && !sseEmitters.empty())
             sseEmitters.send ("RemoveWaitingList", enterMemeberName);
-        return ResponseEntity.ok (memberId);
+        return ResponseEntity.ok (request.get("memberId"));
     }
 
     @PostMapping("/exit-game")
-    public ResponseEntity<Long> exitGame (@RequestParam Long memberId){
-        String enterMemberName = memberService.exitGame_String(memberId);
+    public ResponseEntity<Long> exitGame (@RequestBody HashMap<String, Long> request){
 
-        if (memberId > 0 && !sseEmitters.empty()) {
-            sseEmitters.send ("AddWaitingList", enterMemberName);
-            //sseEmitters.send (SseEmitters.DataType.WAITING_LIST)
-        }
+        String exitMemberName = memberService.exitGame_String( request.get("memberId"));
 
-        return ResponseEntity.ok (memberId);
+        if ( request.get("memberId") > 0 && !sseEmitters.empty())
+            sseEmitters.send ("AddWaitingList", exitMemberName);
+
+        return ResponseEntity.ok (request.get("memberId"));
     }
 
     @GetMapping(value = "/waiting-list/init")

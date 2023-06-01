@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.service;
 
+import com.toyproject.hyeonworld.DTO.PartyInitDTO;
 import com.toyproject.hyeonworld.entity.Game;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Party;
@@ -18,6 +19,16 @@ public class PartyService {
 
     public PartyService(PartyRepository partyRepository) {
         this.partyRepository = partyRepository;
+    }
+
+    public void init(PartyInitDTO partyInitDTO) {
+        Party party = new Party();
+
+        party.setPartyType(partyInitDTO.getPartyType());
+        party.setPersons(partyInitDTO.getPersons());
+        party.setCurrentGame(-1);
+        party.setCurrentGameStage(0);
+        partyRepository.save(party);
     }
 
     public void init(Party party) {

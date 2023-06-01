@@ -58,9 +58,7 @@ export default function Submit(props : GameStageProps){
     const handleInputChange = (index: number, event : React.ChangeEvent<HTMLInputElement>) => {
         let value : string = event.target.value;
 
-        if (value.includes(';')){
-
-        }
+        if (value.includes(';') || value.includes(',')){}
 
         else {
             setInput((prevInput)=> {

@@ -9,9 +9,9 @@ export function SubmitAPI(memberId : number, onSend: (val: boolean) => void, inp
         method: 'post',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
-        params: {
-            input: input.join(","),
+        data: {
             memberId: memberId,
+            input: input.join(","),
             inputFalse : inputFalse,
         }
     }).then(function (response) {
