@@ -17,7 +17,6 @@ public class RoundController {
 
     private static List<String> game0NameList;
     private static boolean game0Init = false;
-    private static Map<String, Object> game0Ranking = new HashMap<String, Object>();
 
     private static int currentRound = 0;
 
@@ -36,20 +35,22 @@ public class RoundController {
     @GetMapping("/0")
     public ResponseEntity<List<String>> getRound0 (){
         System.out.println("트레이드");
+        System.out.println(currentRound);
         if (!game0Init){
             System.out.println("GAME Init");
             game0NameList = roundService.get0List(currentRound);
             game0Init = true;
-
         }
+
 
         return ResponseEntity.ok (game0NameList);
     }
 
     @PutMapping("/0")
     public ResponseEntity<Boolean> getRanking0 (){
+        System.out.println("따씨");
         game0Init = false;
-        ++currentRound;
+        //++currentRound;
         return ResponseEntity.ok (true);
     }
 }

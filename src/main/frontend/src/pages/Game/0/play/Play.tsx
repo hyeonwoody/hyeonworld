@@ -41,7 +41,7 @@ export default function Play(props : GameStageProps) {
             <button>{props.target?.name}님</button>
             {props.target?.textList.map ((text, index)=>{
                 return (
-                    <div>
+                    <div key={index}>
                         <button id={index.toString()} className={"bg-blue-500 rounded-2xl p-2"} onClick={handlePlay}>{text}</button>
                         <ul className={"p-4"}></ul>
                     </div>

@@ -6,6 +6,7 @@ export function RankingAPI(memberId : number) {
     const my = new My();
     const special = new Special();
     if (memberId == special.adminId){
+        console.log("INIT ROUND");
         axios({
             url: "round/0",
             method: 'put',

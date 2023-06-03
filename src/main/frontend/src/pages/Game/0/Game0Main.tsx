@@ -43,7 +43,7 @@ export default function Game0(props : GameProps) {
                     const Component = stageComponent;
                     // @ts-ignore
                     return (
-                        <div>
+                        <div key={index}>
                             <Component memberId={props.memberId} callback={submissionCallBack} target={target}/>
                         </div>
                     );

@@ -7,6 +7,7 @@ export default function  Result(props : GameStageProps) {
     const [correctName, setCorrectName] = useState<string[]>();
 
     const getNameList = ((nameList : string[])=>{
+        console.log("NAMELIST : "+nameList);
         setCorrectName(nameList);
     })
 
@@ -15,12 +16,12 @@ export default function  Result(props : GameStageProps) {
     },[])
 
     return (
-        <div className="Game0">
+        <div className="Game0" >
 
             <p>맞추신 분 :</p>
             {correctName?.map ((name, index)=>{
                 return (
-                    <div>
+                    <div key={index}>
                         <p>{name}</p>
                         <ul className={"p-4"}></ul>
                     </div>

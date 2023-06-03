@@ -97,7 +97,7 @@ function Game(props : GameProps) {
                 if (game == index){
                     const Component = gameComponent;
                     return (
-                        <div>
+                        <div key={index}>
                             <p>{gameName}</p>
                             <Component memberId={props.memberId} memberName={props.memberName} gameId={props.gameId} stage={stage} key={index}/>
                         </div>

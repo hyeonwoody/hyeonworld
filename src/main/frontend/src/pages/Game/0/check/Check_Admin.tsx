@@ -43,7 +43,7 @@ export default function Check_Admin () {
             <button className={`mb-2 justify-between items-center p-2 rounded-2xl ${buttonColor}`} onClick={()=>onConfirm()}>{target}</button>
             {submissionList.map((submission: SubmissionAdmin, i: number) => {
                 return (
-                    <div onClick={(event)=>handleSubmission(i)}>
+                    <div onClick={(event)=>handleSubmission(i)} key={i}>
                         <Accordion  title={submission.name+(submission.number+1)} content={submission.textList}/>
                         <ul className={"py-2"}></ul>
                     </div>
