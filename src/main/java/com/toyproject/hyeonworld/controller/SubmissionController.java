@@ -30,13 +30,10 @@ public class SubmissionController {
         Map<String, SubmissionEssential> submissionEssentialMap;
 
         if (true){
-            System.out.println("HERE");
             submissionEssentialMap = submissionService.get();
-            System.out.println("SIZE 나이 : "+submissionEssentialMap.size());
             return ResponseEntity.ok (submissionEssentialMap);
         }
         else {
-            System.out.println("NULL");
             return ResponseEntity.ok(null);
         }
     }

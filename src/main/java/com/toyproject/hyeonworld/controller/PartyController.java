@@ -4,6 +4,7 @@ import com.toyproject.hyeonworld.DTO.Member.MemberDTO;
 import com.toyproject.hyeonworld.DTO.PartyInitDTO;
 import com.toyproject.hyeonworld.DTO.Submission.SubmissionVO;
 import com.toyproject.hyeonworld.service.PartyService;
+import com.toyproject.hyeonworld.service.RoundService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,7 @@ public class PartyController {
     }
 
     @PutMapping("/current-game")
-    public ResponseEntity<Boolean> openGame (HttpServletRequest request, @RequestParam Integer game){
-        System.out.println("왔ㄷ자");
+    public ResponseEntity<Boolean> openGame (@RequestParam Integer game){
         partyService.open(game);
 
         return ResponseEntity.ok (true);
@@ -31,7 +31,6 @@ public class PartyController {
     public ResponseEntity<Boolean> putTarget (@RequestBody MemberDTO memberDTO){
 
         partyService.putTarget(memberDTO.getMemberName());
-
         return ResponseEntity.ok (true);
     }
 

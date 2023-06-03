@@ -1,6 +1,7 @@
 package com.toyproject.hyeonworld.controller;
 
 import com.toyproject.hyeonworld.DTO.Member.MemberAnswer;
+import com.toyproject.hyeonworld.DTO.Member.MemberScore;
 import com.toyproject.hyeonworld.controller.sse.CustomSseEmitter;
 import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 
@@ -81,5 +82,13 @@ public class MemberController {
         Long playMemberId = memberService.putPlayGame0 (memberAnswer);
 
         return ResponseEntity.ok (playMemberId);
+    }
+
+    @GetMapping("/ranking")
+    public ResponseEntity<List<MemberScore>> getRanking (){
+
+        List <MemberScore> ret = memberService.getRanking ();
+
+        return ResponseEntity.ok (ret);
     }
 }

@@ -66,11 +66,9 @@ public class SseEmitters {
     public CustomSseEmitter add(CustomSseEmitter emitter){
         this.emitterList.add(emitter);
         emitter.onCompletion(()->{
-            System.out.println("Completed");
             this.emitterList.remove(emitter); //Emitter 객체 다시 생성 되기 때문에 자기 자신 지우기.
         });
         emitter.onTimeout(()->{
-            System.out.println("TIME OUT");
             emitter.complete(); //타임아웃 발생 시, 브라우저에서 재연결 요청 & 새로운 Emitter 객체 다시 생성.
         });
 

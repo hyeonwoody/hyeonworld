@@ -37,7 +37,6 @@ public class GameStageController extends HttpServlet {
         Integer ret = partyService.setCurrentGameStage(currentStage);
         if (!sseEmitters.empty())
             sseEmitters.send("currentGameStage");
-        System.out.println("Game Stage 길이 : "+sseEmitters.size());
         return ResponseEntity.ok (ret);
     }
 
@@ -46,14 +45,12 @@ public class GameStageController extends HttpServlet {
         /*
         Singleprocess
          */
-        System.out.println("Players");
 
         /*
         Init Waiting List.
          */
         CustomSseEmitter emitter = new CustomSseEmitter (memberId, "currentGameStage");
         sseEmitters.add(emitter);
-        System.out.println("Game Stage 길이 : "+sseEmitters.size());
 
         return ResponseEntity.ok(emitter);
     }

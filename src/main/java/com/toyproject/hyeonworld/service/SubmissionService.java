@@ -58,7 +58,7 @@ public class SubmissionService {
         for (Member member : loginMemberList){
             List <Submission> submissionList = member.getSubmissionList();
             if (!submissionList.isEmpty()){
-                System.out.println("FFFFFFF");
+
                 Submission recentlyAddedSubmission = submissionList.get(submissionList.size() - 1);
                 if (recentlyAddedSubmission.getNumber() == null && recentlyAddedSubmission.getText() != null)
                     continue;
@@ -80,7 +80,7 @@ public class SubmissionService {
             List <Submission> submissionList = member.getSubmissionList();
 
             if (!submissionList.isEmpty()){
-                System.out.println("FFFFFFF");
+
                 Submission submission = new Submission();
                 Submission recentlyAddedSubmission = submissionList.get(submissionList.size() - 1);
 

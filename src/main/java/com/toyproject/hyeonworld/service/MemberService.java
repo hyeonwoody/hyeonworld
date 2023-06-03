@@ -1,13 +1,12 @@
 package com.toyproject.hyeonworld.service;
 
 import com.toyproject.hyeonworld.DTO.Member.MemberAnswer;
+import com.toyproject.hyeonworld.DTO.Member.MemberScore;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,5 +131,21 @@ public class MemberService {
             memberRepository.save(pMember);
             return pMember.getId();
         }).orElse(-1L);
+    }
+
+    public List<MemberScore> getRanking() {
+        List<Member> memberList = memberRepository.findAll().stream()
+                .filter(member -> member.isLogin())
+                .sorted(Comparator.comparing(Member::getScore))
+                .collect(Collectors.toList());
+
+        List<MemberScore> ret = new ArrayList<>();
+
+//        for (Member member : memberList){
+//            MemberScore memberScore = new MemberScore();
+//
+//        }
+
+        return ret;
     }
 }

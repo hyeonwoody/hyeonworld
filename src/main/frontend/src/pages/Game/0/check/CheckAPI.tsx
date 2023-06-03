@@ -8,6 +8,16 @@ export function CheckTargetAPI(getResponse: ()=> void, memberName: string) {
     const my = new My();
 
     axios({
+        url: "round/0",
+        method: 'post',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+        data : {
+            memberName: memberName
+        }
+    });
+
+    axios({
         url: "party/target",
         method: 'put',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
@@ -18,6 +28,8 @@ export function CheckTargetAPI(getResponse: ()=> void, memberName: string) {
     }).then(function (response) {
         getResponse();
     });
+
+
 };
 
 export function CheckAPI(getPlayer: (submissions: SubmissionAdmin[]) => void) {

@@ -46,6 +46,7 @@ public class Member {
 
     private long score;
 
+    @Column(name="answer", nullable = false, columnDefinition = "-1")
     private int answer;
 
     @OneToMany (mappedBy = "member")

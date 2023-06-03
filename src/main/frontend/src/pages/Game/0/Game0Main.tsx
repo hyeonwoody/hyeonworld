@@ -6,8 +6,8 @@ import Submit from "./submit/Submit";
 import Check from "./check/Check";
 import Show from "./show/Show";
 import Play from "./play/Play";
-import Result from "./Result";
-import Ranking from "./Ranking";
+import Result from "./result/Result";
+import Ranking from "./ranking/Ranking";
 import Done from "./Done";
 import {Submission} from "./Submission";
 
