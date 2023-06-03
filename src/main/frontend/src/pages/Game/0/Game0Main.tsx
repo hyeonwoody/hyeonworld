@@ -4,11 +4,12 @@ import {GameProps} from "../GameProps/GameProps";
 import Tutorial from "./Tutorial";
 import Submit from "./submit/Submit";
 import Check from "./check/Check";
-import Show from "./Show";
-import Play from "./Play";
+import Show from "./show/Show";
+import Play from "./play/Play";
 import Result from "./Result";
 import Ranking from "./Ranking";
 import Done from "./Done";
+import {Submission} from "./Submission";
 
 export const Stages = {
     0: null,
@@ -25,6 +26,11 @@ export const Stages = {
 
 export default function Game0(props : GameProps) {
 
+    const [target, setTarget] = useState<Submission>();
+
+    const submissionCallBack = ((submission : Submission)=>{
+        setTarget(submission);
+    })
 
     console.log("GAME 0 Stage : "+props.stage);
     useEffect( ()=>{
@@ -35,9 +41,10 @@ export default function Game0(props : GameProps) {
             {Object.entries(Stages).map(([index, stageComponent]) =>{
                 if (props.stage == Number(index) && stageComponent != null){
                     const Component = stageComponent;
+                    // @ts-ignore
                     return (
                         <div>
-                            <Component memberId={props.memberId}/>
+                            <Component memberId={props.memberId} callback={submissionCallBack} target={target}/>
                         </div>
                     );
                 }

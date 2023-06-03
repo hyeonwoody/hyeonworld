@@ -30,8 +30,14 @@ public class Party {
     @Column(name="current_game_stage", nullable = false)
     private Integer currentGameStage;
 
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member target;
+
     @Column(name = "created_at")
     private Date createdAt;
+
+
 
     @PrePersist
     public void prePersist(){

@@ -1,46 +1,54 @@
 import {My} from "../../../../configuration/web/WebConfig";
+import {Special} from "../../../../configuration/special/SpecialConfig";
 import axios from "axios"
-import {data} from "autoprefixer";
 import React from "react";
+import {SubmissionAdmin} from "../Submission";
 
-export function CheckAPI(getPlayer: (name : string, input : string[], inputFalse : number) => void, memberId: number) {
+export function CheckTargetAPI(getResponse: ()=> void, memberName: string) {
     const my = new My();
 
+    axios({
+        url: "party/target",
+        method: 'put',
+        baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
+        withCredentials: true,
+        data : {
+            memberName: memberName
+        }
+    }).then(function (response) {
+        getResponse();
+    });
+};
+
+export function CheckAPI(getPlayer: (submissions: SubmissionAdmin[]) => void) {
+    const my = new My();
+    const special = new Special();
+
+    console.log("CHECKAPI");
 
     axios({
         url: "submission/0",
         method: 'get',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
-        params: {
-            memberId: memberId,
+        params : {
+            memberId: special.adminId
         }
     }).then(function (response) {
         const dataList = response.data;
+        const submissionList: SubmissionAdmin[] = [];
+        Object.entries(dataList).forEach(([name, player]) => {
+            const map = new Map(Object.entries(player as Object[]));
+            const tmp: string = map.get('text') as string;
+            const textList: string[] = tmp.split(',');
+            const number: number = map.get('number') as number;
 
-        // const mappedList = dataList.map ((item : any) => ({
-        //     inputFalse : item.number,
-        //     text: item.text,
-        // }));
-        console.log(dataList);
-
-
-        Object.entries(dataList).map(([name, arr])=>{
-            console.log(name);
-            // @ts-ignore
-            const map = new Map(Object.entries(arr));
-
-            const text : unknown = (map.get('text'));
-
-            // @ts-ignore
-            const input = text.split(';');
-
-            const inputFalse = map.get('number');
-
-            // @ts-ignore
-            getPlayer(name, input, inputFalse);
+            submissionList.push({
+                name,
+                textList,
+                number,
+            });
         });
-
-        //console.log(typeof (dataList));
+        getPlayer(submissionList);
     });
 };

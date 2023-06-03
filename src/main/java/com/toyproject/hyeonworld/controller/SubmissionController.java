@@ -1,13 +1,11 @@
 package com.toyproject.hyeonworld.controller;
 
-import com.toyproject.hyeonworld.DTO.SubmissionDTO;
-import com.toyproject.hyeonworld.entity.Game;
-import com.toyproject.hyeonworld.entity.Submission;
+import com.toyproject.hyeonworld.DTO.Submission.SubmissionDTO;
+import com.toyproject.hyeonworld.DTO.Submission.SubmissionEssential;
 import com.toyproject.hyeonworld.service.SubmissionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,15 +25,15 @@ public class SubmissionController {
     }
 
     @GetMapping("/0")
-    public ResponseEntity<Map<String, Submission> > submission0 (@RequestParam Long memberId){
+    public ResponseEntity<Map<String, SubmissionEssential> > submission0 (@RequestParam Long memberId){
         System.out.println("GET Submission memberId: "+ memberId);
-        Map<String, Submission> submissionList;
-        //List<Submission> submissionList;
-        if (memberId == 1219L){
-            System.out.println("HERE");
-            submissionList = submissionService.get(0);
+        Map<String, SubmissionEssential> submissionEssentialMap;
 
-            return ResponseEntity.ok (submissionList);
+        if (true){
+            System.out.println("HERE");
+            submissionEssentialMap = submissionService.get();
+            System.out.println("SIZE 나이 : "+submissionEssentialMap.size());
+            return ResponseEntity.ok (submissionEssentialMap);
         }
         else {
             System.out.println("NULL");

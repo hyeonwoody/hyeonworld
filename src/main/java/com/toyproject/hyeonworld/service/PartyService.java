@@ -1,24 +1,25 @@
 package com.toyproject.hyeonworld.service;
 
 import com.toyproject.hyeonworld.DTO.PartyInitDTO;
-import com.toyproject.hyeonworld.entity.Game;
+import com.toyproject.hyeonworld.DTO.Submission.SubmissionVO;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Party;
+import com.toyproject.hyeonworld.repository.MemberRepository;
 import com.toyproject.hyeonworld.repository.PartyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class PartyService {
 
     private final PartyRepository partyRepository;
+    private final MemberRepository memberRepository;
 
-    public PartyService(PartyRepository partyRepository) {
+    public PartyService(PartyRepository partyRepository, MemberRepository memberRepository) {
         this.partyRepository = partyRepository;
+        this.memberRepository = memberRepository;
     }
 
     public void init(PartyInitDTO partyInitDTO) {
@@ -72,5 +73,30 @@ public class PartyService {
 
     public Integer getCurrentPartyType (){
         return partyRepository.getCurrentPartyType();
+    }
+
+
+    public void putTarget(String memberName) {
+        Optional<Party> party = partyRepository.findRecentOne();
+        if (party.isPresent()){
+            Party pParty = party.get();
+            Optional<Member> member = memberRepository.findByName(memberName);
+            Member foundMember = member.orElseThrow(() -> new IllegalArgumentException("Member not found"+memberName));
+            pParty.setTarget(foundMember);
+            partyRepository.save(pParty);
+        }
+    }
+
+    public SubmissionVO getTarget() {
+        Optional<Party> party = partyRepository.findRecentOne();
+
+        if (party.isPresent()){
+            Party pParty = party.get();
+            Member member = pParty.getTarget();
+            String tmp[] = member.getSubmission().getText().split(",");
+            SubmissionVO submissionPlayer = new SubmissionVO(member.getName(), List.of(tmp));
+            return submissionPlayer;
+        }
+        return null;
     }
 }

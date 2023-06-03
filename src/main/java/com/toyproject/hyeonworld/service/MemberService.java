@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.service;
 
+import com.toyproject.hyeonworld.DTO.Member.MemberAnswer;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -123,4 +124,13 @@ public class MemberService {
     }
 
 
+    public Long putPlayGame0(MemberAnswer memberAnswer) {
+        Optional<Member> member = memberRepository.findById(memberAnswer.getMemberId());
+
+        return member.map (pMember -> {
+            pMember.setAnswer(memberAnswer.getAnswer());
+            memberRepository.save(pMember);
+            return pMember.getId();
+        }).orElse(-1L);
+    }
 }

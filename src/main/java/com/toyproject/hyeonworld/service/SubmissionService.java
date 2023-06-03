@@ -1,6 +1,7 @@
 package com.toyproject.hyeonworld.service;
 
-import com.toyproject.hyeonworld.DTO.SubmissionDTO;
+import com.toyproject.hyeonworld.DTO.Submission.SubmissionDTO;
+import com.toyproject.hyeonworld.DTO.Submission.SubmissionEssential;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Submission;
 import com.toyproject.hyeonworld.repository.MemberRepository;
@@ -35,18 +36,38 @@ public class SubmissionService {
         return foundMember.getId();
     }
 
-    public Long post(int game, Long memberId, List<String> input, Integer inputFalse) {
-        Submission submission = new Submission();
-        submission.setGame(game);
-        submission.setNumber(inputFalse);
-            String str = String.join(";", input);
-        submission.setText(str);
-            Optional<Member> member = memberRepository.findById(memberId);
-        Member foundMember = member.orElseThrow(() -> new IllegalArgumentException("Member not found"+memberId));
-        submission.setMember(foundMember);
-        submissionRepository.save(submission);
-        memberRepository.save(foundMember);
-        return foundMember.getId();
+//    public Long post(int game, Long memberId, List<String> input, Integer inputFalse) {
+//        Submission submission = new Submission();
+//        submission.setGame(game);
+//        submission.setNumber(inputFalse);
+//            String str = String.join(";", input);
+//        submission.setText(str);
+//            Optional<Member> member = memberRepository.findById(memberId);
+//        Member foundMember = member.orElseThrow(() -> new IllegalArgumentException("Member not found"+memberId));
+//        submission.setMember(foundMember);
+//        submissionRepository.save(submission);
+//        memberRepository.save(foundMember);
+//        return foundMember.getId();
+//    }
+
+    public Map<String, SubmissionEssential>  get() {
+        Map<String, SubmissionEssential> ret = new HashMap<>();
+        List <Member> loginMemberList = memberRepository.findAll().stream()
+                .filter(member -> member.getLogin())
+                .collect(Collectors.toList());
+        for (Member member : loginMemberList){
+            List <Submission> submissionList = member.getSubmissionList();
+            if (!submissionList.isEmpty()){
+                System.out.println("FFFFFFF");
+                Submission recentlyAddedSubmission = submissionList.get(submissionList.size() - 1);
+                if (recentlyAddedSubmission.getNumber() == null && recentlyAddedSubmission.getText() != null)
+                    continue;
+                SubmissionEssential submissionEssential = new SubmissionEssential(recentlyAddedSubmission.getNumber(), recentlyAddedSubmission.getText());
+                ret.put(member.getName(), submissionEssential);
+            }
+        }
+        System.out.println("SIZE : "+ ret.size());
+        return ret;
     }
 
     public Map<String, Submission>  get(int game) {
@@ -55,7 +76,6 @@ public class SubmissionService {
         List <Member> loginMemberList = memberRepository.findAll().stream()
                                             .filter(member -> member.getLogin())
                                             .collect(Collectors.toList());
-
         for (Member member : loginMemberList){
             List <Submission> submissionList = member.getSubmissionList();
 
@@ -70,12 +90,8 @@ public class SubmissionService {
 
                 ret.put(member.getName(), submission);
             }
-
-//            submission.setText("WORKING");
-//            submission.setId(22L);
-
         }
-
+        System.out.println("SIZE : "+ ret.size());
         return ret;
     }
 }

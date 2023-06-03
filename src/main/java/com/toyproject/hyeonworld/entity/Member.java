@@ -46,6 +46,8 @@ public class Member {
 
     private long score;
 
+    private int answer;
+
     @OneToMany (mappedBy = "member")
     private List<Submission> submissionList = new ArrayList<>();
 
@@ -60,5 +62,8 @@ public class Member {
     }
     public boolean isInGame() {
         return this.inGame;
+    }
+    public Submission getSubmission () {
+        return submissionList.get(submissionList.size() - 1);
     }
 }

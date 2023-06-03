@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.controller;
 
+import com.toyproject.hyeonworld.DTO.Member.MemberAnswer;
 import com.toyproject.hyeonworld.controller.sse.CustomSseEmitter;
 import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 
@@ -72,5 +73,13 @@ public class MemberController {
         List<String> waitngList = memberService.getWaitingList();
         System.out.println("Waiting List aaa");
         return ResponseEntity.ok (waitngList);
+    }
+
+    @PutMapping("/play/0")
+    public ResponseEntity<Long> putPlayGame0 (@RequestBody MemberAnswer memberAnswer){
+
+        Long playMemberId = memberService.putPlayGame0 (memberAnswer);
+
+        return ResponseEntity.ok (playMemberId);
     }
 }

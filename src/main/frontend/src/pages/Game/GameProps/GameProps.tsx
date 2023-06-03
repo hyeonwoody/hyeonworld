@@ -1,3 +1,5 @@
+import {Submission} from "../0/Submission";
+
 export interface GameProps {
     memberId: number;
     memberName: string;
@@ -7,4 +9,6 @@ export interface GameProps {
 
 export interface GameStageProps {
     memberId: number;
+    callback : any;
+    target : Submission | undefined;
 }

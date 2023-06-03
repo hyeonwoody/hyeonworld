@@ -1,16 +1,12 @@
 package com.toyproject.hyeonworld.controller;
 
+import com.toyproject.hyeonworld.DTO.Member.MemberDTO;
 import com.toyproject.hyeonworld.DTO.PartyInitDTO;
-import com.toyproject.hyeonworld.DTO.SubmissionDTO;
-import com.toyproject.hyeonworld.entity.Party;
+import com.toyproject.hyeonworld.DTO.Submission.SubmissionVO;
 import com.toyproject.hyeonworld.service.PartyService;
-import com.toyproject.hyeonworld.service.ThreadService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 @RestController
 @RequestMapping("/party")
@@ -31,6 +27,14 @@ public class PartyController {
         return ResponseEntity.ok (true);
     }
 
+    @PutMapping("/target")
+    public ResponseEntity<Boolean> putTarget (@RequestBody MemberDTO memberDTO){
+
+        partyService.putTarget(memberDTO.getMemberName());
+
+        return ResponseEntity.ok (true);
+    }
+
     @PostMapping("/init")
     public ResponseEntity<Boolean> initParty (@RequestBody PartyInitDTO partyInitDTO){
         System.out.println("party init");
@@ -39,7 +43,7 @@ public class PartyController {
     }
 
     @GetMapping("/current-game")
-    public ResponseEntity<Integer> getCurrentGame (HttpServletRequest request){
+    public ResponseEntity<Integer> getCurrentGame (){
 
         System.out.println("send current-game");
 
@@ -78,7 +82,13 @@ public class PartyController {
 
 
     }
+    @GetMapping("/target")
+    public ResponseEntity<SubmissionVO> getTarget (){
 
+        SubmissionVO submissionVO = partyService.getTarget();
+
+        return ResponseEntity.ok (submissionVO);
+    }
 
 
 }
