@@ -150,7 +150,7 @@ public class MemberService {
         List<MemberScore> tmp = new ArrayList<>();
         List<Member> memberList = memberRepository.findAll().stream()
                 .filter(member -> member.isLogin())
-                .sorted(Comparator.comparing(Member::getTotalScore))
+                .sorted(Comparator.comparing(Member::getTotalScore).reversed())
                 .collect(Collectors.toList());
         for (Member member : memberList){
             MemberScore memberScore = new MemberScore(member.getName(), member.getTotalScore());
