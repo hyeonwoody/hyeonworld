@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -16,6 +18,14 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("UPDATE Member e SET e.login = false")
     void updateLoginAndInGameColumns();
+
+    default List<String> getCorrectNameList(int answer) {
+        return this.findAll().stream()
+                .filter(member -> member.isLogin())
+                .filter (member -> member.getAnswer() == answer)
+                .map(Member::getName)
+                .collect(Collectors.toList());
+    };
 
 //    @Modifying
 //    @Query("UPDATE Member e SET e.login =:true WHERE e.id = :id")

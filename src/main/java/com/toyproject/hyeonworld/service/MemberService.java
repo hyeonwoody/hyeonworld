@@ -3,7 +3,11 @@ package com.toyproject.hyeonworld.service;
 import com.toyproject.hyeonworld.DTO.Member.MemberAnswer;
 import com.toyproject.hyeonworld.DTO.Member.MemberScore;
 import com.toyproject.hyeonworld.entity.Member;
+import com.toyproject.hyeonworld.entity.Round;
 import com.toyproject.hyeonworld.repository.MemberRepository;
+import com.toyproject.hyeonworld.repository.PartyRepository;
+import com.toyproject.hyeonworld.repository.RoundRepository;
+import com.toyproject.hyeonworld.repository.ScoreSourceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,10 +16,16 @@ import java.util.stream.Collectors;
 @Service
 public class MemberService {
 
+    private final PartyRepository partyRepository;
     private final MemberRepository memberRepository;
+    private final ScoreSourceRepository scoreSourceRepository;
+    private final RoundRepository roundRepository;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, PartyRepository partyRepository, ScoreSourceRepository scoreSourceRepository, RoundRepository roundRepository) {
+        this.partyRepository = partyRepository;
         this.memberRepository = memberRepository;
+        this.scoreSourceRepository = scoreSourceRepository;
+        this.roundRepository = roundRepository;
     }
 
 
@@ -127,25 +137,66 @@ public class MemberService {
         Optional<Member> member = memberRepository.findById(memberAnswer.getMemberId());
 
         return member.map (pMember -> {
+            if (pMember == partyRepository.findFirstByOrderByCreatedAtDesc().get().getTarget())
+                pMember.setAnswer(-2);
             pMember.setAnswer(memberAnswer.getAnswer());
             memberRepository.save(pMember);
             return pMember.getId();
         }).orElse(-1L);
     }
 
-    public List<MemberScore> getRanking() {
+    public HashMap<String, List<MemberScore>> getRanking() {
+        HashMap<String, List<MemberScore>> ret = new HashMap<>();
+        List<MemberScore> tmp = new ArrayList<>();
         List<Member> memberList = memberRepository.findAll().stream()
                 .filter(member -> member.isLogin())
-                .sorted(Comparator.comparing(Member::getScore))
+                .sorted(Comparator.comparing(Member::getTotalScore))
                 .collect(Collectors.toList());
-
-        List<MemberScore> ret = new ArrayList<>();
-
+        for (Member member : memberList){
+            MemberScore memberScore = new MemberScore(member.getName(), member.getTotalScore());
+            tmp.add(memberScore);
+        }
+        ret.put ("memberList", tmp);
 //        for (Member member : memberList){
 //            MemberScore memberScore = new MemberScore();
 //
 //        }
 
         return ret;
+    }
+
+    public List<Member> putScore(int game, HashMap<String, Long> request) {
+        Map<Boolean, List<Member>> memberMap;
+
+        Optional <Round> recentAddedRound = roundRepository.findAll().stream()
+                .sorted(Comparator.comparing(Round::getCreatedAt).reversed())
+                .findFirst();
+
+        if (recentAddedRound.isPresent()) {
+            Round pRound = recentAddedRound.get();
+
+            Integer answer = pRound.getAnswer();
+
+            memberMap = memberRepository.findAll().stream()
+                    .filter(member -> member.isLogin())
+                    .collect(Collectors.partitioningBy(member-> member.getAnswer() == answer));
+
+            for (Member member : memberMap.get(true)){
+                System.out.println("CORRECT"+member.getName());
+                member.addScore(request.get("correct"));
+            }
+            for (Member member : memberMap.get(false)){
+                System.out.println("WRONG"+member.getName());
+                member.addScore(request.get("wrong"));
+            }
+            memberRepository.saveAll(memberMap.get(false));
+            memberRepository.saveAll(memberMap.get(true));
+
+            return memberMap.get(true);
+        } else {
+            // Handle the case when no entities are found
+        }
+
+        return null;
     }
 }

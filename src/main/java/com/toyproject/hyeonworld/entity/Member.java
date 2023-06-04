@@ -44,7 +44,11 @@ public class Member {
     @Column(name="in_game", nullable = false)
     private Boolean inGame;
 
-    private long score;
+    @Column(name="total_score", nullable = false)
+    private long totalScore;
+
+    @OneToMany (mappedBy = "member")
+    private List<ScoreSource> scoreSourceList = new ArrayList<>();
 
     @Column(name="answer", nullable = false, columnDefinition = "-1")
     private int answer;
@@ -66,5 +70,9 @@ public class Member {
     }
     public Submission getSubmission () {
         return submissionList.get(submissionList.size() - 1);
+    }
+    public Long addScore (Long scoreToAdd){
+        this.totalScore += scoreToAdd;
+        return this.totalScore;
     }
 }

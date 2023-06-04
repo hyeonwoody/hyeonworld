@@ -9,7 +9,6 @@ public class MemberDTO {
 
     private String memberName;
 
-
     public MemberDTO(){
 
     }
@@ -19,7 +18,5 @@ public class MemberDTO {
     ) {
         this.memberName = memberName;
     }
-
-
 
 }

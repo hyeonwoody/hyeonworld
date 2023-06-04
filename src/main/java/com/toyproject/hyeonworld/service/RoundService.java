@@ -9,9 +9,7 @@ import com.toyproject.hyeonworld.repository.MemberRepository;
 import com.toyproject.hyeonworld.repository.RoundRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,36 +19,45 @@ public class RoundService {
     private final MemberRepository memberRepository;
     private final GameRepository gameRepository;
 
+    private static List<String> game0CorrectList = new ArrayList<>();
+
+    private static boolean game0Init = false;
+    private static int currentRound = 0;
+
     public RoundService(RoundRepository roundRepository, MemberRepository memberRepository, GameRepository gameRepository) {
         this.roundRepository = roundRepository;
         this.memberRepository = memberRepository;
         this.gameRepository = gameRepository;
     }
 
-    public List<String> get0List(int currentRound) {
+    public Map<String, Object> get0List() {
+        Map <String, Object> ret = new HashMap <>();
 
-        Optional <Round> roundOptional = roundRepository.findAll().stream()
-                .filter(round-> round.getRound() == currentRound && round.getGame().getId() == 0L)
-                .findFirst();
+        if (!game0Init){
+            game0Init = true;
+            System.out.println("Result STAGE LIST INIT :");
+            Optional <Round> roundOptional = roundRepository.findAll().stream()
+                    .filter(round-> round.getGame().getId() == 0L)
+                    .filter(round-> round.getRound() == currentRound)
+                    .max(Comparator.comparing(Round::getCreatedAt));
 
-        if (roundOptional.isPresent()) {
-            Round pRound = roundOptional.get();
-            int answer = pRound.getAnswer();
+            if (roundOptional.isPresent()) {
+                Round pRound = roundOptional.get();
+                int answer = pRound.getAnswer();
 
-            List<String> nameList = memberRepository.findAll().stream()
-                    .filter (member -> member.getAnswer() == answer)
-                    .map(Member::getName)
-                    .collect(Collectors.toList());
-
-            return nameList;
+                this.game0CorrectList = memberRepository.findAll().stream()
+                        .filter (member -> member.getAnswer() == answer)
+                        .map(Member::getName)
+                        .collect(Collectors.toList());
+            }
         }
-        else{
-            return null;
-        }
+        ret.put("CorerectNameList", game0CorrectList);
+        System.out.println("CORRECT SIZE "+game0CorrectList.size());
 
+        return ret;
     }
 
-    public Round postRound0(int currentRound, String memberName) {
+    public Round postRound0(String memberName) {
 
         Optional<Member> memberOptional = memberRepository.findByName(memberName);
         Member pMember = memberOptional.get();
@@ -60,8 +67,11 @@ public class RoundService {
         Optional<Game> game = gameRepository.findById(0L);
 
         Optional <Round> roundOptional = roundRepository.findAll().stream()
-                .filter(round-> round.getRound() == currentRound && round.getGame().getId() == 0L)
+                .filter(round -> round.getGame().getId() == 0L)
+                .filter(round -> round.getRound() == currentRound)
                 .findFirst();
+
+        System.out.println("LIST SIZE "+ roundOptional.stream().toList().size());
 
         if (roundOptional.isPresent()){
             Round pRound = roundOptional.get();
@@ -75,7 +85,18 @@ public class RoundService {
         }
         else {
             Round round = new Round(game.get(), currentRound, submission.getNumber());
+            roundRepository.save(round);
             return round;
         }
     }
+
+    public void createNewRound() {
+        if (game0Init){
+            game0CorrectList.clear();
+            game0Init = false;
+            ++currentRound;
+        }
+    }
+
+
 }

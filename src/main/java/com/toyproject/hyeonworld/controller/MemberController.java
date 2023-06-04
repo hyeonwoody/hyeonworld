@@ -2,16 +2,14 @@ package com.toyproject.hyeonworld.controller;
 
 import com.toyproject.hyeonworld.DTO.Member.MemberAnswer;
 import com.toyproject.hyeonworld.DTO.Member.MemberScore;
-import com.toyproject.hyeonworld.controller.sse.CustomSseEmitter;
 import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 
+import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.service.MemberService;
-import com.toyproject.hyeonworld.service.ThreadService;
-import org.springframework.http.MediaType;
+import com.toyproject.hyeonworld.service.RoundService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,11 +18,13 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private final RoundService roundService;
 
     private final SseEmitters sseEmitters;
 
-    public MemberController(MemberService memberService, SseEmitters sseEmitters) {
+    public MemberController(MemberService memberService, RoundService roundService, SseEmitters sseEmitters) {
         this.memberService = memberService;
+        this.roundService = roundService;
         this.sseEmitters = sseEmitters;
     }
     @PutMapping("/init")
@@ -84,10 +84,17 @@ public class MemberController {
         return ResponseEntity.ok (playMemberId);
     }
 
-    @GetMapping("/ranking")
-    public ResponseEntity<List<MemberScore>> getRanking (){
+    @PutMapping("/score/0")
+    public ResponseEntity<Long> putScore0 (@RequestBody HashMap<String, Long> request){
+        System.out.println(" 스코어 "+request.get("correct"));
+        List<Member> member = memberService.putScore (0, request);
+        return ResponseEntity.ok (request.get("score"));
+    }
 
-        List <MemberScore> ret = memberService.getRanking ();
+    @GetMapping("/ranking")
+    public ResponseEntity<HashMap<String, List<MemberScore>>> getRanking (){
+        HashMap<String, List<MemberScore>> ret = new HashMap<>();
+        ret = memberService.getRanking ();
 
         return ResponseEntity.ok (ret);
     }
