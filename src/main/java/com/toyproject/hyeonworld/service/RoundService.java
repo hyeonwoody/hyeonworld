@@ -37,9 +37,8 @@ public class RoundService {
             game0Init = true;
             System.out.println("Result STAGE LIST INIT :");
             Optional <Round> roundOptional = roundRepository.findAll().stream()
-                    .filter(round-> round.getGame().getId() == 0L)
-                    .filter(round-> round.getRound() == currentRound)
                     .max(Comparator.comparing(Round::getCreatedAt));
+
 
             if (roundOptional.isPresent()) {
                 Round pRound = roundOptional.get();
@@ -77,6 +76,7 @@ public class RoundService {
             Round pRound = roundOptional.get();
 
             pRound.setAnswer(submission.getNumber());
+            pRound.setCreatedAt(new Date());
 
             roundRepository.save(pRound);
             System.out.println("ROUND GOGOG");

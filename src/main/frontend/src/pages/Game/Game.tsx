@@ -32,44 +32,31 @@ function Game(props : GameProps) {
     const [stage, setStage] = useState<number> (1);
     const [waitingList, setList] = useState <string[]> ([]);
 
+    const removeWaitingList = (memberName : string) => {
+        console.log("리무브 : " +memberName);
+        console.log ("STAGE : "+stage);
+
+        setList((prevList) => prevList.filter((item) => item !== memberName));
+
+    }
+
+    const addWaitingList = (memberName : string ) => {
+        setList((prevList) => {
+            if (!prevList.includes(memberName)) {
+                console.log("함포");
+                return [...prevList, memberName];
+            }
+            console.log("미포");
+            return prevList;
+        });
+    }
+
     useEffect(()=>{
         setGame (props.gameId);
 
-        function removeWaitingList (memberName : string){
-            console.log("리무브 : " +memberName);
-            console.log ("STAGE : "+stage);
 
-                // @ts-ignore
-            const removedList: string[] = waitingList.filter((item) => item !== memberName);
-                setList(removedList);
-            if (stage != 1){
-                console.log("REMOVE if ");
-                //stageApi.closeConnection();
-            }
 
-            else {
-                console.log("REMOVE else ");
-            }
-        }
 
-        function addWaitingList (memberName : string){
-                setList((waitingList) => {
-                    if (!waitingList.includes(memberName)){
-                        console.log("함포");
-                        return [...waitingList, memberName];
-                    }
-                    console.log("미포");
-                    return waitingList;
-                });
-            if (stage != 1){
-                console.log("ADD if ");
-                //stageApi.closeConnection();
-            }
-
-            else {
-                 console.log("ADD else ");
-            }
-        }
 
         function changeStage (stage :number){
             console.log("CHANGE STAGE : "+stage);

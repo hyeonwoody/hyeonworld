@@ -40,6 +40,6 @@ public class Round {
 
     @PrePersist
     public void prePersist(){
-        createdAt = new Date();
+        this.createdAt = new Date();
     }
 }
