@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {LogoutAxios} from "../../pages/Home/HomeAPI";
+import ScoreModal from "./scoreModal/ScoreModal";
 
 interface MenuBarProps{
     moveBack: ()=> void;
@@ -10,6 +11,7 @@ interface MenuBarProps{
 
 function MenuBar (props : MenuBarProps){
     const [year, setYear] = useState(0);
+    const [showScore, setScore] = useState(false);
 
     useEffect(()=>{
         const d = new Date();
@@ -28,10 +30,17 @@ function MenuBar (props : MenuBarProps){
 
     const onClickScore = (event : React.MouseEvent<HTMLButtonElement>) => {
         console.log ("현재 점수");
+        setScore(true);
     }
+
+    const onCloseModal = (()=>{
+        console.log("ddddd")
+       setScore(!showScore);
+    });
 
     return (
         <div className="MenuBar">
+            {showScore && <ScoreModal onClose ={onCloseModal}></ScoreModal>}
             <div className="flex flex-row py-4 px-0.5">
                 <div className="flex-grow rounded-lg">
                     <div className="flex justify-end">

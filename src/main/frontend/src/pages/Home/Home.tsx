@@ -28,8 +28,6 @@ function Home (props : HomeProps){
     const [currentGameId, setCurrentGame] = useState <number> (-2);
     const special = new Special();
 
-
-
     useEffect(()=>{
 
         function getGameList (data : Game[]){

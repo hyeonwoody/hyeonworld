@@ -47,12 +47,15 @@ public class MemberService {
 
         if (member.isPresent()){
             Member pMember = member.get();
-            if (pMember.getLogin().equals (false)){
+            if (pMember.isLogin()) {
+                return -2L;
+            }
+            if (pMember.isPlayer()) {
                 pMember.setLogin(true);
                 memberRepository.save(pMember);
-                return pMember.getId();
+
             }
-            return -2L;
+            return pMember.getId();
         }
         return -1L;
     }
@@ -158,7 +161,7 @@ public class MemberService {
         }
         ret.put ("memberList", tmp);
 //        for (Member member : memberList){
-//            MemberScore memberScore = new MemberScore();
+//            MemberScore.ts memberScore = new MemberScore.ts();
 //
 //        }
 

@@ -5,7 +5,7 @@ import Login from '../Login/Login';
 
 function Root(){
 
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(false);
     const [memberName, setMemberName] = useState("");
     const [memberId, setMemberId] = useState(-1);
 

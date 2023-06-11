@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {GameStageProps} from "../../GameProps/GameProps";
 import {RankingAPI} from "./RankingAPI";
-
-export interface MemberScore{
-    memberName :string,
-    totalScore : number
-}
+import {MemberScore} from "../../../../DTO/MemberScore";
 
 export default function Ranking (props : GameStageProps){
     const [list, setList] = useState<MemberScore[]>();

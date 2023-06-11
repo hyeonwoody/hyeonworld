@@ -7,6 +7,7 @@ import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.service.MemberService;
 import com.toyproject.hyeonworld.service.RoundService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,9 @@ public class MemberController {
     }
 
     @PutMapping("/login-confirm")
-    public ResponseEntity<Long> loginConfirm (@RequestParam String loginName){
+    public ResponseEntity<Long> loginConfirm (HttpServletRequest request, @RequestParam String loginName){
+        System.out.println(request.getRemoteAddr());
+
         Long loginMemberId  = memberService.login (loginName);
         if (loginMemberId > 0 && !sseEmitters.empty())
             sseEmitters.send ("AddWaitingList", loginName);

@@ -1,7 +1,7 @@
 import {My} from "../../../../configuration/web/WebConfig";
 import {Special} from "../../../../configuration/special/SpecialConfig";
 import axios from "axios";
-import {MemberScore} from "./Ranking";
+import {MemberScore} from "../../../../DTO/MemberScore";
 
 export function RankingAPI(getList : any) {
     const my = new My();
