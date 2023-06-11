@@ -48,5 +48,12 @@ out/
 
 /src/main/frontend/tsconfig.json
 
+/src/main/frontend/react.log
+/src/main/frontend/nohup.out
+
 ### Test ###
 /src/test/*
+
+app.sh
+react.log
+java.log
