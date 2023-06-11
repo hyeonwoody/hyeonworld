@@ -6,23 +6,26 @@
 ## 🧑‍💻: Intro
 가족의 단합을 도모하는 레크레이션 게임 모음.
 
-❓ Problem : 명절날 오랜만에 모인 가족과 함께 즐길거리가 없다.
+❓Problem : 명절날 오랜만에 모인 가족과 함께 즐길거리가 없다.
 
-‼ Idea : 온 가족 구성원과 가까워질 수 있는 아이스브레이커 게임을 만들기.
+❗Idea : 온 가족 구성원과 가까워질 수 있는 아이스브레이커 게임을 만들기.
 
-💯 Solution : 온 세대가 즐길 수 있는 웹 기반 레크레이션 게임.
+💯Solution : 온 세대가 즐길 수 있는 웹 기반 레크레이션 게임.
 
 <br>
 
 ## 🗓️: Development Period
-2022년 8월 ~ 현재 (약 6개월), 개발 1명.
+2022년 8월 ~ 2023년 6월, 개발 1명.
 
 <br>
 
 ## ✅: Implementation
+- **프록시** : 서버에 접근하기 위한 프록시 설정.
+- **방화벽** : webpackDevServer.config.js에서 disableFirewall 옵션을 true로 설정.
 - **포트포워딩** : 외부 네트워크에서 접속하기 위해 공유기 설정.
 - **CORS 설정** : WebMvcConfigurer 활용.
-- **SSE** : 플레이어가 게임에 진입 할 때, 서버와 EventSource 연결. 서버는 SSeEmitter List로 관리
+- **SSE** : 플레이어가 게임에 진입 할 때, 서버와 EventSource 연결. 서버는 SSeEmitter List로 관리.
+- **Login** :  파일로 저장된 가족 구성원 성함 목록과 비교하여 목록에 있을 경우 로그인 허용.
 
 <br>
 
@@ -76,15 +79,24 @@
 <br>
 
 ## 🧱: Technologies Used
+> Java (Spring Boot) 
 > Javascript (react.js)
-> Java (Spring Boot)
+
 
 <br>
 
 ## 📖: Libraries Used
-> Tailwind CSS
-> Sping Data JPA (MariaDB)
-> EventSource & SseEmitter
+> Tailwind CSS  
+> 
+> Spring Data JPA (MariaDB)  
+> 
+> EventSource & SseEmitter 
+>
+> react-query (현재 단계가 무엇인지 6초 간격으로 서버에게 요청) 
+> 
+> axios (사회자 <=> 서버 <=> 참가자) 
+> 
+> useState (게임 단계)
 
 <br>
 
