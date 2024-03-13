@@ -20,9 +20,13 @@
 <br>
 
 ## ✅: Implementation
+- **프록시** : 서버에 접근하기 위한 프록시 설정.
+- - **방화벽** : webpackDevServer.config.js에서 disableFirewall 옵션을 true로 설정.
 - **포트포워딩** : 외부 네트워크에서 접속하기 위해 공유기 설정.
 - **CORS 설정** : WebMvcConfigurer 활용.
-- **SSE** : 플레이어가 게임에 진입 할 때, 서버와 EventSource 연결. 서버는 SSeEmitter List로 관리
+- - **Login** :  파일로 저장된 가족 구성원 성함 목록과 비교하여 목록에 있을 경우 로그인 허용.
+- **SSE** : 플레이어가 게임에 진입 할 때, 서버와 EventSource 연결. 서버는 SSeEmitter List로 관리.
+- 
 
 <br>
 
@@ -77,14 +81,23 @@
 
 ## 🧱: Technologies Used
 > Javascript (react.js)
+> 
 > Java (Spring Boot)
 
 <br>
 
 ## 📖: Libraries Used
 > Tailwind CSS
+> 
 > Sping Data JPA (MariaDB)
+> 
 > EventSource & SseEmitter
+> 
+> react-query (현재 단계가 무엇인지 6초 간격으로 서버에게 요청)
+> 
+> axios (사회자 <=> 서버 <=> 참가자)
+> 
+> useState (게임 단계)  
 
 <br>
 
