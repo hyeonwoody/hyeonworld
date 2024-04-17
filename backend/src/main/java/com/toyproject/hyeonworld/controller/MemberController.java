@@ -25,13 +25,11 @@ import java.util.stream.Collectors;
 public class MemberController {
 
     private final MemberService memberService;
-    private final RoundService roundService;
 
     private final SseEmitters sseEmitters;
 
-    public MemberController(MemberService memberService, RoundService roundService, SseEmitters sseEmitters) {
+    public MemberController(MemberService memberService, SseEmitters sseEmitters) {
         this.memberService = memberService;
-        this.roundService = roundService;
         this.sseEmitters = sseEmitters;
     }
     @PutMapping("/init")
@@ -68,9 +66,9 @@ public class MemberController {
     @PostMapping("/enter-game")
     public ResponseEntity<Long> enterGame (@RequestBody HashMap<String, Long> request){
 
-        String enterMemeberName = memberService.enterGame_String(request.get("memberId"));
+        String enterMemeberName = memberService.enterGame(request.get("memberId"));
 
-        if (request.get("memberId") > 0 && !sseEmitters.empty())
+        if (request.get("memberId") > 0 && enterMemeberName != null && !sseEmitters.empty())
             sseEmitters.send ("RemoveWaitingList", enterMemeberName);
         return ResponseEntity.ok (request.get("memberId"));
     }
@@ -78,9 +76,9 @@ public class MemberController {
     @PostMapping("/exit-game")
     public ResponseEntity<Long> exitGame (@RequestBody HashMap<String, Long> request){
 
-        String exitMemberName = memberService.exitGame_String( request.get("memberId"));
+        String exitMemberName = memberService.exitGame( request.get("memberId"));
 
-        if ( request.get("memberId") > 0 && !sseEmitters.empty())
+        if ( request.get("memberId") > 0 && exitMemberName != null && !sseEmitters.empty())
             sseEmitters.send ("AddWaitingList", exitMemberName);
 
         return ResponseEntity.ok (request.get("memberId"));
@@ -89,13 +87,11 @@ public class MemberController {
     @GetMapping(value = "/waiting-list/init")
     public ResponseEntity<List<String>> WaitingListInit (@RequestParam Long memberId){
         List<String> waitngList = memberService.getWaitingList();
-        System.out.println("Waiting List aaa");
         return ResponseEntity.ok (waitngList);
     }
 
     @PutMapping("/play/0")
     public ResponseEntity<Long> putPlayGame0 (@RequestBody MemberAnswer memberAnswer){
-
         Long playMemberId = memberService.putPlayGame0 (memberAnswer);
 
         return ResponseEntity.ok (playMemberId);
@@ -104,7 +100,7 @@ public class MemberController {
     @PutMapping("/score/0")
     public ResponseEntity<Long> putScore0 (@RequestBody HashMap<String, Long> request){
         System.out.println(" 스코어 "+request.get("correct"));
-        List<Member> member = memberService.putScore (0, request);
+        List<Member> member = memberService.putScore (request);
         return ResponseEntity.ok (request.get("score"));
     }
 

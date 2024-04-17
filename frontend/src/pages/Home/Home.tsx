@@ -81,7 +81,7 @@ function Home (props : HomeProps){
                     </>)
                 : <ul className="cards">
                     {gameList.map((game: Game, i: number) => {
-                        return <li id={(game.id).toString()} className={"card"+i%7} key={i} onClick={onClickGame}>
+                        return <li id={i.toString()} className={"card"+i%7} key={i} onClick={onClickGame}>
                             <h3 className="card-title">{game.name}</h3>
                             <ul className="p-2 space-y-1"/>
                             {game.description}</li>

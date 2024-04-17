@@ -88,7 +88,7 @@
 ## 📖: Libraries Used
 > Tailwind CSS  
 > 
-> Spring Data JPA (MariaDB)  
+> JDBC (MariaDB)  
 > 
 > EventSource & SseEmitter 
 >

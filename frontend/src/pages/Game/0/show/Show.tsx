@@ -24,7 +24,7 @@ export default function Show(props : GameStageProps) {
 
             <h3>{displaySubmission?.name}님의 명제</h3>
             {
-                displaySubmission?.textList.map ((text, index)=>{
+                displaySubmission?.textList?.map ((text, index)=>{
                     return (
                             <div key={index}>
                                 <p >{text}</p>

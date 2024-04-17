@@ -4,9 +4,12 @@ import com.toyproject.hyeonworld.entity.Game;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Round;
 import com.toyproject.hyeonworld.entity.Submission;
-import com.toyproject.hyeonworld.repository.GameRepository;
-import com.toyproject.hyeonworld.repository.MemberRepository;
-import com.toyproject.hyeonworld.repository.RoundRepository;
+import com.toyproject.hyeonworld.repository.game.GameRepository;
+import com.toyproject.hyeonworld.repository.game.JdbcTemplateGameRepository;
+import com.toyproject.hyeonworld.repository.member.JdbcTemplateMemberRepository;
+import com.toyproject.hyeonworld.repository.member.MemberRepository;
+import com.toyproject.hyeonworld.repository.round.JdbcTemplateRoundRepository;
+import com.toyproject.hyeonworld.repository.round.RoundRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,19 +18,19 @@ import java.util.stream.Collectors;
 @Service
 public class RoundService {
 
-    private final RoundRepository roundRepository;
-    private final MemberRepository memberRepository;
-    private final GameRepository gameRepository;
+    private final JdbcTemplateRoundRepository jdbcTemplateRoundRepository;
 
-    private static List<String> game0CorrectList = new ArrayList<>();
+    private final JdbcTemplateMemberRepository jdbcTemplateMemberRepository;
+
+    private static List<String> correctMemberNames = new ArrayList<>();
 
     private static boolean game0Init = false;
     private static int currentRound = 0;
 
-    public RoundService(RoundRepository roundRepository, MemberRepository memberRepository, GameRepository gameRepository) {
-        this.roundRepository = roundRepository;
-        this.memberRepository = memberRepository;
-        this.gameRepository = gameRepository;
+    public RoundService(JdbcTemplateRoundRepository jdbcTemplateRoundRepository,
+                        JdbcTemplateMemberRepository jdbcTemplateMemberRepository) {
+        this.jdbcTemplateRoundRepository = jdbcTemplateRoundRepository;
+        this.jdbcTemplateMemberRepository = jdbcTemplateMemberRepository;
     }
 
     public Map<String, Object> get0List() {
@@ -36,63 +39,29 @@ public class RoundService {
         if (!game0Init){
             game0Init = true;
             System.out.println("Result STAGE LIST INIT :");
-            Optional <Round> roundOptional = roundRepository.findAll().stream()
-                    .max(Comparator.comparing(Round::getCreatedAt));
+            Round round = jdbcTemplateRoundRepository.getCurrentRound();
 
 
-            if (roundOptional.isPresent()) {
-                Round pRound = roundOptional.get();
-                int answer = pRound.getAnswer();
+            if (round != null) {
+                int answer = round.getAnswer();
+                correctMemberNames = jdbcTemplateMemberRepository.getCorrectMemberNames(answer);
 
-                this.game0CorrectList = memberRepository.findAll().stream()
-                        .filter (member -> member.getAnswer() == answer)
-                        .map(Member::getName)
-                        .collect(Collectors.toList());
             }
         }
-        ret.put("CorerectNameList", game0CorrectList);
-        System.out.println("CORRECT SIZE "+game0CorrectList.size());
+        ret.put("CorerectNameList", correctMemberNames);
+        System.out.println("CORRECT SIZE "+correctMemberNames.size());
 
         return ret;
     }
 
-    public Round postRound0(String memberName) {
-
-        Optional<Member> memberOptional = memberRepository.findByName(memberName);
-        Member pMember = memberOptional.get();
-
-        List<Submission> submissionList = pMember.getSubmissionList();
-        Submission submission = submissionList.get(submissionList.size() - 1);
-        Optional<Game> game = gameRepository.findById(0L);
-
-        Optional <Round> roundOptional = roundRepository.findAll().stream()
-                .filter(round -> round.getGame().getId() == 0L)
-                .filter(round -> round.getRound() == currentRound)
-                .findFirst();
-
-        System.out.println("LIST SIZE "+ roundOptional.stream().toList().size());
-
-        if (roundOptional.isPresent()){
-            Round pRound = roundOptional.get();
-
-            pRound.setAnswer(submission.getNumber());
-            pRound.setCreatedAt(new Date());
-
-            roundRepository.save(pRound);
-            System.out.println("ROUND GOGOG");
-            return pRound;
-
-        }
-        else {
-            Round round = new Round(game.get(), currentRound, submission.getNumber());
-            roundRepository.save(round);
-            return round;
-        }
+    public void postRound0(String memberName) {
+       Submission submission = jdbcTemplateMemberRepository.findByNameGetSubmission(memberName);
+       jdbcTemplateRoundRepository.updateCurrentRoundAnswer(0L, currentRound, submission);
     }
 
     public void createNewRound() {
         if (game0Init){
-            game0CorrectList.clear();
+            correctMemberNames.clear();
             game0Init = false;
             ++currentRound;
         }

@@ -27,7 +27,7 @@ public class RoundController {
     @PostMapping("/0")
     public ResponseEntity<Boolean> postRound0 (@RequestBody HashMap<String, String > request){
 
-        Round round = roundService.postRound0(request.get("memberName"));
+        roundService.postRound0(request.get("memberName"));
         System.out.println("ROUND Controller"+currentRound);
         return ResponseEntity.ok (true);
     }

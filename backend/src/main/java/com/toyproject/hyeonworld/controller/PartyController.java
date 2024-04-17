@@ -1,8 +1,10 @@
 package com.toyproject.hyeonworld.controller;
 
+import com.toyproject.hyeonworld.DTO.Game.CurrentGameDTO;
 import com.toyproject.hyeonworld.DTO.Member.MemberDTO;
 import com.toyproject.hyeonworld.DTO.PartyInitDTO;
 import com.toyproject.hyeonworld.DTO.Submission.SubmissionVO;
+import com.toyproject.hyeonworld.service.MemberService;
 import com.toyproject.hyeonworld.service.PartyService;
 import com.toyproject.hyeonworld.service.RoundService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,15 +16,17 @@ import org.springframework.web.bind.annotation.*;
 public class PartyController {
 
     private final PartyService partyService;
+    private final MemberService memberService;
 
 
-    public PartyController(PartyService partyService) {
+    public PartyController(PartyService partyService, MemberService memberService) {
         this.partyService = partyService;
+        this.memberService = memberService;
     }
 
     @PutMapping("/current-game")
-    public ResponseEntity<Boolean> openGame (@RequestParam Integer game){
-        partyService.open(game);
+    public ResponseEntity<Boolean> openGame (@RequestBody CurrentGameDTO gameDTO){
+        partyService.open(gameDTO.getId());
 
         return ResponseEntity.ok (true);
     }
@@ -38,6 +42,7 @@ public class PartyController {
     public ResponseEntity<Boolean> initParty (@RequestBody PartyInitDTO partyInitDTO){
         System.out.println("party init");
         partyService.init(partyInitDTO);
+        memberService.init();
         return ResponseEntity.ok (true);
     }
 

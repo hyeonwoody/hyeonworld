@@ -1,36 +1,44 @@
 package com.toyproject.hyeonworld.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
 
-@Entity
+
 @Data
-@Table(name="submission")
 public class Submission {
-    @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "submission_id", unique = true)
+
     private Long id;
 
-    @Column(name = "game")
     private Integer game;
 
-    @Column(name = "number")
     private Integer number;
 
-    @Column(name = "text")
+
     private String text;
 
-    @ManyToOne
-    @JoinColumn (name="member_id")
+
     private Member member;
 
-    @Column(name = "created_at")
     private Date createdAt;
 
-    @PrePersist
+    public Submission(String text){
+        this.text = text;
+    }
+    public Submission(Integer number) {
+
+        this.number = number;
+
+    }
+
+
+    public Submission(Integer game, Integer number, String text) {
+        this.game = game;
+        this.number = number;
+        this.text = text;
+    }
+
+
     public void prePersist(){
         createdAt = new Date();
     }

@@ -79,7 +79,7 @@ public class SseEmitters {
         DataMap dataMap = new DataMap();
         switch (eventName){
             case "currentGameStage":
-                Integer currentGameStage = partyService.getCurrentGameStageQuery();
+                Integer currentGameStage = partyService.getCurrentGameStage();
                 System.out.println("SEND : :"+currentGameStage);
                 send (eventName, dataMap.mapOf("gameStage", currentGameStage));
                 break;

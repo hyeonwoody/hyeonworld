@@ -37,6 +37,7 @@ const OpenModal = ( props: OpenModalProps) => {
     }
 
     const commitOpen = (event : React.MouseEvent<HTMLButtonElement>) => {
+        console.log(gameName);
         OpenGameAxios(props.gameList[openGame].id);
         props.onOpen();
     }

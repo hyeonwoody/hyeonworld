@@ -1,20 +1,20 @@
 package com.toyproject.hyeonworld.service;
 
-import com.toyproject.hyeonworld.repository.MemberRepository;
+import com.toyproject.hyeonworld.repository.member.JdbcTemplateMemberRepository;
+import com.toyproject.hyeonworld.repository.member.MemberRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class InitService {
-    private final MemberRepository memberRepository;
+    private final JdbcTemplateMemberRepository jdbcTemplateMemberRepository;
 
 
-    public InitService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+    public InitService(JdbcTemplateMemberRepository jdbcTemplateMemberRepository) {
+        this.jdbcTemplateMemberRepository = jdbcTemplateMemberRepository;
     }
 
     public void member() {
         System.out.println("실행");
-        memberRepository.updateLoginAndInGameColumns();
     }
 
 }
