@@ -62,7 +62,7 @@ export function DisplayGameAxios(callback: (data: any) => void) {
 export function LogoutAxios(callback: (data: any) => void, logoutId : number) {
     axios({
         url: "member/" + "logout-confirm",
-        method: 'put',
+        method: 'post',
         baseURL: `http://${my.ipAddress}:${my.backEndPort}`,
         withCredentials: true,
         params: {

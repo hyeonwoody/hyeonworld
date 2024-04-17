@@ -6,6 +6,7 @@ import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.service.MemberService;
+import com.toyproject.hyeonworld.service.PartyService;
 import com.toyproject.hyeonworld.service.RoundService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,7 @@ public class MemberController {
         return ResponseEntity.ok (loginMemberId);
     }
 
-    @PutMapping("/logout-confirm")
+    @PostMapping("/logout-confirm")
     public ResponseEntity<Long> logoutConfirm (@RequestParam Long logoutId){
         Long loginMemberId = memberService.logout (logoutId);
         return ResponseEntity.ok (loginMemberId);
