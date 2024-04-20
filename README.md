@@ -14,6 +14,11 @@
 
 <br>
 
+## 🧬: Structure
+![Web App Reference Architecture (3)](https://github.com/hyeonwoody/hyeonworld/assets/75844701/40fdf696-8fca-415f-84d6-06df73bfd300)
+
+</br>
+
 ## 🗓️: Development Period
 2022년 8월 ~ 2023년 6월, 개발 1명.
 
