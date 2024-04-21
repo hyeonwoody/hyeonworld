@@ -104,9 +104,7 @@
 > 
 > JDBC (MariaDB)  
 > 
-> EventSource & SseEmitter 
->
-> react-query (현재 단계가 무엇인지 6초 간격으로 서버에게 요청) 
+> EventSource & SseEmitter
 > 
 > axios (사회자 <=> 서버 <=> 참가자) 
 > 
