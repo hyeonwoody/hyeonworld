@@ -24,8 +24,13 @@ public class JdbcTemplateGameRepository {
 
     public Game findById(long l) {
         String sql = "SELECT * FROM game where id = ?";
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-            int a = 0;
-            return new Game(rs.getLong("game_id"), rs.getString("name"), rs.getString("description"));});
+
+        List<Game> retGame = jdbcTemplate.query(sql, (rs, rowNum) -> new Game(rs.getLong("game_id"), rs.getString("name"), rs.getString("description")));
+        if (retGame.isEmpty()){
+            return null;
+        }
+        else {
+            return retGame.get(0);
+        }
     }
 }

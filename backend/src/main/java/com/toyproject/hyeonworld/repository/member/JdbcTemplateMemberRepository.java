@@ -4,6 +4,7 @@ import com.toyproject.hyeonworld.entity.Member;
 
 import com.toyproject.hyeonworld.entity.Submission;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.stereotype.Repository;
@@ -25,24 +26,35 @@ public class JdbcTemplateMemberRepository {
     public Member findById(Long logoutId) {
         Map<String, Object> params = Collections.singletonMap("id", logoutId);
 
-        String sql = "SELECT id, login, in_game FROM member WHERE id = ?";
+        String sql = "SELECT id, login, in_game FROM member WHERE id = ? LIMIT 1";
 
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-            return new Member(rs.getLong("id"),
-                    rs.getBoolean("login"), rs.getBoolean("in_game"));}, logoutId);
+        List<Member> retMember = jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getLong("id"),
+                        rs.getBoolean("login"), rs.getBoolean("in_game"))
+                , logoutId);
+
+        if (retMember.isEmpty()) {
+            return null;
+        } else {
+            return retMember.get(0);
+        }
     }
+
     public Member findByName(String name) {
         Map<String, Object> params = Collections.singletonMap("name", name);
 
-        String sql = "SELECT id,name,login,player FROM member WHERE name = ?";
+        String sql = "SELECT id,name,login,player FROM member WHERE name = ? LIMIT 1";
 
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-
-            String a = rs.getString("name");
-            return new Member(rs.getLong("id"),
-                    rs.getString("name"),
-                    rs.getBoolean("login"),
-                    rs.getBoolean("player"));}, name);
+        List <Member> retMember = jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getLong("id"),
+                            rs.getString("name"),
+                            rs.getBoolean("login"),
+                            rs.getBoolean("player"))
+                            , name);
+        if (retMember.isEmpty()){
+            return null;
+        }
+        else {
+            return retMember.get(0);
+        }
     }
 
 
@@ -103,9 +115,8 @@ public class JdbcTemplateMemberRepository {
 
     public List<Member> findLoggedInButNotInGameMembers() {
         String sql = "SELECT name FROM member where login = true AND in_game = false";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            String a = rs.getString("name");
-            return new Member(rs.getString("name"));});
+
+            return jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getString("name")));
     }
 
     public void setAnswer(Member member) {
@@ -115,16 +126,14 @@ public class JdbcTemplateMemberRepository {
 
     public List<Member> getTopScoringParticipants() {
         String sql = "SELECT * FROM member WHERE login = true ORDER BY total_score DESC";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            return new Member(rs.getString("name"), rs.getLong("total_score"));});
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getString("name"), rs.getLong("total_score")));
     }
 
 
 
     public List<Member> getCorrectMembers(Integer answer) {
         String sql = "SELECT * FROM member WHERE answer = ?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            return new Member(rs.getString("name"), rs.getLong("total_score"));}, answer);
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getString("name"), rs.getLong("total_score")), answer);
     }
 
     public void updateScore(List<Member> correctMembers, Long correctScore, Long wrongScore) {
