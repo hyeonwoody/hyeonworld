@@ -45,6 +45,7 @@ frontend/src/configuration/special/SpecialConfig.ts
 
 ### Various properties ###
 *.properties
+!backend/gradle/wrapper/gradle-wrapper.properties
 
 frontend/tsconfig.json
 
