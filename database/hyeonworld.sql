@@ -14,20 +14,20 @@ CREATE TABLE `game` (
 CREATE TABLE `member` (
                           `id` bigint(20) NOT NULL AUTO_INCREMENT,
                           `email` varchar(50) DEFAULT NULL,
-                          `login` bit(1) NOT NULL,
+                          `login` bit(1) NOT NULL DEFAULT b'0',
                           `party_type` tinyint(4) NOT NULL,
                           `name` varchar(15) NOT NULL,
-                          `proposition` bit(1) NOT NULL,
+                          `proposition` bit(1) NOT NULL DEFAULT b'0',
                           `nick_name` varchar(15) DEFAULT NULL,
-                          `nick_name_proposition` bit(1) NOT NULL,
-                          `in_game` bit(1) NOT NULL,
+                          `nick_name_proposition` bit(1) NOT NULL DEFAULT b'0',
+                          `in_game` bit(1) NOT NULL DEFAULT b'0',
                           `relation` tinyint(4) NOT NULL,
-                          `answer` int(11) NOT NULL,
-                          `total_score` bigint(20) NOT NULL,
-                          `player` bit(1) NOT NULL,
-                          `member_id` bigint(20) NOT NULL,
+                          `answer` int(11) NOT NULL DEFAULT 0,
+                          `total_score` bigint(20) NOT NULL DEFAULT 0,
+                          `player` bit(1) NOT NULL DEFAULT b'1',
+                          `member_id` bigint(20) NOT NULL DEFAULT 0,
                           PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1220 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1231 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 -- hyeonworld.party definition
