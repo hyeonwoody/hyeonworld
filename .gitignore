@@ -48,7 +48,7 @@ frontend/src/configuration/special/SpecialConfig.ts
 !backend/src/main/resources/application.properties
 !backend/gradle/wrapper/gradle-wrapper.properties
 
-frontend/tsconfig.json
+!frontend/tsconfig.json
 
 nohup.out
 
