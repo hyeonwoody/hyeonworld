@@ -30,8 +30,6 @@
 
 <br>
 
-
-
 ## ✅: Implementation
 - **프록시** : 서버에 접근하기 위한 프록시 설정.
 - **방화벽** : webpackDevServer.config.js에서 disableFirewall 옵션을 true로 설정.
@@ -39,6 +37,7 @@
 - **CORS 설정** : WebMvcConfigurer 활용.
 - **SSE** : 플레이어가 게임에 진입 할 때, 서버와 EventSource 연결. 서버는 SSeEmitter List로 관리.
 - **Login** :  파일로 저장된 가족 구성원 성함 목록과 비교하여 목록에 있을 경우 로그인 허용.
+- **Member CRUD** : 사용자를 추가할 수 있는 어드민 메뉴.
 
 <br>
 
@@ -81,6 +80,13 @@
 
 한번 이상의 라운드를 거친 게임을 사회자 판단 하에 종료(Done)할 수 있으며  
 라운드가 끝날 때마다 점수 게임 내용에 대한 기록(score_source) Entity 생성.
+
+<br>
+
+## 🎥: Demonstration
+
+[Link to AWS EC2](http://13.125.105.200:13001/)
+(AdminId : 가족 ) 
 
 <br>
 
