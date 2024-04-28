@@ -5,7 +5,6 @@ import {InitAxios} from "./InitAPI"
 export const PartyList: {[key: number] : string} = {
     0:"외가",
     1:"친가",
-    2:"가족",
 }
 
 const InitModal = ({onInit}: any) => {
@@ -53,7 +52,7 @@ const InitModal = ({onInit}: any) => {
                     })}
                   </label>
                 <input className={"text-center"} type={"text"} value={PartyList[partyType]} onChange={handleGroups}></input>
-                <input id="default-range" type="range" min="0" max={Object.keys(PartyList).length} step={"1"} onChange={handleGroups} value={partyType}
+                <input id="default-range" type="range" min="0" max={Object.keys(PartyList).length -1} step={"1"} onChange={handleGroups} value={partyType}
                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                 />
 

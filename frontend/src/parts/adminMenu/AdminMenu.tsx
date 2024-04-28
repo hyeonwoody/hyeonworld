@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import InitModal from "./init/InitModal";
 import OpenModal from "./open/OpenModal";
+import MemberModal from "./member/MemberModal";
 import {AdminMenuAxios, AdminDoneAxios} from "../adminMenu/AdminMenuAPI";
 import {type} from "@testing-library/user-event/dist/type";
 
@@ -25,12 +26,16 @@ export const AdminMenuList = {
     Result: 7,
     Ranking: 8,
     Done: 9,
+    Members: 10,
 };
+
+
 
 function AdminMenu (props: AdminMenuProps){
 
     const [initModal, setInit] = useState<boolean>(false);
     const [openModal, setOpen] = useState<boolean>(false);
+    const [memberModal, setMember] = useState<boolean>(false);
 
     useEffect(()=>{
     },[])
@@ -44,6 +49,9 @@ function AdminMenu (props: AdminMenuProps){
     }
     const onDone = () => {
         AdminDoneAxios();
+    }
+    const onMember = () => {
+        setMember(!memberModal);
     }
 
 
@@ -66,6 +74,9 @@ function AdminMenu (props: AdminMenuProps){
             case AdminMenuList["Done"]:
                 onDone();
                 break;
+            case AdminMenuList["Members"]:
+                onMember();
+                break;
             default:
                 console.log("ㅁㄹ");
         }
@@ -77,6 +88,7 @@ function AdminMenu (props: AdminMenuProps){
             <div className={"grid grid-cols-5"}>
                 {initModal && <InitModal onInit={onInit}/>}
                 {openModal && <OpenModal onOpen={onOpen} gameList={props.gameList}/>}
+                {memberModal && <MemberModal onMember={onMember}/>}
             {Object.entries(AdminMenuList).map(([menuName, index]) =>{
                 return <button
                         type={"button"}
