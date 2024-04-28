@@ -1,6 +1,8 @@
 package com.toyproject.hyeonworld.service;
 
 import com.toyproject.hyeonworld.DTO.Member.MemberAnswer;
+import com.toyproject.hyeonworld.DTO.Member.MemberCreateDTO;
+import com.toyproject.hyeonworld.DTO.Member.MemberDTO;
 import com.toyproject.hyeonworld.DTO.Member.MemberScore;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Round;
@@ -31,6 +33,27 @@ public class MemberService {
         this.jdbcTemplateRoundRepository = jdbcTemplateRoundRepository;
     }
 
+
+    public Long create(MemberCreateDTO member) {
+        Member pMember = jdbcTemplateMemberRepository.findByName(member.getName());
+        if (pMember == null){
+            return jdbcTemplateMemberRepository.create(member);
+        }
+        else {
+            return -1L;
+        }
+    }
+
+    public MemberDTO findById(Long id) {
+        return jdbcTemplateMemberRepository.findDTOById(id);
+    }
+
+    public Long edit(MemberCreateDTO member) {
+        return jdbcTemplateMemberRepository.edit(member);
+    }
+
+    public void delete(Long id) {
+    }
 
     public Long init() {
         jdbcTemplateMemberRepository.init();
@@ -143,4 +166,7 @@ public class MemberService {
 
         return null;
     }
+
+
+
 }

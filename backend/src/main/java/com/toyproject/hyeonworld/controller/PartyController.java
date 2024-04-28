@@ -34,7 +34,7 @@ public class PartyController {
     @PutMapping("/target")
     public ResponseEntity<Boolean> putTarget (@RequestBody MemberDTO memberDTO){
 
-        partyService.putTarget(memberDTO.getMemberName());
+        partyService.putTarget(memberDTO.getName());
         return ResponseEntity.ok (true);
     }
 

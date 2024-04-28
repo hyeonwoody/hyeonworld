@@ -1,5 +1,7 @@
 package com.toyproject.hyeonworld.repository.member;
 
+import com.toyproject.hyeonworld.DTO.Member.MemberCreateDTO;
+import com.toyproject.hyeonworld.DTO.Member.MemberDTO;
 import com.toyproject.hyeonworld.entity.Member;
 
 import com.toyproject.hyeonworld.entity.Submission;
@@ -7,9 +9,13 @@ import com.toyproject.hyeonworld.entity.Submission;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,9 +29,20 @@ public class JdbcTemplateMemberRepository {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public Member findById(Long logoutId) {
-        Map<String, Object> params = Collections.singletonMap("id", logoutId);
 
+    public MemberDTO findDTOById(Long id) {
+        String sql = "SELECT id, name, party_type, relation FROM member WHERE id = ? LIMIT 1";
+        List<MemberDTO> retMember = jdbcTemplate.query(sql, (rs, rowNum) -> new MemberDTO(rs.getLong("id"),
+                        rs.getString("name"), rs.getByte("party_type"), rs.getByte("relation"))
+                , id);
+
+        if (retMember.isEmpty()) {
+            return null;
+        } else {
+            return retMember.get(0);
+        }
+    }
+    public Member findById(Long logoutId) {
         String sql = "SELECT id, login, in_game FROM member WHERE id = ? LIMIT 1";
 
         List<Member> retMember = jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getLong("id"),
@@ -96,7 +113,31 @@ public class JdbcTemplateMemberRepository {
             params.add(paramMap);
         }
     }
+    public Long create(MemberCreateDTO member) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        String sql = "INSERT INTO member (name, party_type, relation) VALUE (?, ?, ?)";
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection
+                    .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, member.getName());
+            ps.setInt(2, member.getPartyType());
+            ps.setInt(3, member.getRelation());
+            return ps;
+        }, keyHolder);
+        Number ret = keyHolder.getKey();
+        return (Long) ret;
+    }
 
+    public Long edit(MemberCreateDTO member) {
+        String sql = "UPDATE member SET party_type = ?, relation = ? WHERE name = ?";
+        jdbcTemplate.update(sql, new Object[]{member.getPartyType(), member.getRelation(), member.getName()});
+        return 0L;
+    }
+
+    public void delete(Long id) {
+        String sql = "DELETE FROM member WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 
     public void toggleLogin(Member member) {
         String sql = "UPDATE member SET login = ? WHERE id = ?";
@@ -188,6 +229,8 @@ public class JdbcTemplateMemberRepository {
         String sql = "SELECT id FROM member WHERE login = true;";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getString("id")));
     }
+
+
 
 
 //    public void save(Member member) {

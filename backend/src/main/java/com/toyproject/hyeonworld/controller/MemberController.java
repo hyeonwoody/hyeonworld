@@ -1,6 +1,9 @@
 package com.toyproject.hyeonworld.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toyproject.hyeonworld.DTO.Member.MemberAnswer;
+import com.toyproject.hyeonworld.DTO.Member.MemberCreateDTO;
+import com.toyproject.hyeonworld.DTO.Member.MemberDTO;
 import com.toyproject.hyeonworld.DTO.Member.MemberScore;
 import com.toyproject.hyeonworld.controller.sse.SseEmitters;
 
@@ -32,6 +35,51 @@ public class MemberController {
         this.memberService = memberService;
         this.sseEmitters = sseEmitters;
     }
+
+    @PostMapping
+    public ResponseEntity<Long> createMember (HttpServletRequest request) { //name, partyType
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String requestBody = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            MemberCreateDTO memberCreateDTO = objectMapper.readValue(requestBody, MemberCreateDTO.class);
+            Long ret = memberService.create(memberCreateDTO);
+            return ResponseEntity.ok(ret);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberDTO> getMemberById (@PathVariable Long id) { //name, partyType
+        MemberDTO memberDTO = memberService.findById(id);
+        return ResponseEntity.ok(memberDTO);
+    }
+
+    @PutMapping
+    public ResponseEntity<Long> editMember (HttpServletRequest request) { //name, partyType
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String requestBody = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            MemberCreateDTO memberCreateDTO = objectMapper.readValue(requestBody, MemberCreateDTO.class);
+            Long ret = memberService.edit(memberCreateDTO);
+            return ResponseEntity.ok(ret);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> deleteMember (@PathVariable Long id){
+        memberService.delete(id);
+        return ResponseEntity.ok (id);
+    }
+
     @PutMapping("/init")
     public ResponseEntity<Long> init(){
         System.out.println("INIT MEMBER");
@@ -48,7 +96,7 @@ public class MemberController {
             requestBody = reader.lines().collect(Collectors.joining(System.lineSeparator()));
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+    }
 
 
         Long loginMemberId  = memberService.login (requestBody);

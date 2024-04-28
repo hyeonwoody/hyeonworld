@@ -1,11 +1,17 @@
 package com.toyproject.hyeonworld.repository.member;
 
+import com.toyproject.hyeonworld.DTO.Member.MemberCreateDTO;
+import com.toyproject.hyeonworld.DTO.Member.MemberDTO;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Submission;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,6 +66,60 @@ class JdbcTemplateMemberRepositoryTest {
         List <Member> members = jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getLong("id")));
         for (Member member :members){
             System.out.println(member.getId());
+        }
+    }
+
+    @Test
+    void create() {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MemberCreateDTO member = new MemberCreateDTO();
+        member.setName("장철수");
+        member.setPartyType(8);
+        member.setRelation(3);
+        String sql = "INSERT INTO member (name, party_type, relation) VALUE (?, ?, ?)";
+        Member memberRet = new Member();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection
+                    .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, member.getName());
+            ps.setInt(2, member.getPartyType());
+            ps.setInt(3, member.getRelation());
+            return ps;
+        }, keyHolder);
+        Number a = keyHolder.getKey();
+        int ab = 0;
+    }
+
+    @Test
+    void edit() {
+        MemberCreateDTO member = new MemberCreateDTO();
+        member.setName("모르겠ㅁ");
+        member.setPartyType(8);
+        member.setRelation(3);
+        String sql = "UPDATE member SET party_type = ?, relation = ? where name = ?";
+        jdbcTemplate.update(sql, new Object[]{member.getPartyType(), member.getRelation(), member.getName()});
+    }
+
+
+    @Test
+    void delete() {
+        Long id = 1222L;
+        String sql = "DELETE FROM member WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
+    @Test
+    void findDTOById() {
+        Long id = 3L;
+        String sql = "SELECT id, name, party_type, relation FROM member WHERE id = ? LIMIT 1";
+        List<MemberDTO> retMember = jdbcTemplate.query(sql, (rs, rowNum) -> new MemberDTO(rs.getLong("id"),
+                        rs.getString("name"), rs.getByte("party_type"), rs.getByte("relation"))
+                , id);
+
+        if (retMember.isEmpty()) {
+        
+        } else {
+
         }
     }
 }
