@@ -43,10 +43,10 @@ public class JdbcTemplateMemberRepository {
         }
     }
     public Member findById(Long logoutId) {
-        String sql = "SELECT id, login, in_game FROM member WHERE id = ? LIMIT 1";
+        String sql = "SELECT id, login, in_game, player FROM member WHERE id = ? LIMIT 1";
 
         List<Member> retMember = jdbcTemplate.query(sql, (rs, rowNum) -> new Member(rs.getLong("id"),
-                        rs.getBoolean("login"), rs.getBoolean("in_game"))
+                        rs.getBoolean("login"), rs.getBoolean("in_game"), rs.getBoolean("player"))
                 , logoutId);
 
         if (retMember.isEmpty()) {

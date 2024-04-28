@@ -96,6 +96,12 @@ public class Member {
         this.inGame = inGame;
     }
 
+    public Member(long id, boolean login, boolean inGame, boolean player) {
+        this.id = id;
+        this.login = login;
+        this.inGame = inGame;
+        this.player = player;
+    }
 
 
     public boolean isLogin() {

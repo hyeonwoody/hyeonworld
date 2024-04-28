@@ -65,7 +65,8 @@ public class MemberService {
             if (member.isLogin()) {
                 return -2L;
             }
-            jdbcTemplateMemberRepository.toggleLogin(member);
+            if (member.isPlayer())
+                jdbcTemplateMemberRepository.toggleLogin(member);
             return member.getId();
         }
         return -1L;
@@ -78,7 +79,8 @@ public class MemberService {
 
 
         if (member != null){
-            jdbcTemplateMemberRepository.toggleLogin(member);
+            if (member.isPlayer())
+                jdbcTemplateMemberRepository.toggleLogin(member);
             return member.getId();
         }
         return -1L;
