@@ -74,8 +74,8 @@ class JdbcTemplateMemberRepositoryTest {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MemberCreateDTO member = new MemberCreateDTO();
         member.setName("장철수");
-        member.setPartyType(8);
-        member.setRelation(3);
+        member.setPartyType((byte) 8);
+        member.setRelation((byte) 3);
         String sql = "INSERT INTO member (name, party_type, relation) VALUE (?, ?, ?)";
         Member memberRet = new Member();
         jdbcTemplate.update(connection -> {
@@ -94,8 +94,8 @@ class JdbcTemplateMemberRepositoryTest {
     void edit() {
         MemberCreateDTO member = new MemberCreateDTO();
         member.setName("모르겠ㅁ");
-        member.setPartyType(8);
-        member.setRelation(3);
+        member.setPartyType((byte) 8);
+        member.setRelation((byte) 3);
         String sql = "UPDATE member SET party_type = ?, relation = ? where name = ?";
         jdbcTemplate.update(sql, new Object[]{member.getPartyType(), member.getRelation(), member.getName()});
     }
@@ -117,7 +117,7 @@ class JdbcTemplateMemberRepositoryTest {
                 , id);
 
         if (retMember.isEmpty()) {
-        
+
         } else {
 
         }

@@ -124,7 +124,7 @@ public class JdbcTemplateMemberRepository {
             ps.setInt(3, member.getRelation());
             return ps;
         }, keyHolder);
-        Number ret = keyHolder.getKey();
+        Number ret = keyHolder.getKey().longValue();
         return (Long) ret;
     }
 

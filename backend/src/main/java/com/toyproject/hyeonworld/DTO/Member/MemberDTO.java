@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.toyproject.hyeonworld.entity.Member;
 import lombok.Data;
 
+import java.math.BigInteger;
+
 @Data
 public class MemberDTO {
 

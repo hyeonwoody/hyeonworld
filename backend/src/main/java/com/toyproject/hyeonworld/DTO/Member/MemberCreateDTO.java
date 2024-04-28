@@ -8,7 +8,7 @@ import lombok.Data;
 public class MemberCreateDTO {
 
     private String name;
-    private Integer relation;
-    private Integer partyType;
+    private Byte partyType;
+    private Byte relation;
 
 }
