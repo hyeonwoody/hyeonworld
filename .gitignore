@@ -37,14 +37,15 @@ out/
 .vscode/
 
 ### Web Configuration ###
-backend/src/main/java/com/toyproject/hyeonworld/configuration/web/WebConfig.java
-frontend/src/configuration/web/WebConfig.ts
+!backend/src/main/java/com/toyproject/hyeonworld/configuration/web/WebConfig.java
+!frontend/src/configuration/web/WebConfig.ts
 
 ### Special ###
 frontend/src/configuration/special/SpecialConfig.ts
 
 ### Various properties ###
 *.properties
+!backend/src/main/resources/application.properties
 !backend/gradle/wrapper/gradle-wrapper.properties
 
 frontend/tsconfig.json
