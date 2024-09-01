@@ -9,17 +9,10 @@ import java.util.Date;
 public class Submission {
 
     private Long id;
-
     private Integer game;
-
     private Integer number;
-
-
     private String text;
-
-
     private Member member;
-
     private Date createdAt;
 
     public Submission(String text){

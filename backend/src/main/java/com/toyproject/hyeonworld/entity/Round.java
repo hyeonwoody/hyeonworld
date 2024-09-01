@@ -12,20 +12,10 @@ public class Round {
 
 
     private Long id;
-
-
-    private Game game;
-
-
-    private int round;
-
-
     private int answer;
-
-
+    private int round;
+    private Game game;
     private Date createdAt;
-
-
 
     public Round() {
 

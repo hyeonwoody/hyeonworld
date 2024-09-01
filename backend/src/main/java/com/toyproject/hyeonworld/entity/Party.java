@@ -10,26 +10,12 @@ public class Party {
 
 
     private Long id;
-
-
     private Integer partyType;
-
-
     private Integer persons;
-
-
     private Integer currentGame;
-
-
     private Integer currentGameStage;
-
-
-    private Member target;
-
     private Date createdAt;
-
-
-
+    private Member target;
 
     public void prePersist(){
         createdAt = new Date();

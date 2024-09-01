@@ -11,46 +11,20 @@ import java.util.List;
 public class Member {
 
     private Long id;
-
-
+    private String email;
+    private Boolean login;
+    private Byte partyType; //0 : 식구, 1 : 친가, 2 : 외가
+    private String name;
+    private boolean proposition; //0 : 은 이, 1 : 는 가
+    private String nickName;
+    private Boolean nickNameProposition;
+    private Boolean inGame;
+    private Byte relation;
+    private int answer;
+    private long totalScore;
     private Boolean player;
 
-
-    private String email;
-
-
-    private Boolean login;
-
-    private Byte partyType; //0 : 식구, 1 : 친가, 2 : 외가
-
-
-    private String name;
-
-
-    private boolean proposition; //0 : 은 이, 1 : 는 가
-
-
-    private Byte relation;
-
-
-    private String nickName;
-
-
-    private Boolean nickNameProposition;
-
-
-    private Boolean inGame;
-
-
-    private long totalScore;
-
-
     private List<ScoreSource> scoreSourceList = new ArrayList<>();
-
-
-    private int answer;
-
-
     private List<Submission> submissionList = new ArrayList<>();
 
     public Member (Long id, String name, boolean login, boolean player){ //
@@ -102,7 +76,6 @@ public class Member {
         this.inGame = inGame;
         this.player = player;
     }
-
 
     public boolean isLogin() {
         return this.login;
