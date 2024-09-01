@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 
-@SpringBootApplication
-public class HyeonworldApplication {
+	@SpringBootApplication
+	public class HyeonworldApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HyeonworldApplication.class, args);
+		public static void main(String[] args) {
+			SpringApplication.run(HyeonworldApplication.class, args);
+		}
 	}
-}
