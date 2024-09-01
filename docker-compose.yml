@@ -7,3 +7,18 @@ services:
             context: ./database
             dockerfile: Dockerfile
         network_mode: "host"
+    mysql:
+        image:
+            mysql:8.0
+        container_name: hyeonworld_mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: hyeonworld
+            MYSQL_USER: cons
+            MYSQL_PASSWORD: sa
+        ports:
+            - 3306:3306
+        volumes:
+            - ./mysql_data:/var/lib/mysql
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
