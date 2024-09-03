@@ -1,20 +1,21 @@
 -- User table
 CREATE TABLE user (
-                      id BIGINT PRIMARY KEY,
+                      id BIGINT PRIMARY KEY AUTO_INCREMENT,
                       login BOOLEAN UNIQUE,
                       name VARCHAR(20) UNIQUE,
                       relation INT UNIQUE,
-                      party_type INT UNIQUE,
+                      relation_type INT UNIQUE,
                       email VARCHAR(50),
                       proposition BOOLEAN,
-                      nick_name VARCHAR(20),
-                      nick_name_proposition BOOLEAN,
-                      in_game BOOLEAN
+                      nickname VARCHAR(20),
+                      nickname_proposition BOOLEAN,
+                      in_game BOOLEAN,
+                    player BOOLEAN
 );
 
 -- Party table
 CREATE TABLE party (
-                       id BIGINT PRIMARY KEY,
+                       id BIGINT PRIMARY KEY AUTO_INCREMENT,
                        party_type INT,
                        created_at DATETIME
 );
@@ -37,7 +38,7 @@ CREATE TABLE game (
 
 -- Round table
 CREATE TABLE round (
-                       id BIGINT PRIMARY KEY,
+                       id BIGINT PRIMARY KEY AUTO_INCREMENT,
                        party_id BIGINT,
                        game_id BIGINT,
                        answer INT,
@@ -46,7 +47,7 @@ CREATE TABLE round (
 
 -- Submission table
 CREATE TABLE submission (
-                            id BIGINT PRIMARY KEY,
+                            id BIGINT PRIMARY KEY AUTO_INCREMENT,
                             round_id BIGINT UNIQUE,
                             user_id BIGINT,
                             number BIGINT,
