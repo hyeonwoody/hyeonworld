@@ -2,6 +2,7 @@ package com.toyproject.hyeonworld.api.user.infrastructure;
 
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 import com.toyproject.hyeonworld.api.user.infrastructure.jpa.UserJpaRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,11 @@ public class UserRepositoryImpl implements UserRepository{
   @Override
   public User save(User user) {
     return userJpaRepository.save(user);
+  }
+
+  @Override
+  public List<User> findAll() {
+    return userJpaRepository.findAll();
   }
 
   @Override

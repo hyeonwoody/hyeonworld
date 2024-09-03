@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,11 @@ public class UserController {
   @PostMapping
   public ResponseEntity<UserResponse> registerUser(@RequestBody UserRequest.create request){
     return ResponseEntity.ok(UserResponse.from(userService.createUser(request.toCommand())));
+  }
+
+  @GetMapping
+  public ResponseEntity<List<UserResponse>> retrieveAllUsers(){
+    return ResponseEntity.ok(UserResponse.from(userService.getAllUsers()));
   }
 
   @GetMapping("/{userId}")

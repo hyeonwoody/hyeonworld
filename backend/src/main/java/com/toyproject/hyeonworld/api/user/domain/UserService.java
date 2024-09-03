@@ -1,9 +1,11 @@
 package com.toyproject.hyeonworld.api.user.domain;
 import static com.toyproject.hyeonworld.api.user.infrastructure.entity.User.*;
 import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo.*;
+import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos.*;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.CreateUserCommand;
 
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo;
+import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos;
 import com.toyproject.hyeonworld.api.user.infrastructure.UserRepository;
 import com.toyproject.hyeonworld.common.exception.ServerException;
 import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
@@ -21,6 +23,10 @@ public class UserService {
 
   public UserInfo createUser(CreateUserCommand command) {
     return from(userRepository.save(create(command)));
+  }
+
+  public UserInfos getAllUsers() {
+    return from(userRepository.findAll());
   }
 
   public UserInfo getUserById(long userId) {
