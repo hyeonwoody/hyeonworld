@@ -14,7 +14,9 @@ import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,5 +46,12 @@ public class UserController {
   @GetMapping("/{userId}")
   public ResponseEntity<UserResponse> retrieveUser(@PathVariable("userId") long userId){
     return ResponseEntity.ok(UserResponse.from(userService.getUserById(userId)));
+  }
+
+  @PatchMapping("/{userId}")
+  public ResponseEntity<UserResponse> editUser(
+      @PathVariable long userId,
+      @RequestBody UserRequest.edit request){
+    return ResponseEntity.ok(UserResponse.from(userService.editUser(request.toCommand(userId))));
   }
 }

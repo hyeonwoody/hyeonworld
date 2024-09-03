@@ -11,7 +11,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Entity
 public class Game {
     @Id
     private Long id;
