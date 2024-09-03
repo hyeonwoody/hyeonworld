@@ -56,4 +56,15 @@ public class UserService {
     userInfos.forEach(userInfo -> userRepository.save(userInfo.entityToInit()));
     return userInfos.size();
   }
+
+  public UserInfo getUserByName(String userName) {
+    return from(userRepository.findByName(userName)
+        .orElseThrow(()->new ServerException(ServerResponseCode.USER_NOT_FOUND))
+    );
+  }
+
+  public UserInfo confirmLogin(String userName) {
+    UserInfo userInfo = this.getUserByName(userName);
+    return from(userRepository.save(userInfo.entityToLogin()));
+  }
 }
