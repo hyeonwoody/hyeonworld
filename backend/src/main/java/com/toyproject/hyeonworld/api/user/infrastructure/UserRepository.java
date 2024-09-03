@@ -1,6 +1,7 @@
 package com.toyproject.hyeonworld.api.user.infrastructure;
 
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
+import java.util.Optional;
 
 /**
  * @author : hyeonwoody@gmail.com
@@ -9,4 +10,6 @@ import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 public interface UserRepository {
 
   User save(User user);
+
+  Optional<User> findById(long userId);
 }

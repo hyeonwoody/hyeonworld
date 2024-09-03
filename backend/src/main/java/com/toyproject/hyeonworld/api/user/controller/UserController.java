@@ -10,8 +10,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,4 +35,8 @@ public class UserController {
     return ResponseEntity.ok(UserResponse.from(userService.createUser(request.toCommand())));
   }
 
+  @GetMapping("/{userId}")
+  public ResponseEntity<UserResponse> retrieveUser(@PathVariable("userId") long userId){
+    return ResponseEntity.ok(UserResponse.from(userService.getUserById(userId)));
+  }
 }
