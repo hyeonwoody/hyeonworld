@@ -12,6 +12,7 @@ import lombok.Getter;
  */
 @Getter
 public class UserInfo {
+  Long id;
   String name;
   Byte relationType;
   String nickname;

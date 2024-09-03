@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  * @since : 24. 9. 3.
  */
 public record UserResponse (
+  Long id,
   String name,
   Byte relationType,
   String nickname,
