@@ -51,4 +51,9 @@ public class UserService {
     return fromDelete(userRepository.deleteById(userId));
   }
 
+  public int initUsers() {
+    UserInfos userInfos = UserInfos.from(userRepository.findByLogin(true));
+    userInfos.forEach(userInfo -> userRepository.save(userInfo.entityToInit()));
+    return userInfos.size();
+  }
 }
