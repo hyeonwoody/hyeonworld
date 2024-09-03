@@ -4,6 +4,8 @@ import com.toyproject.hyeonworld.api.game.domain.dto.out.GameInfo;
 import com.toyproject.hyeonworld.api.game.infrastructure.entity.Game;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.EditUserCommand;
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
+import com.toyproject.hyeonworld.common.exception.ServerException;
+import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 import java.util.Objects;
 import lombok.Getter;
@@ -21,6 +23,13 @@ public class UserInfo {
   Byte relation;
   public static UserInfo from (User user) {
     return ObjectrMapper.convert(user, UserInfo.class);
+  }
+
+  public static UserInfo fromDelete (int ret){
+    if (ret == 1){
+      return new UserInfo();
+    }
+    throw new ServerException(ServerResponseCode.USER_NOT_FOUND);
   }
 
   public User toEntity() {

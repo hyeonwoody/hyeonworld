@@ -54,4 +54,10 @@ public class UserController {
       @RequestBody UserRequest.edit request){
     return ResponseEntity.ok(UserResponse.from(userService.editUser(request.toCommand(userId))));
   }
+
+  @DeleteMapping("/{userId}")
+  public ResponseEntity<UserResponse> deleteUser(
+      @PathVariable long userId){
+    return ResponseEntity.ok(UserResponse.from(userService.deleteUser(userId)));
+  }
 }

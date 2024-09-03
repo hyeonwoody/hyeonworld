@@ -45,4 +45,10 @@ public class UserService {
     userInfo.update(command);
     return from(userRepository.save(userInfo.toEntity()));
   }
+
+  @Transactional
+  public UserInfo deleteUser(long userId) {
+    return fromDelete(userRepository.deleteById(userId));
+  }
+
 }
