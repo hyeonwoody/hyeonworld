@@ -1,16 +1,17 @@
 -- User table
 CREATE TABLE user (
                       id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                      login BOOLEAN UNIQUE,
-                      name VARCHAR(20) UNIQUE,
-                      relation INT UNIQUE,
-                      relation_type INT UNIQUE,
+                      login BOOLEAN,
+                      name VARCHAR(20),
+                      relation INT,
+                      relation_type INT,
                       email VARCHAR(50),
                       proposition BOOLEAN,
                       nickname VARCHAR(20),
                       nickname_proposition BOOLEAN,
                       in_game BOOLEAN,
-                    player BOOLEAN
+                      player BOOLEAN,
+                      UNIQUE (login, name, relation, relation_type)
 );
 
 -- Party table
