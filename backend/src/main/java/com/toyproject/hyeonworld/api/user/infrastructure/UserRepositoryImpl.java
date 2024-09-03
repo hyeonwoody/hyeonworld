@@ -35,4 +35,9 @@ public class UserRepositoryImpl implements UserRepository{
   public int deleteById(long userId) {
     return userJpaRepository.deleteById(userId);
   }
+
+  @Override
+  public List<User> findByLogin(boolean login) {
+    return userJpaRepository.findByLogin(login);
+  }
 }

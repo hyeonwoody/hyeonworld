@@ -21,24 +21,36 @@ public class UserInfo {
   Byte relationType;
   String nickname;
   Byte relation;
+
+  private User.UserBuilder initializeEntity(){
+    return User.builder()
+        .id(this.id)
+        .name(this.name)
+        .relationType(this.relationType)
+        .nickname(this.nickname)
+        .relation(this.relation);
+  }
+
   public static UserInfo from (User user) {
     return ObjectrMapper.convert(user, UserInfo.class);
   }
 
-  public static UserInfo fromDelete (int ret){
-    if (ret == 1){
+  public static UserInfo fromDelete (int ret) {
+    if (ret == 1) {
       return new UserInfo();
     }
     throw new ServerException(ServerResponseCode.USER_NOT_FOUND);
   }
 
   public User toEntity() {
-    return User.builder()
-        .id(this.id)
-        .name(this.name)
-        .relationType(this.relationType)
-        .nickname(this.nickname)
-        .relation(this.relation)
+    return initializeEntity()
+        .build();
+  }
+
+  public User entityToInit() {
+    return initializeEntity()
+        .login(false)
+        .inGame(false)
         .build();
   }
 
@@ -61,6 +73,4 @@ public class UserInfo {
       }
     });
   }
-
-
 }

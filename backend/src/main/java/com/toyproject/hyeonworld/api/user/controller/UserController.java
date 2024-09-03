@@ -60,4 +60,9 @@ public class UserController {
       @PathVariable long userId){
     return ResponseEntity.ok(UserResponse.from(userService.deleteUser(userId)));
   }
+
+  @PatchMapping("/init")
+  public ResponseEntity<Integer> initUsers(){
+    return ResponseEntity.ok(userService.initUsers());
+  }
 }

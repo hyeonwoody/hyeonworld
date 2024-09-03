@@ -17,4 +17,6 @@ public interface UserRepository {
   List<User> findAll();
 
   int deleteById(long userId);
+
+  List<User> findByLogin(boolean login);
 }
