@@ -19,4 +19,6 @@ public interface UserRepository {
   int deleteById(long userId);
 
   List<User> findByLogin(boolean login);
+
+  Optional<User> findByName(String userName);
 }

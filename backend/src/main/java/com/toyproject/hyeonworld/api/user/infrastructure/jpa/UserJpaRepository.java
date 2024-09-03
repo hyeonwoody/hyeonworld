@@ -3,6 +3,7 @@ package com.toyproject.hyeonworld.api.user.infrastructure.jpa;
 import com.toyproject.hyeonworld.api.game.infrastructure.entity.Game;
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Meta;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,4 +21,6 @@ public interface UserJpaRepository extends JpaRepository<User, Long> {
   int deleteById(@Param("user_id") long userId);
 
   List<User> findByLogin(boolean login);
+
+  Optional<User> findByName(String userName);
 }
