@@ -37,4 +37,8 @@ public class SseManager {
 
 
   }
+
+  public void remove(long userId) {
+    emitterManager.removeEmitter(userId);
+  }
 }

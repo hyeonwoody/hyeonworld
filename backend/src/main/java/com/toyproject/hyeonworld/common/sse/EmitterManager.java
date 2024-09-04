@@ -53,4 +53,12 @@ public class EmitterManager {
     emitter.onTimeout(emitter::complete);
     this.emitterList.add(emitter);
   }
+
+  public void removeEmitter(long userId) {
+    List<CustomSseEmitter> emittersToRemove = this.emitterList.stream()
+        .filter(emitter -> emitter.getId() == userId)
+        .toList();
+    this.emitterList.removeAll(emittersToRemove);
+    emittersToRemove.forEach(CustomSseEmitter::complete);
+  }
 }
