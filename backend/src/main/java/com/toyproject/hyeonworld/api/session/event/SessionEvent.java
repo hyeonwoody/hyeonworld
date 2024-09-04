@@ -8,27 +8,10 @@ import lombok.RequiredArgsConstructor;
  * @author : hyeonwoody@gmail.com
  * @since : 24. 9. 4.
  */
-public abstract class SessionEvent implements CustomEvent {
-  @Getter
-  private final long userId;
+public sealed interface SessionEvent extends CustomEvent {
+  long userId();
 
-  protected SessionEvent(long userId) {
-    this.userId = userId;
-  }
+  record Login(long userId, String userName) implements SessionEvent {}
 
-  @Getter
-  public static class Login extends SessionEvent {
-    private final String userName;
-    public Login(long userId, String userName) {
-      super(userId);
-      this.userName = userName;
-    }
-  }
-
-  @Getter
-  public static class Logout extends SessionEvent {
-    public Logout(long userId) {
-      super(userId);
-    }
-  }
+  record Logout(long userId) implements SessionEvent {}
 }

@@ -22,20 +22,20 @@ public class LoginEventListenerImpl implements LoginEventListener {
   @Async
   @TransactionalEventListener(phase = AFTER_COMMIT)
   public void registerWaitingList(SessionEvent.Login event) {
-    sseManager.registerWaitingList(event.getUserName());
+    sseManager.registerWaitingList(event.userName());
   }
 
   @Override
   @Async
   @TransactionalEventListener(phase = AFTER_COMMIT)
   public void registerSse(SessionEvent.Login event){
-    sseManager.add(event.getUserId());
+    sseManager.add(event.userId());
   }
 
   @Override
   @Async
   @TransactionalEventListener(phase = AFTER_COMMIT)
   public void removeSse(SessionEvent.Logout event){
-    sseManager.remove(event.getUserId());
+    sseManager.remove(event.userId());
   }
 }
