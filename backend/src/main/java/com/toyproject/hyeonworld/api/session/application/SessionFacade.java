@@ -1,8 +1,9 @@
 package com.toyproject.hyeonworld.api.session.application;
 
 import com.toyproject.hyeonworld.api.session.application.dto.in.CreateLoginSessionCommand;
-import com.toyproject.hyeonworld.api.session.application.dto.in.DeleteLoginSessionCommand;
+import com.toyproject.hyeonworld.api.session.application.dto.in.SessionCommand;
 import com.toyproject.hyeonworld.api.session.event.SessionEvent;
+import com.toyproject.hyeonworld.api.session.event.SessionEvent.Game;
 import com.toyproject.hyeonworld.api.session.event.SessionEventPublisher;
 import com.toyproject.hyeonworld.api.user.domain.UserService;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo;
@@ -32,9 +33,16 @@ public class SessionFacade {
   }
 
   @Transactional
-  public long deleteLoginSession(DeleteLoginSessionCommand command) {
+  public long deleteLoginSession(SessionCommand command) {
     UserInfo userInfo = userService.confirmLogOut(command.userId());
     eventPublisher.execute(new SessionEvent.Logout(userInfo.getId()));
+    return command.userId();
+  }
+
+  @Transactional
+  public long enterGame(SessionCommand command) {
+    UserInfo userInfo = userService.confirmEnterGame(command.userId());
+    eventPublisher.execute(new SessionEvent.GameIn(userInfo.getId(), userInfo.getName()));
     return command.userId();
   }
 }

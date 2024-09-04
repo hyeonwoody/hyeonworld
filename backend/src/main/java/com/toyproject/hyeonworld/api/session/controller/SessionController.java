@@ -22,11 +22,19 @@ public class SessionController {
   private final SessionFacade sessionFacade;
 
   @PostMapping
-  public ResponseEntity<SessionResponse> processLogin(@RequestBody SessionRequest.create request){
+  public ResponseEntity<SessionResponse> processLogin(@RequestBody SessionRequest.Create request){
     return ResponseEntity.ok(SessionResponse.from(sessionFacade.createLoginSession(request.toCommand())));
   }
+
+  @PostMapping("/game")
+  public ResponseEntity<SessionResponse> processEnterGame(@RequestBody SessionRequest.Game request){
+    return ResponseEntity.ok(SessionResponse.from(sessionFacade.enterGame(request.toCommand())));
+  }
+
   @DeleteMapping
-  public ResponseEntity<SessionResponse> processLogout(@RequestBody SessionRequest.delete request){
+  public ResponseEntity<SessionResponse> processLogout(@RequestBody SessionRequest.Delete request){
     return ResponseEntity.ok(SessionResponse.from(sessionFacade.deleteLoginSession(request.toCommand())));
   }
+
+
 }

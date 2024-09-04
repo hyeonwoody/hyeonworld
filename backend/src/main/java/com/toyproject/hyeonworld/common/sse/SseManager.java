@@ -23,12 +23,11 @@ public class SseManager {
 
 
   public void registerWaitingList(String userName) {
-    DataMap dataMap = new DataMap();
-    emitterManager.send("registerWaitingList", dataMap.mapOf("userName", userName));
+    emitterManager.send("registerWaitingList", DataMap.mapOf("userName", userName));
   }
 
   public void removeWaitingList(String userName){
-    //execute this when user enter the game
+    emitterManager.send("removeWaitingList", DataMap.mapOf("userName", userName));
   }
 
   //Nobody listens to this.

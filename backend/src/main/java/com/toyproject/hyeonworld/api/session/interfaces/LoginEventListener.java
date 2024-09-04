@@ -14,6 +14,9 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public interface LoginEventListener extends EventListener {
 
   void registerWaitingList(SessionEvent.Login event);
+
+  void removeWaitingList(SessionEvent.GameIn event);
+
   void registerSse(SessionEvent.Login event);
   void removeSse(SessionEvent.Logout event);
 }

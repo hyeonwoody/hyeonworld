@@ -72,4 +72,14 @@ public class UserService {
     UserInfo userInfo = this.getUserById(userId);
     return from(userRepository.save(userInfo.entityToSession(false)));
   }
+
+  public UserInfo confirmEnterGame(long userId) {
+    UserInfo userInfo = this.getUserById(userId);
+    return from(userRepository.save(userInfo.entityToGame(true)));
+  }
+
+  public UserInfo confirmExitGame(long userId) {
+    UserInfo userInfo = this.getUserById(userId);
+    return from(userRepository.save(userInfo.entityToGame(false)));
+  }
 }

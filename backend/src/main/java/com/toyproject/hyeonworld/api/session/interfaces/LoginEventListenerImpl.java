@@ -28,6 +28,13 @@ public class LoginEventListenerImpl implements LoginEventListener {
   @Override
   @Async
   @TransactionalEventListener(phase = AFTER_COMMIT)
+  public void removeWaitingList(SessionEvent.GameIn event){
+    sseManager.removeWaitingList(event.userName());
+  }
+
+  @Override
+  @Async
+  @TransactionalEventListener(phase = AFTER_COMMIT)
   public void registerSse(SessionEvent.Login event){
     sseManager.add(event.userId());
   }
