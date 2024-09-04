@@ -11,13 +11,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class LoginEventPublisherImpl implements LoginEventPublisher{
+public class SessionEventPublisherImpl implements SessionEventPublisher{
   private final ApplicationEventPublisher applicationEventPublisher;
 
   @Override
-  public void execute(CustomEvent loginEvent) {
-    applicationEventPublisher.publishEvent(loginEvent);
+  public void execute(CustomEvent event) {
+    applicationEventPublisher.publishEvent(event);
   }
-
-
 }

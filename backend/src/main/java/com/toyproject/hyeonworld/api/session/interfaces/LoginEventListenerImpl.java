@@ -3,7 +3,7 @@ package com.toyproject.hyeonworld.api.session.interfaces;
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
 import com.toyproject.hyeonworld.common.sse.SseManager;
-import com.toyproject.hyeonworld.api.session.event.LoginEvent;
+import com.toyproject.hyeonworld.api.session.event.SessionEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -21,14 +21,21 @@ public class LoginEventListenerImpl implements LoginEventListener {
   @Override
   @Async
   @TransactionalEventListener(phase = AFTER_COMMIT)
-  public void registerWaitingList(LoginEvent event) {
+  public void registerWaitingList(SessionEvent.Login event) {
     sseManager.registerWaitingList(event.getUserName());
   }
 
   @Override
   @Async
   @TransactionalEventListener(phase = AFTER_COMMIT)
-  public void registerSse(LoginEvent event){
+  public void registerSse(SessionEvent.Login event){
     sseManager.add(event.getUserId());
+  }
+
+  @Override
+  @Async
+  @TransactionalEventListener(phase = AFTER_COMMIT)
+  public void removeSse(SessionEvent.Logout event){
+    sseManager.remove(event.getUserId());
   }
 }
