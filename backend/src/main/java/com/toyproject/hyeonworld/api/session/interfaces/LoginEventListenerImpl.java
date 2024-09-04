@@ -2,6 +2,7 @@ package com.toyproject.hyeonworld.api.session.interfaces;
 
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
+import com.toyproject.hyeonworld.api.session.event.SessionEvent.GameOut;
 import com.toyproject.hyeonworld.common.sse.SseManager;
 import com.toyproject.hyeonworld.api.session.event.SessionEvent;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,13 @@ public class LoginEventListenerImpl implements LoginEventListener {
   @Async
   @TransactionalEventListener(phase = AFTER_COMMIT)
   public void registerWaitingList(SessionEvent.Login event) {
+    sseManager.registerWaitingList(event.userName());
+  }
+
+  @Override
+  @Async
+  @TransactionalEventListener(phase = AFTER_COMMIT)
+  public void registerWaitingList(GameOut event) {
     sseManager.registerWaitingList(event.userName());
   }
 

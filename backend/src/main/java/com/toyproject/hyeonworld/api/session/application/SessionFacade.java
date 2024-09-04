@@ -46,6 +46,7 @@ public class SessionFacade {
     return command.userId();
   }
 
+  @Transactional
   public long exitGame(SessionCommand command) {
     UserInfo userInfo = userService.confirmExitGame(command.userId());
     eventPublisher.execute(new SessionEvent.GameOut(userInfo.getId(), userInfo.getName()));

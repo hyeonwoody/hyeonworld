@@ -31,6 +31,11 @@ public class SessionController {
     return ResponseEntity.ok(SessionResponse.from(sessionFacade.enterGame(request.toCommand())));
   }
 
+  @DeleteMapping("/game")
+  public ResponseEntity<SessionResponse> processExitGame(@RequestBody SessionRequest.Game request){
+    return ResponseEntity.ok(SessionResponse.from(sessionFacade.exitGame(request.toCommand())));
+  }
+
   @DeleteMapping
   public ResponseEntity<SessionResponse> processLogout(@RequestBody SessionRequest.Delete request){
     return ResponseEntity.ok(SessionResponse.from(sessionFacade.deleteLoginSession(request.toCommand())));

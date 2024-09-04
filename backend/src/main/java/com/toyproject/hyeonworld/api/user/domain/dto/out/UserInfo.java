@@ -62,10 +62,9 @@ public class UserInfo {
         .inGame(false)
         .build();
   }
-
-  public User entityToEnterGame() {
+  public User entityToGame(boolean enter) {
     return initializeEntity()
-        .inGame(true)
+        .inGame(enter)
         .build();
   }
 
