@@ -45,4 +45,10 @@ public class SessionFacade {
     eventPublisher.execute(new SessionEvent.GameIn(userInfo.getId(), userInfo.getName()));
     return command.userId();
   }
+
+  public long exitGame(SessionCommand command) {
+    UserInfo userInfo = userService.confirmExitGame(command.userId());
+    eventPublisher.execute(new SessionEvent.GameOut(userInfo.getId(), userInfo.getName()));
+    return command.userId();
+  }
 }

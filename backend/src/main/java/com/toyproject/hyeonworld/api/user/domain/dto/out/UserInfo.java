@@ -21,6 +21,8 @@ public class UserInfo {
   Byte relationType;
   String nickname;
   Byte relation;
+  boolean login;
+  boolean inGame;
 
   private User.UserBuilder initializeEntity(){
     return User.builder()
@@ -61,9 +63,9 @@ public class UserInfo {
         .build();
   }
 
-  public User entityToGame(boolean enter) {
+  public User entityToEnterGame() {
     return initializeEntity()
-        .inGame(enter)
+        .inGame(true)
         .build();
   }
 

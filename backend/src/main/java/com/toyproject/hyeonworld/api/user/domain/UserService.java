@@ -65,6 +65,9 @@ public class UserService {
 
   public UserInfo confirmLogin(String userName) {
     UserInfo userInfo = this.getUserByName(userName);
+    if (userInfo.isLogin()){
+      throw new ServerException(ServerResponseCode.USER_ALREADY_LOGGED_IN);
+    }
     return from(userRepository.save(userInfo.entityToSession(true)));
   }
 
