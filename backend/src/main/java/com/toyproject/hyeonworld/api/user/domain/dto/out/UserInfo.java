@@ -54,9 +54,9 @@ public class UserInfo {
         .build();
   }
 
-  public User entityToLogin() {
+  public User entityToSession(boolean login) {
     return initializeEntity()
-        .login(true)
+        .login(login)
         .inGame(false)
         .build();
   }
@@ -80,6 +80,7 @@ public class UserInfo {
       }
     });
   }
+
 
 
 }

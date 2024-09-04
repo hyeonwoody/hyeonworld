@@ -65,6 +65,11 @@ public class UserService {
 
   public UserInfo confirmLogin(String userName) {
     UserInfo userInfo = this.getUserByName(userName);
-    return from(userRepository.save(userInfo.entityToLogin()));
+    return from(userRepository.save(userInfo.entityToSession(true)));
+  }
+
+  public UserInfo confirmLogOut(long userId) {
+    UserInfo userInfo = this.getUserById(userId);
+    return from(userRepository.save(userInfo.entityToSession(false)));
   }
 }
