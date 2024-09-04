@@ -11,12 +11,12 @@ import org.springframework.transaction.event.TransactionalEventListener;
  * @author : hyeonwoody@gmail.com
  * @since : 24. 9. 4.
  */
-public interface LoginEventListener extends EventListener {
+public interface SessionEventListener extends EventListener {
 
-  void registerWaitingList(SessionEvent.Login event);
-  void removeWaitingList(SessionEvent.GameIn event);
-  void registerWaitingList(SessionEvent.GameOut event);
-  void registerSse(SessionEvent.Login event);
-  void removeSse(SessionEvent.Logout event);
+  void handleSessionEvent(SessionEvent event);
 
+  void handleLoginSessionEvent(SessionEvent.Login event);
+  void handleGameInSessionEvent(SessionEvent.GameIn event);
+  void handleGameOutSessionEvent(SessionEvent.GameOut event);
+  void handleLogoutSessionEvent(SessionEvent.Logout event);
 }

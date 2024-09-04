@@ -5,5 +5,4 @@ package com.toyproject.hyeonworld.common.event;
  * @since : 24. 9. 4.
  */
 public interface EventListener {
-
 }
