@@ -1,8 +1,12 @@
-package com.toyproject.hyeonworld.api.party.domain;
+package com.toyproject.hyeonworld.api.partyDashboard.domain;
 
-import static com.toyproject.hyeonworld.api.party.infrastructure.entity.PartyDashboard.*;
-import com.toyproject.hyeonworld.api.party.infrastructure.PartyDashboardRepository;
-import com.toyproject.hyeonworld.api.party.infrastructure.entity.PartyDashboard;
+import static com.toyproject.hyeonworld.api.partyDashboard.domain.dto.out.PartyDashboardInfo.from;
+import static com.toyproject.hyeonworld.api.partyDashboard.infrastructure.entity.PartyDashboard.*;
+
+import com.toyproject.hyeonworld.api.partyDashboard.domain.dto.in.ChangeDashboardCommand;
+import com.toyproject.hyeonworld.api.partyDashboard.domain.dto.out.PartyDashboardInfo;
+import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.PartyDashboardRepository;
+import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.entity.PartyDashboard;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,5 +34,9 @@ public class PartyDashboardService {
       log.error("Failed to save PartyDashboard for partyId: {}", partyId, e);
       throw e;
     }
+  }
+
+  public PartyDashboardInfo changeDashboard(ChangeDashboardCommand command) {
+    return from(partyDashboardRepository.save(create(command)));
   }
 }

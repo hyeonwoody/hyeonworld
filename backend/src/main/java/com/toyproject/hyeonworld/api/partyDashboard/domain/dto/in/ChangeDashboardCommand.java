@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.party.domain.dto.in;
+package com.toyproject.hyeonworld.api.partyDashboard.domain.dto.in;
 
 /**
  * @author : hyeonwoody@gmail.com

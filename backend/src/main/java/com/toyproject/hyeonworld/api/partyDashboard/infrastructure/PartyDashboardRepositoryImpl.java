@@ -1,7 +1,7 @@
-package com.toyproject.hyeonworld.api.party.infrastructure;
+package com.toyproject.hyeonworld.api.partyDashboard.infrastructure;
 
-import com.toyproject.hyeonworld.api.party.infrastructure.entity.PartyDashboard;
-import com.toyproject.hyeonworld.api.party.infrastructure.jpa.PartyDashboardJpaRepository;
+import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.jpa.PartyDashboardJpaRepository;
+import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.entity.PartyDashboard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @RequiredArgsConstructor
-public class PartyDashboardRepositoryImpl implements PartyDashboardRepository{
+public class PartyDashboardRepositoryImpl implements PartyDashboardRepository {
   private final PartyDashboardJpaRepository partyDashboardJpaRepository;
 
   @Override

@@ -1,7 +1,6 @@
-package com.toyproject.hyeonworld.api.party.infrastructure;
+package com.toyproject.hyeonworld.api.partyDashboard.infrastructure;
 
-import com.toyproject.hyeonworld.api.party.infrastructure.entity.Party;
-import com.toyproject.hyeonworld.api.party.infrastructure.entity.PartyDashboard;
+import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.entity.PartyDashboard;
 
 /**
  * @author : hyeonwoody@gmail.com

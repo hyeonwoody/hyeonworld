@@ -2,9 +2,9 @@ package com.toyproject.hyeonworld.api.party.interfaces;
 
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
-import com.toyproject.hyeonworld.api.party.domain.PartyDashboardService;
 import com.toyproject.hyeonworld.api.party.event.PartyEvent;
 import com.toyproject.hyeonworld.api.party.event.PartyEvent.Begin;
+import com.toyproject.hyeonworld.api.partyDashboard.domain.PartyDashboardService;
 import com.toyproject.hyeonworld.api.session.event.SessionEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;

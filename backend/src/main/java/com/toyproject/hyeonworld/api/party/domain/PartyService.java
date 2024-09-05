@@ -3,12 +3,8 @@ package com.toyproject.hyeonworld.api.party.domain;
 import static com.toyproject.hyeonworld.api.party.domain.dto.out.PartyInfo.*;
 import static com.toyproject.hyeonworld.api.party.infrastructure.entity.Party.*;
 
-import com.toyproject.hyeonworld.api.party.domain.dto.in.ChangeDashboardCommand;
 import com.toyproject.hyeonworld.api.party.domain.dto.out.PartyInfo;
 import com.toyproject.hyeonworld.api.party.application.port.in.BeginPartyCommand;
-
-import com.toyproject.hyeonworld.api.party.domain.dto.out.PartyDashboardInfo;
-import com.toyproject.hyeonworld.api.party.infrastructure.PartyDashboardRepository;
 import com.toyproject.hyeonworld.api.party.infrastructure.PartyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

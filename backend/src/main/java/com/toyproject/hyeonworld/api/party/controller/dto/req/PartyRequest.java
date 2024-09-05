@@ -1,6 +1,5 @@
 package com.toyproject.hyeonworld.api.party.controller.dto.req;
 
-import com.toyproject.hyeonworld.api.party.domain.dto.in.ChangeDashboardCommand;
 import com.toyproject.hyeonworld.api.party.application.port.in.BeginPartyCommand;
 
 /**
@@ -16,12 +15,5 @@ public sealed interface PartyRequest {
       return new BeginPartyCommand(relationType());
     }
   }
-  record Dashboard (
-      Long gameId,
-      Byte gameStage
-  ) implements PartyRequest {
-    public ChangeDashboardCommand toCommand(long partyId) {
-      return new ChangeDashboardCommand(partyId, gameId, gameStage);
-    }
-  }
+
 }

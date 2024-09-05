@@ -1,6 +1,6 @@
 package com.toyproject.hyeonworld.api.party.controller.dto.res;
 
-import com.toyproject.hyeonworld.api.party.domain.dto.out.PartyDashboardInfo;
+import com.toyproject.hyeonworld.api.partyDashboard.domain.dto.out.PartyDashboardInfo;
 import com.toyproject.hyeonworld.api.party.domain.dto.out.PartyInfo;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 
@@ -15,15 +15,6 @@ public abstract interface PartyResponse {
   ) implements PartyResponse {
     public static PartyResponse.Begin from (PartyInfo partyInfo) {
       return ObjectrMapper.convert(partyInfo, Begin.class);
-    }
-  }
-
-  record Dashboard (
-    long gameId,
-    byte stage
-  ) implements PartyResponse {
-    public static PartyResponse.Dashboard from (PartyDashboardInfo partyDashboardInfo) {
-      return ObjectrMapper.convert(partyDashboardInfo, Dashboard.class);
     }
   }
 }
