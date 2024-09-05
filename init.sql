@@ -17,8 +17,9 @@ CREATE TABLE user (
 -- Party table
 CREATE TABLE party (
                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                       party_type INT,
-                       created_at DATETIME
+                       relation_type INT,
+                       created_at DATETIME,
+                        terminated_at DATETIME
 );
 
 -- Party Dashboard table
