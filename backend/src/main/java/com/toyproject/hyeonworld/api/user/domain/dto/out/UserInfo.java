@@ -58,9 +58,11 @@ public class UserInfo {
         .inGame(false)
         .build();
   }
-  public User entityToGame(boolean enter) {
+
+  public User entityToGame(boolean inGame) {
     return initializeEntity()
-        .inGame(enter)
+        .login(true)
+        .inGame(inGame)
         .build();
   }
 
