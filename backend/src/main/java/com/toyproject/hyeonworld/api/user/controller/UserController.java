@@ -49,10 +49,10 @@ public class UserController {
   }
 
   @PatchMapping("/{userId}")
-  public ResponseEntity<UserResponse> editUser(
+  public ResponseEntity<UserResponse> updateUser(
       @PathVariable long userId,
-      @RequestBody UserRequest.edit request){
-    return ResponseEntity.ok(UserResponse.from(userService.editUser(request.toCommand(userId))));
+      @RequestBody UserRequest.update request){
+    return ResponseEntity.ok(UserResponse.from(userService.updateUser(request.toCommand(userId))));
   }
 
   @DeleteMapping("/{userId}")

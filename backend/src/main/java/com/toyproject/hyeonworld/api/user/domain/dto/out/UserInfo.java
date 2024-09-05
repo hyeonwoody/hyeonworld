@@ -1,8 +1,6 @@
 package com.toyproject.hyeonworld.api.user.domain.dto.out;
 
-import com.toyproject.hyeonworld.api.game.domain.dto.out.GameInfo;
-import com.toyproject.hyeonworld.api.game.infrastructure.entity.Game;
-import com.toyproject.hyeonworld.api.user.domain.dto.in.EditUserCommand;
+import com.toyproject.hyeonworld.api.user.domain.dto.in.UpdateUserCommand;
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 import com.toyproject.hyeonworld.common.exception.ServerException;
 import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
@@ -54,7 +52,7 @@ public class UserInfo {
         .build();
   }
 
-  public void update(EditUserCommand command) {
+  public void update(UpdateUserCommand command) {
     command.name().ifPresent(newName -> {
       if (!Objects.equals(this.name, newName)) {
         this.name = newName;

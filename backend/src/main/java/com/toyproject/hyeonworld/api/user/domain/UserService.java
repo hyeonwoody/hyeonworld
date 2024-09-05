@@ -5,8 +5,7 @@ import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos.*;
 import static com.toyproject.hyeonworld.api.user.infrastructure.entity.User.*;
 
 import com.toyproject.hyeonworld.api.user.domain.dto.in.CreateUserCommand;
-import com.toyproject.hyeonworld.api.user.domain.dto.in.EditUserCommand;
-
+import com.toyproject.hyeonworld.api.user.domain.dto.in.UpdateUserCommand;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos;
 import com.toyproject.hyeonworld.api.user.infrastructure.UserRepository;
@@ -40,7 +39,7 @@ public class UserService {
   }
 
   @Transactional
-  public UserInfo editUser(EditUserCommand command) {
+  public UserInfo updateUser(UpdateUserCommand command) {
     UserInfo userInfo = this.getUserById(command.userId());
     userInfo.update(command);
     return from(userRepository.save(userInfo.toEntity()));
