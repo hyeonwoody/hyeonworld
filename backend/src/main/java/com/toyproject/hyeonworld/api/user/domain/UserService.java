@@ -1,17 +1,21 @@
 package com.toyproject.hyeonworld.api.user.domain;
 
-import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo.*;
 import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos.*;
+import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo.*;
+import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListInfo.*;
 import static com.toyproject.hyeonworld.api.user.infrastructure.entity.User.*;
 
 import com.toyproject.hyeonworld.api.user.domain.dto.in.CreateUserCommand;
-import com.toyproject.hyeonworld.api.user.domain.dto.in.EditUserCommand;
-
+import com.toyproject.hyeonworld.api.user.domain.dto.in.RetrieveUserWaitingListCommand;
+import com.toyproject.hyeonworld.api.user.domain.dto.in.UpdateUserCommand;
+import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInGameInfo;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos;
+import com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListInfo;
 import com.toyproject.hyeonworld.api.user.infrastructure.UserRepository;
 import com.toyproject.hyeonworld.common.exception.ServerException;
 import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +44,7 @@ public class UserService {
   }
 
   @Transactional
-  public UserInfo editUser(EditUserCommand command) {
+  public UserInfo updateUser(UpdateUserCommand command) {
     UserInfo userInfo = this.getUserById(command.userId());
     userInfo.update(command);
     return from(userRepository.save(userInfo.toEntity()));
@@ -56,6 +60,12 @@ public class UserService {
     userInfos.forEach(userInfo -> userRepository.save(userInfo.entityToInit()));
     return userInfos.size();
   }
+
+  public UserWaitingListInfo retrieveWaitingList(RetrieveUserWaitingListCommand command) {
+    List<UserInGameInfo> userInfos = UserInGameInfo.from(userRepository.findByLogin(true));
+    return from(userInfos);
+  }
+
 
   public UserInfo getUserByName(String userName) {
     return from(userRepository.findByName(userName)

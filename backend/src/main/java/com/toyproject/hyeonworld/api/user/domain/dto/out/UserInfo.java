@@ -56,18 +56,6 @@ public class UserInfo {
         .build();
   }
 
-  public User entityToSession(boolean login) {
-    return initializeEntity()
-        .login(login)
-        .inGame(false)
-        .build();
-  }
-  public User entityToGame(boolean enter) {
-    return initializeEntity()
-        .inGame(enter)
-        .build();
-  }
-
   public void update(EditUserCommand command) {
     command.name().ifPresent(newName -> {
       if (!Objects.equals(this.name, newName)) {
@@ -87,7 +75,4 @@ public class UserInfo {
       }
     });
   }
-
-
-
 }
