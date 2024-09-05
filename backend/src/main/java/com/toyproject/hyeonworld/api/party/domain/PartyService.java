@@ -5,7 +5,7 @@ import static com.toyproject.hyeonworld.api.party.infrastructure.entity.Party.*;
 
 import com.toyproject.hyeonworld.api.party.domain.dto.in.ChangeDashboardCommand;
 import com.toyproject.hyeonworld.api.party.domain.dto.out.PartyInfo;
-import com.toyproject.hyeonworld.api.party.domain.dto.in.OpenPartyCommand;
+import com.toyproject.hyeonworld.api.party.application.port.in.BeginPartyCommand;
 
 import com.toyproject.hyeonworld.api.party.domain.dto.out.PartyDashboardInfo;
 import com.toyproject.hyeonworld.api.party.infrastructure.PartyDashboardRepository;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class PartyService {
   private final PartyRepository partyRepository;
 
-  public PartyInfo begin(OpenPartyCommand command) {
+  public PartyInfo begin(BeginPartyCommand command) {
     return from(partyRepository.save(create(command)));
   }
 }

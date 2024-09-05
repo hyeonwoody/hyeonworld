@@ -24,10 +24,9 @@ CREATE TABLE party (
 
 -- Party Dashboard table
 CREATE TABLE party_dashboard (
-                                 party_id BIGINT,
+                                 party_id BIGINT PRIMARY KEY,
                                  current_game_id BIGINT,
-                                 current_game_stage INT,
-                                 PRIMARY KEY (party_id)
+                                 current_game_stage INT
 );
 
 -- Game table

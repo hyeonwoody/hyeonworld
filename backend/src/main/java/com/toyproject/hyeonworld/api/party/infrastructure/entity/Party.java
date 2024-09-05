@@ -1,6 +1,6 @@
 package com.toyproject.hyeonworld.api.party.infrastructure.entity;
 
-import com.toyproject.hyeonworld.api.party.domain.dto.in.OpenPartyCommand;
+import com.toyproject.hyeonworld.api.party.application.port.in.BeginPartyCommand;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,7 +46,7 @@ public class Party {
     return Party.builder();
   }
 
-  public static Party create (OpenPartyCommand command){
+  public static Party create (BeginPartyCommand command){
     return defaultBuilder()
         .relationType(command.relationType())
         .build();
