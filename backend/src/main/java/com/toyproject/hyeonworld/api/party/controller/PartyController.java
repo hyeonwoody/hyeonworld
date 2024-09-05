@@ -2,6 +2,7 @@ package com.toyproject.hyeonworld.api.party.controller;
 
 import static com.toyproject.hyeonworld.api.party.controller.dto.res.PartyResponse.Begin.*;
 
+import com.toyproject.hyeonworld.api.party.application.PartyFacade;
 import com.toyproject.hyeonworld.api.party.controller.dto.req.PartyRequest;
 import com.toyproject.hyeonworld.api.party.controller.dto.res.PartyResponse;
 import com.toyproject.hyeonworld.api.party.domain.PartyService;
@@ -25,11 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v2/parties")
 public class PartyController {
-
+  private final PartyFacade partyFacade;
   private final PartyService partyService;
 
   @PostMapping
   public ResponseEntity<PartyResponse.Begin> beginParty(@RequestBody PartyRequest.Begin request){
-    return ResponseEntity.ok(from(partyService.begin(request.toCommand())));
+    return ResponseEntity.ok(from(partyFacade.begin(request.toCommand())));
   }
 }
