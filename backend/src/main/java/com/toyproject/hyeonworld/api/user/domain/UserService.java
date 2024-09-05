@@ -61,6 +61,35 @@ public class UserService {
     return userInfos.size();
   }
 
+  public UserInfo getUserByName(String userName) {
+    return from(userRepository.findByName(userName)
+        .orElseThrow(()->new ServerException(ServerResponseCode.USER_NOT_FOUND))
+    );
+  }
+
+  public UserInfo confirmLogin(String userName) {
+    UserInfo userInfo = this.getUserByName(userName);
+    if (userInfo.isLogin()){
+      throw new ServerException(ServerResponseCode.USER_ALREADY_LOGGED_IN);
+    }
+    return from(userRepository.save(userInfo.entityToSession(true)));
+  }
+
+  public UserInfo confirmLogOut(long userId) {
+    UserInfo userInfo = this.getUserById(userId);
+    return from(userRepository.save(userInfo.entityToSession(false)));
+  }
+
+  public UserInfo confirmEnterGame(long userId) {
+    UserInfo userInfo = this.getUserById(userId);
+    return from(userRepository.save(userInfo.entityToGame(true)));
+  }
+
+  public UserInfo confirmExitGame(long userId) {
+    UserInfo userInfo = this.getUserById(userId);
+    return from(userRepository.save(userInfo.entityToGame(false)));
+  }
+
   public UserWaitingListInfo retrieveWaitingList(RetrieveUserWaitingListCommand command) {
     List<UserInGameInfo> userInfos = UserInGameInfo.from(userRepository.findByLogin(true));
     return from(userInfos);

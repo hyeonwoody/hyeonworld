@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.common.exception.dto;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import lombok.Getter;
@@ -13,7 +14,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum ServerResponseCode {
-  USER_NOT_FOUND(NOT_FOUND, "The user is not in DB");
+  USER_NOT_FOUND(NOT_FOUND, "The user is not in DB"),
+  USER_ALREADY_LOGGED_IN(CONFLICT, "The user is already Logged in");
 
 
   private final HttpStatus httpStatus;

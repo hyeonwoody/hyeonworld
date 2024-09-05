@@ -1,16 +1,23 @@
 # hyeonworld
 
+<p align=center>
+  <a href="https://github.com/hyeonwoody/hyeonworld/wiki/Welcome-to-Hyeonworld!">🌐 위키</a>
+  &nbsp; | &nbsp; 
+  <a href="https://github.com/users/hyeonwoody/projects/3">🗃️ 백로그</a>
+  &nbsp; | &nbsp;
+  <a href="https://github.com/hyeonwoody/hyeonworld/wiki/Welcome-to-Hyeonworld!#%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%86%8C%EA%B0%9C">🔍 소개</a>
+  &nbsp; | &nbsp;
+  <a href="https://github.com/hyeonwoody/hyeonworld/wiki/JPA-to-JDBC-Migration">🛠️ 개발</a>
+</p>
 
 <br>
 
 ## 🧑‍💻: Intro
-가족의 단합을 도모하는 레크레이션 게임 모음.
+>Family Recreation Game Collection: Fostering Family Unity.
 
-❓Problem : 명절날 오랜만에 모인 가족과 함께 즐길거리가 없다.
-
-❗Idea : 온 가족 구성원과 가까워질 수 있는 아이스브레이커 게임을 만들기.
-
-💯Solution : 온 세대가 즐길 수 있는 웹 기반 레크레이션 게임.
+**❓Problem**: Lack of engaging activities for families reuniting during holidays.  
+**❗Idea**: Create icebreaker games to bring all family members closer together.  
+**💯Solution**: Web-based recreational games enjoyable for all generations.  
 
 <br>
 
@@ -20,66 +27,130 @@
 </br>
 
 ## 🛢️: Entity Relationship Diagram
-![hyeonworld](https://github.com/hyeonwoody/hyeonworld/assets/75844701/5758f2e5-6370-462d-8fea-1fbd69138b19)
+[Wiki Documentation](https://github.com/hyeonwoody/hyeonworld/wiki/Entity-Relationship-Diagram)
+```mermaid
+erDiagram
+    user{
+        bigint id PK "User ID"
+        bool login UK "Login status"
+        string(20) name UK "Name"
+        int relation UK "Family relation degree"
+        int party_type UK "Family relationship type"
+        string email "Email"
+        bool proposition "Name particle 0: 은/이, 1: 는/가"
+        string nick_name "Nickname"
+        bool nick_name_proposition "Nickname particle"
+        bool in_game "In-game status"
+    }
+    party{
+        bigint id PK "Party ID"
+        int party_type "Family relationship type"
+        datetime created_at "Creation time"
+    }
+    party_dashboard{
+        bigint party_id FK "Party ID"
+        bigint current_game_id FK "Current game"
+        int current_game_stage "Current game stage"
+    }
+    game{
+        bigint id PK "Game ID"
+        string name "Game name"
+        string description "Game description"
+        bool playable "Playable status"
+    }
+    round{
+        bigint party_id FK "Party ID"
+        bigint id PK "Round ID"
+        bigint game_id FK "Game ID"
+        int answer "Answer"
+        datetime created_at "Creation time"
+    }
+    submission{
+        bigint id PK "Submission ID"
+        bigint round_id UK "Round ID"
+        bigint user_id FK "User ID"
+        bigint number "Number"
+        string text "Text"
+    }
+    score{
+        bigint party_id FK "Party ID composite key"
+        bigint user_id FK "User ID composite key"
+        bigint score "Total score"
+    }
+    score_history{
+        bigint user_id FK "User ID"
+        bigint party_id FK "Party ID"
+        bigint round_id FK "Round ID"
+        bigint score "Round score"
+    }
+    party ||--|| party_dashboard : contains
+    party_dashboard ||--|| game : "tracks current"
+    party ||--o{ round : includes
+    user ||--o{ submission : submits
+    round ||--o{ submission : "is associated with"
+    round ||--o{ score_history : generates
+    score ||--o{ score_history : "is detailed in"
+
+    game ||--|| round : "plays in"
+```
 
 </br>
 
 
 ## 🗓️: Development Period
-2022년 8월 ~ 2023년 6월, 개발 1명.
+From August 2022 to September 2024, developed by one person.  
+Continuously undergoing updates.
 
 <br>
 
 ## ✅: Implementation
-- **프록시** : 서버에 접근하기 위한 프록시 설정.
-- **방화벽** : webpackDevServer.config.js에서 disableFirewall 옵션을 true로 설정.
-- **포트포워딩** : 외부 네트워크에서 접속하기 위해 공유기 설정.
-- **CORS 설정** : WebMvcConfigurer 활용.
-- **SSE** : 플레이어가 게임에 진입 할 때, 서버와 EventSource 연결. 서버는 SSeEmitter List로 관리.
-- **Login** :  파일로 저장된 가족 구성원 성함 목록과 비교하여 목록에 있을 경우 로그인 허용.
-- **Member CRUD** : 사용자를 추가할 수 있는 어드민 메뉴.
+- **Proxy**: Configure a proxy to access the server.  
+- **Firewall**: Set the `disableFirewall` option to true in `webpackDevServer.config.js`.  
+- **Port Forwarding**: Configure the router to allow access from external networks.  
+- **CORS Configuration**: Utilize `WebMvcConfigurer`.  
+- **SSE (Server-Sent Events)**: Establish an EventSource connection with the server when a player enters the game. The server manages connections using an `SseEmitter` list.  
+- **Login**: Allow login by comparing the entered name with a list of family member names stored in a database.  
+- **Member CRUD**: Provide an admin menu to add users.  
 
 <br>
 
-### 사용자는 다음과 같이 정의  :
-| 단어    | 내용                                    | 참조            |
-| ----- | ------------------------------------- | ------------- |
-| Moderator   | 사회자. 게임을 제어하는 사용자.                         |               |
-| Monitor   | 모니터. 게임의 진행상황을 보여주는 전광판.                   |               |
-| Participant   | 참가자. 게임에 참여하는 사용자.                         | 외가, 친가로 구분된다. |
+### Users are defined as  :
+| Term        | Description                                       | Note                                     |
+|-------------|---------------------------------------------------|------------------------------------------|
+| Moderator   | The user who officiates the game.                 |                                          |
+| Monitor     | A display board showing the progress of the game. |                                          |
+| Participant | Users participating in the game.                  | Divided into maternal and paternal sides |
 
 <br>
 
-### 어드민(사회자)메뉴 :
-| **메뉴** |                               **설명**                               | **구현** |
-|:------:|:------------------------------------------------------------------:|:------:|
-|  Init  |          친가/외가에서 플레이하는지 설정, 참여 인원을 설정하며 로그인을 활성화.          |   O    |
-|  Open  |                            플레이할 게임 초기화.                            |   O    |
-|  Done  |                   게임을 종료하며, 모든 참가자를 홈화면으로 이동 제어.                   |   O    |  
+### Moderator menu :
+| **Menu** |                                               **Description**                                                | **Note** |
+|:--------:|:------------------------------------------------------------------------------------------------------------:|:--------:|
+|   Init   | Moderator menu. Set whether playing with maternal/paternal side, set number of participants, activate login. |          |
+|   Open   |                                                  Initialize the game to be played.                                                 |          |
+|   Done   |                                         End the game and control all participants to move to the home screen.                                        |         |  
 
 <br>
 
-### 각 게임에는 단계가 있으며 이를 state 관리로 구현 :
-|**단계**|                **설명**                 | **구현** |
-|:---:|:-------------------------------------:|:------:|
-| Tutorial  |           각 게임에 대한 설명하는 단계.           |   X    |
-| Submit    |             참가자가 제출하는 단계.             |   O    |
-| Check    |      사회자가 참가자가 제출한 내용을 확인하는 단계.       |   O    |
-| Show    | 모든 참가자와 모니터 기기에 사회자가 선택한 내용을 공개하는 단계. |   O    |
-| Play    |     공개된 내용을 토대로 참가자가 게임을 진행하는 단계.     |   O    |
-| Result    |           놀이의 결과를 공개하는 단계.            |   O    |
-| Ranking    |        참가자의 현재 점수 순위를 보여주는 단계.        |   O    |
-| Done |  사회자가 게임을 종료하며, 모든 참가자를 홈화면으로 이동 제어.  |   O    |
+### Game stages :
+| **Stage** |            **Description**            | **Note** |
+|:---------:|:-------------------------------------:|:-------:|
+| Tutorial  |    The phase explaining each game.    |         |
+|  Submit   |             The phase where participants submit their entries.             |         |
+|   Check   |      The phase where the moderator checks the content submitted by participants.       |         |
+|   Show    | The phase where the content selected by the moderator is revealed to all participants and monitor devices. |         |
+|   Play    |     The phase where participants play the game based on the revealed content.     |         |
+|  Result   |           	The phase where the results of the game are revealed.            |         |
+|  Ranking  |        	The phase showing the current score rankings of participants.        |         |
 
 
 <br>
 
-사회자는 단계를 변경할 수 있으며,  
-모든 참가자에서도 변경이 적용.
-
-
-한번 이상의 라운드를 거친 게임을 사회자 판단 하에 종료(Done)할 수 있으며  
-라운드가 끝날 때마다 점수 게임 내용에 대한 기록(score_source) Entity 생성.
+### Moderator Control and Game Flow:
+1. The moderator has the ability to change stages.
+2. UI changes are applied to all participants when the stage changes.
+3. The moderator can end (Done) a game after at least one round, based on their judgment.
+4. At the end of each round, a score_source Entity is created to record the game content and scores.
 
 <br>
 
@@ -91,9 +162,9 @@
 <br>
 
 ## 📞: Contact
-- 이메일: hyeonwoody@gmail.com
-- 블로그: https://velog.io/@hyeonwoody
-- 깃헙: https://github.com/hyeonwoody
+- Email: hyeonwoody@gmail.com
+- Blog: https://velog.io/@hyeonwoody
+- Github: https://github.com/hyeonwoody
 
 <br>
 
@@ -112,18 +183,19 @@
 > 
 > EventSource & SseEmitter
 > 
-> axios (사회자 <=> 서버 <=> 참가자) 
+> axios (Moderator <=> Server <=> Participants) 
 > 
-> React Hook [useState (게임 단계)]
+> React Hook [useState (game stage)]
 
 <br>
 
 ## 🔥: Accomplishments
 > [JPA to JDBC migration](https://github.com/hyeonwoody/hyeonworld/wiki/JPA-to-JDBC-Migration)
+> [Improving Package Structure](https://github.com/hyeonwoody/hyeonworld/wiki/JPA-to-JDBC-Migration)
 
 <br>
 
-## 📖: Wiki
+## 🌐: Wiki
 [hyeonworld Wiki](https://github.com/hyeonwoody/hyeonworld/wiki)
 
 <br> 

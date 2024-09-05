@@ -40,4 +40,9 @@ public class UserRepositoryImpl implements UserRepository{
   public List<User> findByLogin(boolean login) {
     return userJpaRepository.findByLogin(login);
   }
+
+  @Override
+  public Optional<User> findByName(String userName) {
+    return userJpaRepository.findByName(userName);
+  }
 }
