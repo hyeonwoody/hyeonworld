@@ -26,6 +26,7 @@ public class SessionEventListenerImpl implements SessionEventListener {
     switch (event.getClass().getSimpleName()){
       case "Login":
         handleLoginSessionEvent((SessionEvent.Login) event);
+        break;
       case "GameIn":
         handleGameInSessionEvent((SessionEvent.GameIn) event);
         break;
