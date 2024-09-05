@@ -49,10 +49,11 @@ CREATE TABLE round (
 -- Submission table
 CREATE TABLE submission (
                             id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                            round_id BIGINT UNIQUE,
+                            round_id BIGINT,
                             user_id BIGINT,
                             number BIGINT,
-                            text VARCHAR(255)
+                            text VARCHAR(255),
+                            created_at DATETIME
 );
 
 -- Score table
