@@ -19,6 +19,8 @@ public class UserInfo {
   Byte relationType;
   String nickname;
   Byte relation;
+  boolean login;
+  boolean inGame;
 
   private User.UserBuilder initializeEntity(){
     return User.builder()
