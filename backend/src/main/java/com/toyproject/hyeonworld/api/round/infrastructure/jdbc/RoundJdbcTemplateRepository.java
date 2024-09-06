@@ -30,16 +30,14 @@ public class RoundJdbcTemplateRepository {
   private final JdbcTemplate jdbcTemplate;
 
   public Round insert(Round round) {
-    round.onCreate();
-    String sql = "INSERT INTO round (party_id, game_id, created_at) " +
-        "VALUES (?, ?, ?)";
+    String sql = "INSERT INTO round (party_id, game_id) " +
+        "VALUES (?, ?)";
     KeyHolder keyHolder = new GeneratedKeyHolder();
 
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       ps.setLong(1, round.getPartyId());
       ps.setLong(2, round.getGameId());
-      ps.setTimestamp(3, Timestamp.valueOf(round.getCreatedAt()));
       return ps;
     }, keyHolder);
 

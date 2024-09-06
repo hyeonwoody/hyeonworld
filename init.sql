@@ -43,7 +43,7 @@ CREATE TABLE round (
                        party_id BIGINT,
                        game_id BIGINT,
                        answer INT,
-                       created_at DATETIME,
+                       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                         terminated_at DATETIME
 );
 
