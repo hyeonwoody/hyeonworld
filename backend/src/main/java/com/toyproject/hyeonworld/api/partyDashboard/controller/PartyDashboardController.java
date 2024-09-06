@@ -2,7 +2,7 @@ package com.toyproject.hyeonworld.api.partyDashboard.controller;
 
 import static com.toyproject.hyeonworld.api.partyDashboard.controller.dto.res.PartyDashboardResponse.*;
 
-import com.toyproject.hyeonworld.api.partyDashboard.controller.dto.req.PartyDashboardRequest.PartyDashboardRequest;
+import com.toyproject.hyeonworld.api.partyDashboard.controller.dto.req.PartyDashboardRequest;
 import com.toyproject.hyeonworld.api.partyDashboard.controller.dto.res.PartyDashboardResponse;
 import com.toyproject.hyeonworld.api.partyDashboard.domain.PartyDashboardService;
 import lombok.RequiredArgsConstructor;
