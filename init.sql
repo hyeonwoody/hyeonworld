@@ -43,7 +43,8 @@ CREATE TABLE round (
                        party_id BIGINT,
                        game_id BIGINT,
                        answer INT,
-                       created_at DATETIME
+                       created_at DATETIME,
+                        terminated_at DATETIME
 );
 
 -- Submission table

@@ -35,4 +35,6 @@ public class Round {
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
+  @Column(name = "terminated_at")
+  private LocalDateTime terminatedAt;
 }
