@@ -25,10 +25,16 @@ public class RoundService {
     return from(roundRepository.insert(create(command)));
   }
 
+  public RoundInfo retrieveCurrentRound(long partyId) {
+    return from(roundRepository.findByPartyId(partyId)
+        .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
+  }
+
   public RoundInfo updateAnswer(RoundAnswerCommand command) {
     RoundInfo roundInfo = from(roundRepository.findById(command.id())
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
     return from(roundRepository.update(roundInfo.entityToUpdate(command)));
   }
+
 
 }

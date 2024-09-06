@@ -15,4 +15,6 @@ public interface RoundRepository {
   Optional<Round> findById(long id);
 
   Round update(Round round);
+
+  Optional<Round> findByPartyId(long partyId);
 }
