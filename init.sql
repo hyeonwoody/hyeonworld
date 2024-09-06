@@ -54,7 +54,8 @@ CREATE TABLE submission (
                             user_id BIGINT,
                             number BIGINT,
                             text VARCHAR(255),
-                            created_at DATETIME
+                            created_at DATETIME,
+                            UNIQUE (round_id, user_id, created_at)
 );
 
 -- Score table
