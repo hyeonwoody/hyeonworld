@@ -21,8 +21,9 @@ public enum ServerResponseCode {
 
   PARTY_NOT_FOUND(NOT_FOUND, "The party is not in DB"),
 
-  PARTY_DASHBOARD_NOT_FOUND(NOT_FOUND, "The party-dashboard is not in DB");
+  PARTY_DASHBOARD_NOT_FOUND(NOT_FOUND, "The party-dashboard is not in DB"),
 
+  ROUND_NOT_FOUND(NOT_FOUND, "The round is not in DB");
 
   private final HttpStatus httpStatus;
   private final String message;
