@@ -2,6 +2,7 @@ package com.toyproject.hyeonworld.api.partyDashboard.infrastructure;
 
 import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.jpa.PartyDashboardJpaRepository;
 import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.entity.PartyDashboard;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -22,5 +23,10 @@ public class PartyDashboardRepositoryImpl implements PartyDashboardRepository {
   @Override
   public PartyDashboard saveAndFlush(PartyDashboard partyDashboard) {
     return partyDashboardJpaRepository.saveAndFlush(partyDashboard);
+  }
+
+  @Override
+  public Optional<PartyDashboard> findById(long partyId) {
+    return partyDashboardJpaRepository.findById(partyId);
   }
 }

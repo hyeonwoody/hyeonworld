@@ -7,6 +7,7 @@ import com.toyproject.hyeonworld.api.partyDashboard.controller.dto.res.PartyDash
 import com.toyproject.hyeonworld.api.partyDashboard.domain.PartyDashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v2/parties")
 public class PartyDashboardController {
   private final PartyDashboardService partyDashboardService;
+
+  @GetMapping("/{partyId}/dashboard/game")
+  public ResponseEntity<Long> retrieveCurrentGame(
+      @PathVariable long partyId){
+    return ResponseEntity.ok(from(partyDashboardService.retrieve(partyId)).currentGameId());
+  }
+
+  @GetMapping("/{partyId}/dashboard/stage")
+  public ResponseEntity<Byte> retrieveCurrentStage(
+      @PathVariable long partyId){
+    return ResponseEntity.ok(from(partyDashboardService.retrieve(partyId)).currentGameStage());
+  }
 
   @PatchMapping("/{partyId}/dashboard")
   public ResponseEntity<PartyDashboardResponse> changeDashboard(

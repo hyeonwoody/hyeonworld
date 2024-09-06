@@ -7,6 +7,8 @@ import com.toyproject.hyeonworld.api.partyDashboard.domain.dto.in.ChangeDashboar
 import com.toyproject.hyeonworld.api.partyDashboard.domain.dto.out.PartyDashboardInfo;
 import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.PartyDashboardRepository;
 import com.toyproject.hyeonworld.api.partyDashboard.infrastructure.entity.PartyDashboard;
+import com.toyproject.hyeonworld.common.exception.ServerException;
+import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,5 +40,10 @@ public class PartyDashboardService {
 
   public PartyDashboardInfo changeDashboard(ChangeDashboardCommand command) {
     return from(partyDashboardRepository.save(create(command)));
+  }
+
+  public PartyDashboardInfo retrieve(long partyId) {
+    return from(partyDashboardRepository.findById(partyId)
+        .orElseThrow(()->new ServerException(ServerResponseCode.PARTY_DASHBOARD_NOT_FOUND)));
   }
 }
