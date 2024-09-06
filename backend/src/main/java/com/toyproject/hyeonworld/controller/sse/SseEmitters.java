@@ -15,8 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component
-@Slf4j //로깅이 유용
+
 public class SseEmitters {
 
     private final MemberService memberService;

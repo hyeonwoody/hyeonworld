@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/round")
+
 public class RoundController {
 
     private final RoundService roundService;

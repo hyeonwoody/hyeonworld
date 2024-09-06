@@ -11,8 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/party")
+
 public class PartyController {
 
     private final PartyService partyService;

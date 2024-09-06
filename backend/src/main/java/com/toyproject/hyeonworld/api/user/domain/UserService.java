@@ -61,12 +61,6 @@ public class UserService {
     return userInfos.size();
   }
 
-  public UserWaitingListInfo retrieveWaitingList(RetrieveUserWaitingListCommand command) {
-    List<UserInGameInfo> userInfos = UserInGameInfo.from(userRepository.findByLogin(true));
-    return from(userInfos);
-  }
-
-
   public UserInfo getUserByName(String userName) {
     return from(userRepository.findByName(userName)
         .orElseThrow(()->new ServerException(ServerResponseCode.USER_NOT_FOUND))
