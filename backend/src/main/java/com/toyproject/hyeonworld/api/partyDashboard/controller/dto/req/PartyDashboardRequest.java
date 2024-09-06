@@ -1,6 +1,5 @@
-package com.toyproject.hyeonworld.api.partyDashboard.controller.dto.req.PartyDashboardRequest;
+package com.toyproject.hyeonworld.api.partyDashboard.controller.dto.req;
 
-import com.toyproject.hyeonworld.api.party.controller.dto.req.PartyRequest;
 import com.toyproject.hyeonworld.api.partyDashboard.domain.dto.in.ChangeDashboardCommand;
 
 /**
