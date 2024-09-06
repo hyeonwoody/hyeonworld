@@ -1,6 +1,7 @@
 package com.toyproject.hyeonworld.api.party.infrastructure;
 
 import com.toyproject.hyeonworld.api.party.infrastructure.entity.Party;
+import java.util.Optional;
 
 /**
  * @author : hyeonwoody@gmail.com
@@ -9,4 +10,6 @@ import com.toyproject.hyeonworld.api.party.infrastructure.entity.Party;
 public interface PartyRepository {
 
   Party save(Party party);
+
+  Optional<Party> findById(long partyId);
 }

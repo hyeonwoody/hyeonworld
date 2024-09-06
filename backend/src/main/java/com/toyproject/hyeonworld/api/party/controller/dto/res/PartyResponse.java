@@ -17,4 +17,11 @@ public abstract interface PartyResponse {
       return ObjectrMapper.convert(partyInfo, Begin.class);
     }
   }
+  record Terminate (
+      long id
+  ) implements PartyResponse {
+    public static PartyResponse.Terminate from (long partyId) {
+      return new Terminate(partyId);
+    }
+  }
 }

@@ -15,8 +15,12 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ServerResponseCode {
   USER_NOT_FOUND(NOT_FOUND, "The user is not in DB"),
-  USER_ALREADY_LOGGED_IN(CONFLICT, "The user is already Logged in");
+
   USER_ALREADY_LOGGED_IN(CONFLICT, "The user is already Logged in"),
+  PARTY_ALREADY_TERMINATED(CONFLICT, "The party is already over"),
+
+  PARTY_NOT_FOUND(NOT_FOUND, "The party is not in DB"),
+
   PARTY_DASHBOARD_NOT_FOUND(NOT_FOUND, "The party-dashboard is not in DB");
 
 

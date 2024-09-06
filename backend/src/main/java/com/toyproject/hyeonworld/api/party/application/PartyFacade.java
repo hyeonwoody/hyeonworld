@@ -28,4 +28,11 @@ public class PartyFacade {
     partyEventPublisher.execute(new PartyEvent.Begin(partyInfo.getId()));
     return partyInfo;
   }
+
+  @Transactional
+  public long terminate(long partyId) {
+    PartyInfo partyInfo = partyService.retrieveById(partyId);
+    partyEventPublisher.execute(new PartyEvent.Terminate(partyInfo.getId()));
+    return partyInfo.getId();
+  }
 }

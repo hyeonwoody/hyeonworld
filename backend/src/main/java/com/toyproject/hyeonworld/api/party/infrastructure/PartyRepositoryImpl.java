@@ -2,6 +2,7 @@ package com.toyproject.hyeonworld.api.party.infrastructure;
 
 import com.toyproject.hyeonworld.api.party.infrastructure.entity.Party;
 import com.toyproject.hyeonworld.api.party.infrastructure.jpa.PartyJpaRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +18,10 @@ public class PartyRepositoryImpl implements PartyRepository{
   @Override
   public Party save(Party party) {
     return partyJpaRepository.save(party);
+  }
+
+  @Override
+  public Optional<Party> findById(long partyId) {
+    return partyJpaRepository.findById(partyId);
   }
 }
