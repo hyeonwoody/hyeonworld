@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,4 +38,9 @@ public class Round {
   private LocalDateTime createdAt;
   @Column(name = "terminated_at")
   private LocalDateTime terminatedAt;
+
+  @PrePersist
+  public void onCreate() {
+    this.createdAt = LocalDateTime.now();
+  }
 }
