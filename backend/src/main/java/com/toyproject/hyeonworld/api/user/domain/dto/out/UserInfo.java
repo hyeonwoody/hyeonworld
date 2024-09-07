@@ -28,6 +28,8 @@ public class UserInfo {
         .name(this.name)
         .relationType(this.relationType)
         .nickname(this.nickname)
+        .login(this.login)
+        .inGame(this.inGame)
         .relation(this.relation);
   }
 
