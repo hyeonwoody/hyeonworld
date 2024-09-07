@@ -2,6 +2,7 @@ package com.toyproject.hyeonworld.service;
 
 import com.toyproject.hyeonworld.DTO.Submission.SubmissionDTO;
 import com.toyproject.hyeonworld.DTO.Submission.SubmissionEssential;
+import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
 import com.toyproject.hyeonworld.entity.Member;
 import com.toyproject.hyeonworld.entity.Submission;
 import com.toyproject.hyeonworld.repository.member.JdbcTemplateMemberRepository;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
 public class SubmissionService {
 
     private final JdbcTemplateSubmissionRepository jdbcSubmissionRepository;
@@ -48,4 +48,5 @@ public class SubmissionService {
         System.out.println("SIZE : "+ ret.size());
         return ret;
     }
+
 }

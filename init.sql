@@ -54,7 +54,7 @@ CREATE TABLE submission (
                             user_id BIGINT,
                             number BIGINT,
                             text VARCHAR(255),
-                            created_at DATETIME,
+                            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                             UNIQUE (round_id, user_id, created_at)
 );
 
