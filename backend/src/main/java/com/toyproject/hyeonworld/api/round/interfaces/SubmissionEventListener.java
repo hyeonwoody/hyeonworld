@@ -1,8 +1,6 @@
-package com.toyproject.hyeonworld.api.submission.interfaces;
+package com.toyproject.hyeonworld.api.round.interfaces;
 
-import com.toyproject.hyeonworld.api.session.event.SessionEvent;
-import com.toyproject.hyeonworld.api.submission.event.SubmissionEvent;
-import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
+import com.toyproject.hyeonworld.api.round.event.SubmissionEvent;
 import com.toyproject.hyeonworld.common.event.EventListener;
 
 /**

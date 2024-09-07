@@ -1,7 +1,6 @@
 package com.toyproject.hyeonworld.api.submission.controller;
 
-import com.toyproject.hyeonworld.api.session.controller.dto.res.SessionResponse;
-import com.toyproject.hyeonworld.api.submission.application.SubmissionFacade;
+import com.toyproject.hyeonworld.api.round.application.SubmissionFacade;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +20,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class SubmissionController {
   private final SubmissionFacade submissionFacade;
 
-  @PostMapping
-  public ResponseEntity<SubmissionResponse> handSubmission(@RequestBody SubmissionRequest request){
-    return ResponseEntity.ok(SubmissionResponse.from(submissionFacade.handSubmission(request.toCommand())));
-  }
+
 }
