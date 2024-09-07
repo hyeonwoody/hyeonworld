@@ -31,4 +31,9 @@ public class RoundRepositoryImpl implements RoundRepository{
   public Round update(Round round) {
     return roundJdbcTemplateRepository.update(round);
   }
+
+  @Override
+  public Optional<Round> findByPartyId(long partyId) {
+    return roundJdbcTemplateRepository.findByPartyId(partyId);
+  }
 }
