@@ -44,7 +44,8 @@ CREATE TABLE round (
                        game_id BIGINT,
                        answer INT,
                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                        terminated_at DATETIME
+                        terminated_at DATETIME,
+                       UNIQUE (party_id, id)
 );
 
 -- Submission table
