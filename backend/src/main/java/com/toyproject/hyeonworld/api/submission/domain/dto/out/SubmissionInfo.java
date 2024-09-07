@@ -1,11 +1,8 @@
 package com.toyproject.hyeonworld.api.submission.domain.dto.out;
 
-import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
-import com.toyproject.hyeonworld.api.round.infrastructure.entity.Round;
+
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
-import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
-import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 import lombok.Builder;
 import lombok.Getter;
 

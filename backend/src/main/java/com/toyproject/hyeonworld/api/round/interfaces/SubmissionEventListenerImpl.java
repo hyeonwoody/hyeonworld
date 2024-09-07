@@ -1,10 +1,10 @@
-package com.toyproject.hyeonworld.api.submission.interfaces;
+package com.toyproject.hyeonworld.api.round.interfaces;
 
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
-import com.toyproject.hyeonworld.api.submission.event.SubmissionEvent;
-import com.toyproject.hyeonworld.api.submission.event.SubmissionEvent.Basic;
+import com.toyproject.hyeonworld.api.round.event.SubmissionEvent;
+import com.toyproject.hyeonworld.api.round.event.SubmissionEvent.Basic;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
