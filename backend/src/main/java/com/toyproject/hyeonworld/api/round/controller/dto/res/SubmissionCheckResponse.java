@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.res;
 
+import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfos;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
@@ -14,7 +15,7 @@ public record SubmissionCheckResponse(
     String name,
     String text,
     String number
-) {
+) implements SubmissionResponse {
 
 
   public static List<SubmissionCheckResponse> from(SubmissionCheckInfos submissionCheckInfos) {

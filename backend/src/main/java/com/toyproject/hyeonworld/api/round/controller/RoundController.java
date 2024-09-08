@@ -50,8 +50,8 @@ public class RoundController {
   사회자만 partyId, roundId 정보를 관리합니다.
    */
   @PostMapping("/submits")
-  public ResponseEntity<SubmissionResponse> submitSubmission(@RequestBody SubmissionRequest request){
-    return ResponseEntity.ok(SubmissionResponse.from(submissionFacade.submitSubmission(request.toCommand())));
+  public ResponseEntity<SubmissionResponse.Basic> submitSubmission(@RequestBody SubmissionRequest.Basic request){
+    return ResponseEntity.ok(SubmissionResponse.Basic.from(submissionFacade.submitSubmission(request.toCommand())));
   }
 
   @GetMapping("/{roundId}/checks")
@@ -64,9 +64,9 @@ public class RoundController {
   //checks -> GET Submission
 
 //  @PostMapping("/{roundId}/check-confirm")
-//  public ResponseEntity<SubmissionResponse> handSubmission(
-//      @PathVariable long roundId
-//      @RequestBody SubmissionRequest.CheckConfirm request){
+//  public ResponseEntity<SubmissionCheckResponse> handSubmission(
+//      @PathVariable long roundId,
+//      @RequestBody SubmissionRequest.Confirm request){
 //    return ResponseEntity.ok(SubmissionResponse.from(submissionFacade.handSubmission(request.toCommand())));
 //  }
 
