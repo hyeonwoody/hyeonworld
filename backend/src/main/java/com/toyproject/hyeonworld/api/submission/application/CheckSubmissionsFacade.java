@@ -19,14 +19,5 @@ public class CheckSubmissionsFacade {
   private final SubmissionService submissionService;
   private final UserService userService;
 
-  @Transactional
-  public SubmissionCheckInfos checkSubmissions(SubmissionCheckCommand command) {
-    SubmissionCheckInfos submissionCheckInfos = submissionService.checkSubmissions(command.roundId());
 
-    for (SubmissionCheckInfo submissionCheckInfo : submissionCheckInfos){
-      String userName = userService.getNameById(submissionCheckInfo.getUserId());
-      submissionCheckInfo.complete(userName);
-    }
-    return submissionCheckInfos;
-  }
 }
