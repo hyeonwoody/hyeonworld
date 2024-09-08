@@ -6,7 +6,7 @@ package com.toyproject.hyeonworld.api.round.domain.dto.in;
  */
 public record RoundAnswerCommand (
     long id,
-    int answer
+    long answer
 ){
 
 }

@@ -103,7 +103,7 @@ public class RoundJdbcTemplateRepository {
     round.setId(rs.getLong("id"));
     round.setPartyId(rs.getLong("party_id"));
     round.setGameId(rs.getLong("game_id"));
-    round.setAnswer(rs.getInt("answer"));
+    round.setAnswer(rs.getLong("answer"));
     round.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
     return round;
   }
