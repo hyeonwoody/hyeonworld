@@ -95,4 +95,8 @@ public class UserService {
     return from(userInfos);
   }
 
+  public String getNameById(long userId) {
+    UserInfo userInfo = this.getUserById(userId);
+    return userInfo.getName();
+  }
 }

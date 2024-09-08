@@ -2,7 +2,10 @@ package com.toyproject.hyeonworld.api.submission.domain.dto;
 
 import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.*;
 
+import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfo;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,4 +27,10 @@ public class SubmissionService {
   public SubmissionInfo hand(long roundId, SubmissionCommand command) {
     return from(command.partyId(), submissionRepository.save(createEntity(roundId, command)));
   }
+
+  @Transactional
+  public SubmissionCheckInfos checkSubmissions(long roundId) {
+    return SubmissionCheckInfos.from(submissionRepository.findMostRecentByRoundId(roundId));
+  }
+
 }

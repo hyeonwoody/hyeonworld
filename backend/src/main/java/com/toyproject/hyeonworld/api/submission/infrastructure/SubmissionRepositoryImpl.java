@@ -1,7 +1,9 @@
 package com.toyproject.hyeonworld.api.submission.infrastructure;
 
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
+import com.toyproject.hyeonworld.api.submission.infrastructure.jdbc.SubmissionJdbcTemplateRepository;
 import com.toyproject.hyeonworld.api.submission.infrastructure.jpa.SubmissionJpaRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +15,20 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class SubmissionRepositoryImpl implements SubmissionRepository{
   private final SubmissionJpaRepository submissionJpaRepository;
+  private final SubmissionJdbcTemplateRepository submissionJdbcTemplateRepository;
 
   @Override
   public Submission save(Submission submission) {
     return submissionJpaRepository.save(submission);
+  }
+
+  @Override
+  public List<Submission> findAllByRoundId(long roundId) {
+    return submissionJpaRepository.findAllByRoundId(roundId);
+  }
+
+  @Override
+  public List<Submission> findMostRecentByRoundId(long roundId) {
+    return submissionJdbcTemplateRepository.findMostRecentByRoundId(roundId);
   }
 }
