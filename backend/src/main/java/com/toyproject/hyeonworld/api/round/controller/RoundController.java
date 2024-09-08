@@ -1,8 +1,5 @@
 package com.toyproject.hyeonworld.api.round.controller;
 
-import static com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Begin.*;
-import static com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Answer.*;
-
 import com.toyproject.hyeonworld.api.round.application.SubmissionFacade;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse;
@@ -42,9 +39,22 @@ public class RoundController {
     return ResponseEntity.ok(Answer.from(roundService.updateAnswer(request.toCommand(roundId))));
   }
 
+  /*
+  참가자는 partyId 정보만 알고
+  사회자만 partyId, roundId 정보를 관리합니다.
+   */
   @PostMapping("/submits")
-  public ResponseEntity<SubmissionResponse> handSubmission(@RequestBody SubmissionRequest request){
-    return ResponseEntity.ok(SubmissionResponse.from(submissionFacade.handSubmission(request.toCommand())));
+  public ResponseEntity<SubmissionResponse> submitSubmission(@RequestBody SubmissionRequest request){
+    return ResponseEntity.ok(SubmissionResponse.from(submissionFacade.submitSubmission(request.toCommand())));
   }
+
+  //checks -> GET Submission
+
+//  @PostMapping("/{roundId}/check-confirm")
+//  public ResponseEntity<SubmissionResponse> handSubmission(
+//      @PathVariable long roundId
+//      @RequestBody SubmissionRequest.CheckConfirm request){
+//    return ResponseEntity.ok(SubmissionResponse.from(submissionFacade.handSubmission(request.toCommand())));
+//  }
 
 }

@@ -23,7 +23,7 @@ public class SubmissionFacade {
   private final SubmissionEventPublisher submissionEventPublisher;
 
   @Transactional
-  public SubmissionInfo handSubmission(SubmissionCommand command) {
+  public SubmissionInfo submitSubmission(SubmissionCommand command) {
     RoundInfo roundInfo = roundService.retrieveCurrentRound(command.partyId());
     submissionEventPublisher.execute(new SubmissionEvent.Basic(roundInfo.getId(), command));
     return from(roundInfo.getId(), command);
