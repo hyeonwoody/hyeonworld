@@ -37,7 +37,7 @@ public class Round {
   @Column(name = "game_id")
   private Long gameId;
 
-  private Integer answer;
+  private Long answer;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
