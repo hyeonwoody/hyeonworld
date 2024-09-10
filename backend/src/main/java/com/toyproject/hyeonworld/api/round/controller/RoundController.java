@@ -1,6 +1,6 @@
 package com.toyproject.hyeonworld.api.round.controller;
 
-import static com.toyproject.hyeonworld.api.round.controller.dto.res.SubmissionCheckResponse.from;
+import static com.toyproject.hyeonworld.api.round.controller.dto.res.SubmissionCheckResponse.Basic.from;
 
 import com.toyproject.hyeonworld.api.round.application.SubmissionFacade;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundRequest;
@@ -55,9 +55,9 @@ public class RoundController {
   }
 
   @GetMapping("/{roundId}/checks")
-  public ResponseEntity<List<SubmissionCheckResponse>> checkSubmissions(
+  public ResponseEntity<List<SubmissionCheckResponse.Basic>> checkSubmissions(
       @PathVariable long roundId,
-      @RequestBody SubmissionCheckRequest request){
+      @RequestBody SubmissionCheckRequest.Basic request){
     return ResponseEntity.ok(from(submissionFacade.checkSubmissions(request.toCommand(roundId))));
   } //check stage
 

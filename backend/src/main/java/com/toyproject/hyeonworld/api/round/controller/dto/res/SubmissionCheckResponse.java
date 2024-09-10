@@ -10,21 +10,38 @@ import java.util.List;
  * @author : hyeonwoody@gmail.com
  * @since : 24. 9. 8.
  */
-public record SubmissionCheckResponse(
-    long userId,
-    String name,
-    String text,
-    String number
-) implements SubmissionResponse {
+public interface SubmissionCheckResponse extends SubmissionResponse {
+  long userId();
+  String name();
+  String text();
+  String number();
+
+  record Basic(
+      long userId,
+      String name,
+      String text,
+      String number
+  ) implements SubmissionResponse {
 
 
-  public static List<SubmissionCheckResponse> from(SubmissionCheckInfos submissionCheckInfos) {
-    return submissionCheckInfos.stream()
-        .map(SubmissionCheckResponse::from)
-        .toList();
+    public static List<SubmissionCheckResponse.Basic> from(SubmissionCheckInfos submissionCheckInfos) {
+      return submissionCheckInfos.stream()
+          .map(SubmissionCheckResponse.Basic::from)
+          .toList();
+    }
+
+    public static SubmissionCheckResponse.Basic from(SubmissionCheckInfo submissionCheckInfo) {
+      return ObjectrMapper.convert(submissionCheckInfo, SubmissionCheckResponse.Basic.class);
+    }
+
   }
 
-  public static SubmissionCheckResponse from(SubmissionCheckInfo submissionCheckInfo) {
-    return ObjectrMapper.convert(submissionCheckInfo, SubmissionCheckResponse.class);
+  record Confirm (
+      long gameId,
+      long userId,
+      String text,
+      String number
+  ){
+
   }
 }

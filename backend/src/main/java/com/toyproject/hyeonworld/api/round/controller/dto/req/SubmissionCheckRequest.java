@@ -7,11 +7,14 @@ import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCom
  * @author : hyeonwoody@gmail.com
  * @since : 24. 9. 8.
  */
-public record SubmissionCheckRequest (
-    long roundId
-) implements SubmissionRequest {
+public abstract interface SubmissionCheckRequest extends SubmissionRequest {
 
-  public SubmissionCheckCommand toCommand(long roundId) {
-    return new SubmissionCheckCommand(roundId);
+  record Basic(
+      long roundId
+  ) implements SubmissionRequest {
+
+    public SubmissionCheckCommand toCommand(long roundId) {
+      return new SubmissionCheckCommand(roundId);
+    }
   }
 }
