@@ -4,10 +4,10 @@ import static com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmis
 
 import com.toyproject.hyeonworld.api.round.application.SubmissionFacade;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundRequest;
+import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundSubmissionRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Begin;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
-import com.toyproject.hyeonworld.api.round.controller.dto.req.SubmissionCheckRequest;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
@@ -56,14 +56,14 @@ public class RoundController {
   @GetMapping("/{roundId}/checks")
   public ResponseEntity<List<RoundSubmissionResponse.Basic>> checkSubmissions(
       @PathVariable long roundId,
-      @RequestBody SubmissionCheckRequest.Basic request){
+      @RequestBody RoundSubmissionRequest.Basic request){
     return ResponseEntity.ok(RoundSubmissionResponse.Basic.from(submissionFacade.check(request.toCommand(roundId))));
   } //check stage
 
   @PatchMapping("/{roundId}/check-confirm")
   public ResponseEntity<RoundSubmissionResponse.Confirm> checkSubmissionConfirm(
       @PathVariable long roundId,
-      @RequestBody SubmissionCheckRequest.Confirm request){
+      @RequestBody RoundSubmissionRequest.Confirm request){
     return ResponseEntity.ok(RoundSubmissionResponse.Confirm.from(submissionFacade.checkConfirm(request.toCommand(roundId))));
   }
 
