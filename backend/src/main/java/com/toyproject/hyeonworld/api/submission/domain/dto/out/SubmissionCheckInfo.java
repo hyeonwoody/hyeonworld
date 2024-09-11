@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.api.submission.domain.dto.out;
 
+import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 import java.util.List;
@@ -14,7 +15,13 @@ public class SubmissionCheckInfo {
   long userId;
   String name;
   String text;
-  int number;
+  long number;
+
+  public SubmissionCheckInfo (SubmissionCheckConfirmCommand command){
+    this.userId = command.userId();
+    this.text = command.text();
+    this.number = command.number();
+  }
 
   public static SubmissionCheckInfo from(Submission submission) {
     return ObjectrMapper.convert(submission, SubmissionCheckInfo.class);

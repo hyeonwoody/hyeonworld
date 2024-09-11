@@ -2,7 +2,11 @@ package com.toyproject.hyeonworld.api.round.application;
 
 import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.*;
 
+import com.toyproject.hyeonworld.api.game.strategy.GameStrategy;
+import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
+import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
@@ -37,8 +41,8 @@ public class SubmissionFacade {
   }
 
   @Transactional
-  public SubmissionCheckInfos checkSubmissions(SubmissionCheckCommand command) {
-    SubmissionCheckInfos submissionCheckInfos = submissionService.checkSubmissions(command.roundId());
+  public SubmissionCheckInfos check(SubmissionCheckCommand command) {
+    SubmissionCheckInfos submissionCheckInfos = submissionService.check(command.roundId());
 
     for (SubmissionCheckInfo submissionCheckInfo : submissionCheckInfos){
       String userName = userService.getNameById(submissionCheckInfo.getUserId());
@@ -46,4 +50,22 @@ public class SubmissionFacade {
     }
     return submissionCheckInfos;
   }
+
+  @Transactional
+  public SubmissionCheckInfo checkConfirm (SubmissionCheckConfirmCommand command) {
+    StringOrLong<?> answer = submissionService.checkConfirm(command);
+    updateRoundAnswer(command.roundId(), answer);
+    return new SubmissionCheckInfo(command);
+  }
+
+  private RoundInfo updateRoundAnswer (long roundId, StringOrLong<?> answer){
+    if (answer.isLong()){
+      return roundService.updateAnswer(roundId, (long) answer.getValue());
+    }
+    if (answer.isString()){
+      return roundService.updateAnswer(roundId, (String) answer.getValue());
+    }
+    throw new IllegalArgumentException("Unsupported answer type: " + answer.getClass().getSimpleName());
+  }
+
 }

@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.req;
 
+import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
 
@@ -11,10 +12,24 @@ public abstract interface SubmissionCheckRequest extends SubmissionRequest {
 
   record Basic(
       long roundId
-  ) implements SubmissionRequest {
+  ) implements SubmissionCheckRequest {
 
     public SubmissionCheckCommand toCommand(long roundId) {
       return new SubmissionCheckCommand(roundId);
+    }
+  }
+
+
+  record Confirm(
+      long roundId,
+      long gameId,
+      long userId,
+      String text,
+      long number
+  )implements SubmissionCheckRequest {
+
+    public SubmissionCheckConfirmCommand toCommand(long roundId) {
+      return new SubmissionCheckConfirmCommand(roundId, gameId, userId, text, number);
     }
   }
 }

@@ -31,10 +31,10 @@ public class RoundInfo {
     return ObjectrMapper.convert(round, RoundInfo.class);
   }
 
-  public Round entityToUpdate(RoundAnswerCommand command){
+  public Round entityToUpdateAnswer(Object answer) {
     return initializeEntity()
         .id(this.id)
-        .answer(command.answer())
+        .answer(String.valueOf(answer))
         .build();
   }
 }

@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.api.round.controller;
 
+import static com.toyproject.hyeonworld.api.round.controller.dto.res.SubmissionCheckResponse.Confirm.from;
 import static com.toyproject.hyeonworld.api.round.controller.dto.res.SubmissionCheckResponse.Basic.from;
 
 import com.toyproject.hyeonworld.api.round.application.SubmissionFacade;
@@ -38,12 +39,12 @@ public class RoundController {
     return ResponseEntity.ok(Begin.from(roundService.begin(request.toCommand())));
   }
 
-  @PatchMapping("/{roundId}")
-  public ResponseEntity<RoundResponse.Answer> updateAnswer(
-      @PathVariable long roundId,
-      @RequestBody RoundRequest.Answer request){
-    return ResponseEntity.ok(Answer.from(roundService.updateAnswer(request.toCommand(roundId))));
-  }
+//  @PatchMapping("/{roundId}")
+//  public ResponseEntity<RoundResponse.Answer> updateAnswer(
+//      @PathVariable long roundId,
+//      @RequestBody RoundRequest.Answer request){
+//    return ResponseEntity.ok(Answer.from(roundService.updateAnswer(request.toCommand(roundId))));
+//  }
 
   /*
   참가자는 partyId 정보만 알고
@@ -58,16 +59,14 @@ public class RoundController {
   public ResponseEntity<List<SubmissionCheckResponse.Basic>> checkSubmissions(
       @PathVariable long roundId,
       @RequestBody SubmissionCheckRequest.Basic request){
-    return ResponseEntity.ok(from(submissionFacade.checkSubmissions(request.toCommand(roundId))));
+    return ResponseEntity.ok(SubmissionCheckResponse.Basic.from(submissionFacade.check(request.toCommand(roundId))));
   } //check stage
 
-  //checks -> GET Submission
-
-//  @PostMapping("/{roundId}/check-confirm")
-//  public ResponseEntity<SubmissionCheckResponse> handSubmission(
-//      @PathVariable long roundId,
-//      @RequestBody SubmissionRequest.Confirm request){
-//    return ResponseEntity.ok(SubmissionResponse.from(submissionFacade.handSubmission(request.toCommand())));
-//  }
+  @PatchMapping("/{roundId}/check-confirm")
+  public ResponseEntity<SubmissionCheckResponse.Confirm> checkSubmissionConfirm(
+      @PathVariable long roundId,
+      @RequestBody SubmissionCheckRequest.Confirm request){
+    return ResponseEntity.ok(SubmissionCheckResponse.Confirm.from(submissionFacade.checkConfirm(request.toCommand(roundId))));
+  }
 
 }

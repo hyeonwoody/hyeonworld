@@ -42,6 +42,8 @@ public interface SubmissionCheckResponse extends SubmissionResponse {
       String text,
       String number
   ){
-
+    public static SubmissionCheckResponse.Confirm from(SubmissionCheckInfo submissionCheckInfo) {
+      return ObjectrMapper.convert(submissionCheckInfo, SubmissionCheckResponse.Confirm.class);
+    }
   }
 }
