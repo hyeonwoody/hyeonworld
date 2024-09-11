@@ -2,9 +2,11 @@ package com.toyproject.hyeonworld.api.submission.domain.dto;
 
 import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.*;
 
-import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
+import com.toyproject.hyeonworld.api.game.strategy.GameStrategy;
+import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
+import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionRepository;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class SubmissionService {
+  private final GameStrategyFactory gameStrategyFactory;
   private final SubmissionRepository submissionRepository;
 
 
@@ -29,8 +32,12 @@ public class SubmissionService {
   }
 
   @Transactional
-  public SubmissionCheckInfos checkSubmissions(long roundId) {
+  public SubmissionCheckInfos check(long roundId) {
     return SubmissionCheckInfos.from(submissionRepository.findMostRecentByRoundId(roundId));
   }
 
+  public StringOrLong<?> checkConfirm(SubmissionCheckConfirmCommand command) {
+    GameStrategy gameStrategy = gameStrategyFactory.getStrategy(command.gameId());
+    return gameStrategy.checkConfirm(command);
+  }
 }
