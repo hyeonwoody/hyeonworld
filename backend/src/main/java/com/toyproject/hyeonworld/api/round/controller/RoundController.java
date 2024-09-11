@@ -67,4 +67,10 @@ public class RoundController {
     return ResponseEntity.ok(RoundSubmissionResponse.Confirm.from(submissionFacade.checkConfirm(request.toCommand(roundId))));
   }
 
+//  @GetMapping("/{roundId}/shows")
+//  public ResponseEntity<RoundSubmissionResponse.Show> show (
+//      @PathVariable long roundId,
+//      @RequestBody SubmissionCheckRequest.Show request){
+//    return ResponseEntity.ok(RoundSubmissionResponse.Confirm.from(submissionFacade.show(request.toCommand(roundId))));
+//  }
 }

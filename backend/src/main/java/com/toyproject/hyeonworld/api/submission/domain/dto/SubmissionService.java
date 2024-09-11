@@ -7,7 +7,7 @@ import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
 import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfos;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +32,8 @@ public class SubmissionService {
   }
 
   @Transactional
-  public SubmissionCheckInfos check(long roundId) {
-    return SubmissionCheckInfos.from(submissionRepository.findMostRecentByRoundId(roundId));
+  public RoundSubmissionInfos check(long roundId) {
+    return RoundSubmissionInfos.from(submissionRepository.findMostRecentByRoundId(roundId));
   }
 
   public StringOrLong<?> checkConfirm(SubmissionCheckConfirmCommand command) {

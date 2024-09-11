@@ -2,9 +2,7 @@ package com.toyproject.hyeonworld.api.game.strategy;
 
 import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfo;
 import com.toyproject.hyeonworld.common.annotation.Strategy;
-import org.springframework.stereotype.Component;
 
 /**
  * @author : hyeonwoody@gmail.com

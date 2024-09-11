@@ -2,8 +2,6 @@ package com.toyproject.hyeonworld.api.round.application;
 
 import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.*;
 
-import com.toyproject.hyeonworld.api.game.strategy.GameStrategy;
-import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
 import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
@@ -11,8 +9,8 @@ import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfo;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfos;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.round.event.SubmissionEvent;
 import com.toyproject.hyeonworld.api.round.event.SubmissionEventPublisher;
@@ -41,21 +39,21 @@ public class SubmissionFacade {
   }
 
   @Transactional
-  public SubmissionCheckInfos check(SubmissionCheckCommand command) {
-    SubmissionCheckInfos submissionCheckInfos = submissionService.check(command.roundId());
+  public RoundSubmissionInfos check(SubmissionCheckCommand command) {
+    RoundSubmissionInfos roundSubmissionInfos = submissionService.check(command.roundId());
 
-    for (SubmissionCheckInfo submissionCheckInfo : submissionCheckInfos){
-      String userName = userService.getNameById(submissionCheckInfo.getUserId());
-      submissionCheckInfo.complete(userName);
+    for (RoundSubmissionInfo roundSubmissionInfo : roundSubmissionInfos){
+      String userName = userService.getNameById(roundSubmissionInfo.getUserId());
+      roundSubmissionInfo.complete(userName);
     }
-    return submissionCheckInfos;
+    return roundSubmissionInfos;
   }
 
   @Transactional
-  public SubmissionCheckInfo checkConfirm (SubmissionCheckConfirmCommand command) {
+  public RoundSubmissionInfo checkConfirm (SubmissionCheckConfirmCommand command) {
     StringOrLong<?> answer = submissionService.checkConfirm(command);
     updateRoundAnswer(command.roundId(), answer);
-    return new SubmissionCheckInfo(command);
+    return new RoundSubmissionInfo(command);
   }
 
   private RoundInfo updateRoundAnswer (long roundId, StringOrLong<?> answer){

@@ -1,8 +1,8 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.res;
 
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfo;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfos;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 import java.util.List;
 
@@ -24,14 +24,15 @@ public interface RoundSubmissionResponse extends SubmissionResponse {
   ) implements SubmissionResponse {
 
 
-    public static List<RoundSubmissionResponse.Basic> from(SubmissionCheckInfos submissionCheckInfos) {
-      return submissionCheckInfos.stream()
+    public static List<RoundSubmissionResponse.Basic> from(
+        RoundSubmissionInfos roundSubmissionInfos) {
+      return roundSubmissionInfos.stream()
           .map(RoundSubmissionResponse.Basic::from)
           .toList();
     }
 
-    public static RoundSubmissionResponse.Basic from(SubmissionCheckInfo submissionCheckInfo) {
-      return ObjectrMapper.convert(submissionCheckInfo, RoundSubmissionResponse.Basic.class);
+    public static RoundSubmissionResponse.Basic from(RoundSubmissionInfo roundSubmissionInfo) {
+      return ObjectrMapper.convert(roundSubmissionInfo, RoundSubmissionResponse.Basic.class);
     }
 
   }
@@ -42,8 +43,8 @@ public interface RoundSubmissionResponse extends SubmissionResponse {
       String text,
       String number
   ){
-    public static RoundSubmissionResponse.Confirm from(SubmissionCheckInfo submissionCheckInfo) {
-      return ObjectrMapper.convert(submissionCheckInfo, RoundSubmissionResponse.Confirm.class);
+    public static RoundSubmissionResponse.Confirm from(RoundSubmissionInfo roundSubmissionInfo) {
+      return ObjectrMapper.convert(roundSubmissionInfo, RoundSubmissionResponse.Confirm.class);
     }
   }
 
@@ -52,8 +53,8 @@ public interface RoundSubmissionResponse extends SubmissionResponse {
       String text,
       String number
   ) {
-    public static RoundSubmissionResponse.Confirm from(SubmissionCheckInfo submissionCheckInfo) {
-      return ObjectrMapper.convert(submissionCheckInfo, RoundSubmissionResponse.Confirm.class);
+    public static RoundSubmissionResponse.Confirm from(RoundSubmissionInfo roundSubmissionInfo) {
+      return ObjectrMapper.convert(roundSubmissionInfo, RoundSubmissionResponse.Confirm.class);
     }
   }
 }
