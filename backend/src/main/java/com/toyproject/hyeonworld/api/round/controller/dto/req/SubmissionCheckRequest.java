@@ -2,7 +2,7 @@ package com.toyproject.hyeonworld.api.round.controller.dto.req;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
-import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
+import com.toyproject.hyeonworld.api.submission.domain.dto.in.RoundSubmissionCommand;
 
 /**
  * @author : hyeonwoody@gmail.com
@@ -14,8 +14,8 @@ public abstract interface SubmissionCheckRequest extends SubmissionRequest {
       long roundId
   ) implements SubmissionCheckRequest {
 
-    public SubmissionCheckCommand toCommand(long roundId) {
-      return new SubmissionCheckCommand(roundId);
+    public RoundSubmissionCommand toCommand(long roundId) {
+      return new RoundSubmissionCommand(roundId);
     }
   }
 

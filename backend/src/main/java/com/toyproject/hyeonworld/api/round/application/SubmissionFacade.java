@@ -7,7 +7,7 @@ import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
-import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
+import com.toyproject.hyeonworld.api.submission.domain.dto.in.RoundSubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
@@ -39,7 +39,7 @@ public class SubmissionFacade {
   }
 
   @Transactional
-  public RoundSubmissionInfos check(SubmissionCheckCommand command) {
+  public RoundSubmissionInfos check(RoundSubmissionCommand command) {
     RoundSubmissionInfos roundSubmissionInfos = submissionService.check(command.roundId());
 
     for (RoundSubmissionInfo roundSubmissionInfo : roundSubmissionInfos){
