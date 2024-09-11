@@ -1,17 +1,15 @@
 package com.toyproject.hyeonworld.api.round.controller;
 
-import static com.toyproject.hyeonworld.api.round.controller.dto.res.SubmissionCheckResponse.Confirm.from;
-import static com.toyproject.hyeonworld.api.round.controller.dto.res.SubmissionCheckResponse.Basic.from;
+import static com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse.Basic.from;
 
 import com.toyproject.hyeonworld.api.round.application.SubmissionFacade;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse;
-import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Answer;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Begin;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.SubmissionCheckRequest;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
-import com.toyproject.hyeonworld.api.round.controller.dto.res.SubmissionCheckResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -56,17 +54,17 @@ public class RoundController {
   }
 
   @GetMapping("/{roundId}/checks")
-  public ResponseEntity<List<SubmissionCheckResponse.Basic>> checkSubmissions(
+  public ResponseEntity<List<RoundSubmissionResponse.Basic>> checkSubmissions(
       @PathVariable long roundId,
       @RequestBody SubmissionCheckRequest.Basic request){
-    return ResponseEntity.ok(SubmissionCheckResponse.Basic.from(submissionFacade.check(request.toCommand(roundId))));
+    return ResponseEntity.ok(RoundSubmissionResponse.Basic.from(submissionFacade.check(request.toCommand(roundId))));
   } //check stage
 
   @PatchMapping("/{roundId}/check-confirm")
-  public ResponseEntity<SubmissionCheckResponse.Confirm> checkSubmissionConfirm(
+  public ResponseEntity<RoundSubmissionResponse.Confirm> checkSubmissionConfirm(
       @PathVariable long roundId,
       @RequestBody SubmissionCheckRequest.Confirm request){
-    return ResponseEntity.ok(SubmissionCheckResponse.Confirm.from(submissionFacade.checkConfirm(request.toCommand(roundId))));
+    return ResponseEntity.ok(RoundSubmissionResponse.Confirm.from(submissionFacade.checkConfirm(request.toCommand(roundId))));
   }
 
 }
