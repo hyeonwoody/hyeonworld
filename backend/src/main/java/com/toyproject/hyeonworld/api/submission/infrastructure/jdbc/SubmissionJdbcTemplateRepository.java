@@ -35,4 +35,22 @@ public class SubmissionJdbcTemplateRepository {
         new Long[]{roundId, roundId},
         (resultSet, rowNum) -> Submission.createToCheck(resultSet));
   }
+
+  public Submission findMostRecentByUserId(long userId) {
+    String sql = """
+            SELECT s.*
+            FROM submission s
+            INNER JOIN (
+                SELECT MAX(created_at) as max_created_at
+                FROM submission
+                WHERE user_id = ?
+            ) latest ON s.created_at = latest.max_created_at
+            WHERE s.user_id = ?
+            LIMIT 1
+        """;
+    return jdbcTemplate.queryForObject(
+        sql,
+        new Object[]{userId, userId},
+        (resultSet, rowNum) -> Submission.createToShow(resultSet));
+  }
 }

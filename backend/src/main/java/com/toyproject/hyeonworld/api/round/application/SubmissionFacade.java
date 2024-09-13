@@ -2,10 +2,13 @@ package com.toyproject.hyeonworld.api.round.application;
 
 import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.*;
 
+import com.toyproject.hyeonworld.api.game.strategy.GameStrategy;
+import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
 import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.RoundSubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
@@ -26,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Facade
 @RequiredArgsConstructor
 public class SubmissionFacade {
+  private final GameStrategyFactory gameStrategyFactory;
   private final RoundService roundService;
   private final SubmissionService submissionService;
   private final UserService userService;
@@ -51,7 +55,8 @@ public class SubmissionFacade {
 
   @Transactional
   public RoundSubmissionInfo checkConfirm (SubmissionCheckConfirmCommand command) {
-    StringOrLong<?> answer = submissionService.checkConfirm(command);
+    GameStrategy gameStrategy = gameStrategyFactory.getStrategy(command.gameId());
+    StringOrLong<?> answer = gameStrategy.checkConfirm(command);
     updateRoundAnswer(command.roundId(), answer);
     return new RoundSubmissionInfo(command);
   }
@@ -66,4 +71,10 @@ public class SubmissionFacade {
     throw new IllegalArgumentException("Unsupported answer type: " + answer.getClass().getSimpleName());
   }
 
+  public ShowInfo show(long roundId) {
+    long gameId = roundService.retrieveCurrentGame(roundId);
+    GameStrategy gameStrategy = gameStrategyFactory.getStrategy(gameId);
+    String content = gameStrategy.show(roundId);
+    return ShowInfo.from(content);
+  }
 }

@@ -6,6 +6,7 @@ import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundAnswerCommand;
 import com.toyproject.hyeonworld.api.round.infrastructure.entity.Round;
 
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
+import java.time.LocalDateTime;
 import lombok.Getter;
 
 /**
@@ -24,11 +25,20 @@ public class RoundInfo {
     return initializeEntity()
         .partyId(command.partyId())
         .gameId(command.gameId())
+        .createdAt(LocalDateTime.now())
         .build();
   }
 
   public static RoundInfo from (Round round) {
     return ObjectrMapper.convert(round, RoundInfo.class);
+  }
+
+  public static long getGameIdFrom (Round round) {
+    return round.getGameId();
+  }
+
+  public static String getAnswerFrom (Round round) {
+    return round.getAnswer();
   }
 
   public Round entityToUpdateAnswer(Object answer) {

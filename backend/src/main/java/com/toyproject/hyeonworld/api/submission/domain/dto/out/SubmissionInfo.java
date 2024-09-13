@@ -13,6 +13,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class SubmissionInfo {
+  private long id;
   private final long partyId;
   private final long roundId;
 
@@ -26,6 +27,12 @@ public class SubmissionInfo {
         .userId(command.userId())
         .text(command.text())
         .number(command.number())
+        .build();
+  }
+  public static SubmissionInfo from (Submission submission) {
+    return SubmissionInfo.builder()
+        .id(submission.getId())
+        .roundId(submission.getRoundId())
         .build();
   }
 

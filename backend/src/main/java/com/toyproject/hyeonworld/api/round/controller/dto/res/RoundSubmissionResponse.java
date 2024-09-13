@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.res;
 
+import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowInfo;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
@@ -49,12 +50,10 @@ public interface RoundSubmissionResponse extends SubmissionResponse {
   }
 
   record Show(
-      long userId,
-      String text,
-      String number
+      String content
   ) {
-    public static RoundSubmissionResponse.Confirm from(RoundSubmissionInfo roundSubmissionInfo) {
-      return ObjectrMapper.convert(roundSubmissionInfo, RoundSubmissionResponse.Confirm.class);
+    public static RoundSubmissionResponse.Show from(ShowInfo showInfo) {
+      return ObjectrMapper.convert(showInfo, Show.class);
     }
   }
 }

@@ -21,7 +21,6 @@ public abstract interface RoundSubmissionRequest extends SubmissionRequest {
 
 
   record Confirm(
-      long roundId,
       long gameId,
       long userId,
       String text,

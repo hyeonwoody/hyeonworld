@@ -4,6 +4,7 @@ import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission
 import com.toyproject.hyeonworld.api.submission.infrastructure.jdbc.SubmissionJdbcTemplateRepository;
 import com.toyproject.hyeonworld.api.submission.infrastructure.jpa.SubmissionJpaRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -30,5 +31,17 @@ public class SubmissionRepositoryImpl implements SubmissionRepository{
   @Override
   public List<Submission> findMostRecentByRoundId(long roundId) {
     return submissionJdbcTemplateRepository.findMostRecentByRoundId(roundId);
+  }
+
+
+
+  @Override
+  public Submission findMostRecentByUserId(long userId) {
+    return submissionJdbcTemplateRepository.findMostRecentByUserId(userId);
+  }
+
+  @Override
+  public Optional<Submission> findById(long submissionId) {
+    return submissionJpaRepository.findById(submissionId);
   }
 }

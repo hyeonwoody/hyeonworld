@@ -48,4 +48,15 @@ public class RoundService {
   public RoundInfo updateAnswer(long roundId, String answer) {
     return updateAnswerInternal(roundId, answer);
   }
+
+  public long retrieveCurrentGame(long roundId) {
+    return getGameIdFrom(roundRepository.findById(roundId)
+        .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
+  }
+
+  public String retrieveAnswer(long roundId) {
+    return getAnswerFrom(roundRepository.findById(roundId)
+        .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
+  }
+
 }
