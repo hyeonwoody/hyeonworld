@@ -1,8 +1,8 @@
 package com.toyproject.hyeonworld.api.game.strategy;
 
 import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowInfo;
 
 /**
  * @author : hyeonwoody@gmail.com
@@ -14,4 +14,6 @@ public interface GameStrategy {
 
 
   String show(long roundId);
+
+  long play(RoundPlayCommand command);
 }

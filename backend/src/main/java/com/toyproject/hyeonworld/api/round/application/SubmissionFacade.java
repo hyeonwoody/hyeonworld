@@ -6,12 +6,16 @@ import com.toyproject.hyeonworld.api.game.strategy.GameStrategy;
 import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
 import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.PlayInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowInfo;
+import com.toyproject.hyeonworld.api.score.domain.ScoreService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.RoundSubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
@@ -76,5 +80,16 @@ public class SubmissionFacade {
     GameStrategy gameStrategy = gameStrategyFactory.getStrategy(gameId);
     String content = gameStrategy.show(roundId);
     return ShowInfo.from(content);
+  }
+
+  @Transactional
+  public PlayInfo play(RoundPlayCommand command) {
+    RoundInfo roundInfo = roundService.retrieveCurrentRound(command.partyId());
+    long gameId = roundService.retrieveCurrentGame(roundInfo.getId());
+    GameStrategy gameStrategy = gameStrategyFactory.getStrategy(gameId);
+    gameStrategy.play(command);
+
+    //submissionEventPublisher.execute(new SubmissionEvent.Answer(command));
+    return PlayInfo.from(command);
   }
 }

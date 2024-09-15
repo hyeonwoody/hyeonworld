@@ -3,10 +3,8 @@ package com.toyproject.hyeonworld.api.round.domain;
 import static com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo.*;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.BeginRoundCommand;
-import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundAnswerCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.round.infrastructure.RoundRepository;
-import com.toyproject.hyeonworld.api.round.infrastructure.entity.Round;
 import com.toyproject.hyeonworld.common.exception.ServerException;
 import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +33,7 @@ public class RoundService {
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
   }
 
-  @CachePut(cacheNames = "roundAnswer", key = "#roundId")
+
   public RoundInfo updateAnswerInternal(long roundId, Object answer) {
     RoundInfo roundInfo = from(roundRepository.findById(roundId)
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
@@ -49,11 +47,13 @@ public class RoundService {
     return updateAnswerInternal(roundId, answer);
   }
 
+  @Cacheable(cacheNames = "roundGame", key = "#roundId")
   public long retrieveCurrentGame(long roundId) {
     return getGameIdFrom(roundRepository.findById(roundId)
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
   }
 
+  @CachePut(cacheNames = "roundAnswer", key = "#roundId")
   public String retrieveAnswer(long roundId) {
     return getAnswerFrom(roundRepository.findById(roundId)
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));

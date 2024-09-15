@@ -2,15 +2,18 @@ package com.toyproject.hyeonworld.api.round.controller;
 
 import static com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse.Basic.from;
 
+import com.toyproject.hyeonworld.api.round.application.ScoreFacade;
 import com.toyproject.hyeonworld.api.round.application.SubmissionFacade;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundSubmissionRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Begin;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
+import com.toyproject.hyeonworld.api.score.domain.ScoreService;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
+import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoundController {
   private final RoundService roundService;
   private final SubmissionFacade submissionFacade;
+  private final ScoreFacade scoreFacade;
+
+  private final SubmissionService submissionService;
+  private final ScoreService scoreService;
+
   @PostMapping
   public ResponseEntity<RoundResponse.Begin> beginRound(@RequestBody RoundRequest.Begin request){
     return ResponseEntity.ok(Begin.from(roundService.begin(request.toCommand())));
@@ -71,5 +79,12 @@ public class RoundController {
   public ResponseEntity<RoundSubmissionResponse.Show> show (
       @PathVariable long roundId){
     return ResponseEntity.ok(RoundSubmissionResponse.Show.from(submissionFacade.show(roundId)));
+  }
+
+  @PostMapping("/plays")
+  public ResponseEntity<RoundResponse.Play> play (
+      @RequestBody RoundRequest.Play request
+  ){
+    return ResponseEntity.ok(RoundResponse.Play.from(submissionFacade.play(request.toCommand())));
   }
 }

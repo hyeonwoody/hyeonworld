@@ -1,8 +1,6 @@
 package com.toyproject.hyeonworld.api.round.domain.dto.out;
 
-import com.toyproject.hyeonworld.api.party.infrastructure.entity.Party;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.BeginRoundCommand;
-import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundAnswerCommand;
 import com.toyproject.hyeonworld.api.round.infrastructure.entity.Round;
 
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
@@ -16,6 +14,7 @@ import lombok.Getter;
 @Getter
 public class RoundInfo {
   long id;
+  String answer;
 
   private static Round.RoundBuilder initializeEntity(){
     return Round.builder();

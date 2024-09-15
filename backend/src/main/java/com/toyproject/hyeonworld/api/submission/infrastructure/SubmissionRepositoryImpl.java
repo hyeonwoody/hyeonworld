@@ -1,7 +1,9 @@
 package com.toyproject.hyeonworld.api.submission.infrastructure;
 
+import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
 import com.toyproject.hyeonworld.api.submission.infrastructure.jdbc.SubmissionJdbcTemplateRepository;
+import com.toyproject.hyeonworld.api.submission.infrastructure.jpa.AnswerSubmissionJpaRepository;
 import com.toyproject.hyeonworld.api.submission.infrastructure.jpa.SubmissionJpaRepository;
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +20,16 @@ public class SubmissionRepositoryImpl implements SubmissionRepository{
   private final SubmissionJpaRepository submissionJpaRepository;
   private final SubmissionJdbcTemplateRepository submissionJdbcTemplateRepository;
 
+  private final AnswerSubmissionJpaRepository answerSubmissionJpaRepository;
+
   @Override
   public Submission save(Submission submission) {
     return submissionJpaRepository.save(submission);
+  }
+
+  @Override
+  public AnswerSubmission saveAnswer(AnswerSubmission answerSubmission) {
+    return answerSubmissionJpaRepository.save(answerSubmission);
   }
 
   @Override

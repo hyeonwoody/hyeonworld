@@ -2,8 +2,11 @@ package com.toyproject.hyeonworld.api.game.strategy;
 
 import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.user.domain.UserService;
@@ -21,6 +24,7 @@ public class Game0Strategy implements GameStrategy{
   private final SubmissionService submissionService;
   private final UserService userService;
 
+
   @Override
   public long getGameId() {
     return 0L;
@@ -30,15 +34,6 @@ public class Game0Strategy implements GameStrategy{
   public StringOrLong<Long> checkConfirm(SubmissionCheckConfirmCommand command) {
     SubmissionInfo submissionInfo = submissionService.retrieveByUserId(command.userId());
     return StringOrLong.ofNumber(submissionInfo.getId());
-  }
-
-  @Override
-  public String show(long roundId) {
-    String submissionId = roundService.retrieveAnswer(roundId);
-    RoundSubmissionInfo roundSubmissionInfo = submissionService.retrieveById(Long.parseLong(submissionId));
-    String userName = userService.getNameById(roundSubmissionInfo.getUserId());
-    roundSubmissionInfo.complete(userName);
-    return formatSubmissionText(roundSubmissionInfo);
   }
 
   private String formatSubmissionText(RoundSubmissionInfo info) {
@@ -53,5 +48,21 @@ public class Game0Strategy implements GameStrategy{
           .append("\n");
     }
     return formattedText.toString();
+  }
+
+  @Override
+  public String show(long roundId) {
+    String submissionId = roundService.retrieveAnswer(roundId);
+    RoundSubmissionInfo roundSubmissionInfo = submissionService.retrieveById(Long.parseLong(submissionId));
+    String userName = userService.getNameById(roundSubmissionInfo.getUserId());
+    roundSubmissionInfo.complete(userName);
+    return formatSubmissionText(roundSubmissionInfo);
+  }
+
+  @Override
+  public long play(RoundPlayCommand command) {
+    RoundInfo roundInfo = roundService.retrieveCurrentRound(command.partyId());
+    submissionService.submitAnswer(roundInfo.getId(), command);
+    return 0;
   }
 }
