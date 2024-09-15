@@ -1,20 +1,12 @@
 package com.toyproject.hyeonworld.api.user.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toyproject.hyeonworld.DTO.Member.MemberCreateDTO;
 import com.toyproject.hyeonworld.api.user.controller.dto.req.UserRequest;
-import com.toyproject.hyeonworld.api.user.controller.dto.req.UserWaitingListRequest;
+
 import com.toyproject.hyeonworld.api.user.controller.dto.res.UserResponse;
 import com.toyproject.hyeonworld.api.user.controller.dto.res.UserWaitingListResponse;
 import com.toyproject.hyeonworld.api.user.domain.UserService;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.RetrieveUserWaitingListCommand;
-import jakarta.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
-import java.util.stream.Collectors;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -82,5 +74,4 @@ public class UserController {
       @RequestParam long partyId){
     return ResponseEntity.ok(UserWaitingListResponse.from(userService.retrieveWaitingList(new RetrieveUserWaitingListCommand(partyId))));
   }
-
 }

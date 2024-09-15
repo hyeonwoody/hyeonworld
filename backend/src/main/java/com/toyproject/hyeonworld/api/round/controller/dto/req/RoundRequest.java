@@ -1,9 +1,7 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.req;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.BeginRoundCommand;
-import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundAnswerCommand;
-import com.toyproject.hyeonworld.api.session.application.dto.in.CreateLoginSessionCommand;
-import com.toyproject.hyeonworld.api.session.controller.dto.req.SessionRequest;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 
 /**
  * @author : hyeonwoody@gmail.com
@@ -19,11 +17,13 @@ public abstract interface RoundRequest {
     }
   }
 
-  record Answer(
-      int answer
+  record Play(
+      long partyId,
+      long userId,
+      String answer
   ) implements RoundRequest {
 
-    public RoundAnswerCommand toCommand(long roundId){return new RoundAnswerCommand(roundId, answer); }
+    public RoundPlayCommand toCommand(){return new RoundPlayCommand(partyId, userId, answer); }
 
   }
 }

@@ -42,10 +42,18 @@ CREATE TABLE round (
                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
                        party_id BIGINT,
                        game_id BIGINT,
-                       answer INT,
+                       answer VARCHAR(255),
                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                         terminated_at DATETIME,
                        UNIQUE (party_id, id)
+);
+
+-- Answer Submission table
+CREATE TABLE answer_submission (
+                            id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                            round_id BIGINT,
+                            user_id BIGINT,
+                            answer VARCHAR(255)
 );
 
 -- Submission table
@@ -72,6 +80,8 @@ CREATE TABLE score_history (
                                user_id BIGINT,
                                party_id BIGINT,
                                round_id BIGINT,
+                               answer VARCHAR(255),
                                score BIGINT,
+
                                PRIMARY KEY (user_id, party_id, round_id)
 );

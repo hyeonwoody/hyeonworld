@@ -23,4 +23,13 @@ public interface UserJpaRepository extends JpaRepository<User, Long> {
   List<User> findByLogin(boolean login);
 
   Optional<User> findByName(String userName);
+
+  @Modifying
+  @Query("SELECT u.id as id, u.name as name FROM User u WHERE u.id IN :userIds")
+  List<UserNameProjection> findNamesByIdsIn(List<Long> userIds);
+
+  interface UserNameProjection {
+    Long getId();
+    String getName();
+  }
 }
