@@ -2,6 +2,7 @@ package com.toyproject.hyeonworld.api.submission.infrastructure;
 
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
+import com.toyproject.hyeonworld.api.submission.infrastructure.jdbc.AnswerSubmissionJdbcTemplateRepository;
 import com.toyproject.hyeonworld.api.submission.infrastructure.jdbc.SubmissionJdbcTemplateRepository;
 import com.toyproject.hyeonworld.api.submission.infrastructure.jpa.AnswerSubmissionJpaRepository;
 import com.toyproject.hyeonworld.api.submission.infrastructure.jpa.SubmissionJpaRepository;
@@ -21,6 +22,7 @@ public class SubmissionRepositoryImpl implements SubmissionRepository{
   private final SubmissionJdbcTemplateRepository submissionJdbcTemplateRepository;
 
   private final AnswerSubmissionJpaRepository answerSubmissionJpaRepository;
+  private final AnswerSubmissionJdbcTemplateRepository answerSubmissionJdbcTemplateRepository;
 
   @Override
   public Submission save(Submission submission) {
@@ -52,5 +54,11 @@ public class SubmissionRepositoryImpl implements SubmissionRepository{
   @Override
   public Optional<Submission> findById(long submissionId) {
     return submissionJpaRepository.findById(submissionId);
+  }
+
+
+  @Override
+  public List<AnswerSubmission> findAnswerMostRecentByRoundId(long roundId) {
+    return answerSubmissionJdbcTemplateRepository.findAnswerMostRecentByRoundId(roundId);
   }
 }

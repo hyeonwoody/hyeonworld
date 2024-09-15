@@ -13,9 +13,14 @@ import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListInfo;
 import com.toyproject.hyeonworld.api.user.infrastructure.UserRepository;
+import com.toyproject.hyeonworld.api.user.infrastructure.jpa.UserJpaRepository.UserNameProjection;
 import com.toyproject.hyeonworld.common.exception.ServerException;
 import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,5 +103,17 @@ public class UserService {
   public String getNameById(long userId) {
     UserInfo userInfo = this.getUserById(userId);
     return userInfo.getName();
+  }
+
+  public Map<Long, String> getNamesByIds(List<Long> userIds) {
+    if (userIds.isEmpty()){
+      return Collections.emptyMap();
+    }
+    return userRepository.findNamesByIds(userIds).stream()
+        .collect(Collectors.toMap(
+            UserNameProjection::getId,
+            UserNameProjection::getName,
+            (existing, replacement)-> existing, LinkedHashMap::new
+        ));
   }
 }

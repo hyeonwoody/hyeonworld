@@ -53,7 +53,7 @@ public class RoundService {
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
   }
 
-  @CachePut(cacheNames = "roundAnswer", key = "#roundId")
+  @Cacheable(cacheNames = "roundAnswer", key = "#roundId")
   public String retrieveAnswer(long roundId) {
     return getAnswerFrom(roundRepository.findById(roundId)
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));

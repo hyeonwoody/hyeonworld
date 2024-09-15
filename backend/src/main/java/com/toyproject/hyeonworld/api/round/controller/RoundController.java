@@ -37,9 +37,6 @@ public class RoundController {
   private final SubmissionFacade submissionFacade;
   private final ScoreFacade scoreFacade;
 
-  private final SubmissionService submissionService;
-  private final ScoreService scoreService;
-
   @PostMapping
   public ResponseEntity<RoundResponse.Begin> beginRound(@RequestBody RoundRequest.Begin request){
     return ResponseEntity.ok(Begin.from(roundService.begin(request.toCommand())));
@@ -86,5 +83,12 @@ public class RoundController {
       @RequestBody RoundRequest.Play request
   ){
     return ResponseEntity.ok(RoundResponse.Play.from(submissionFacade.play(request.toCommand())));
+  }
+
+  @GetMapping("/{roundId}/results")
+  public ResponseEntity<RoundResponse.Result> result (
+      @PathVariable long roundId
+  ){
+    return ResponseEntity.ok(RoundResponse.Result.from(scoreFacade.result(roundId)));
   }
 }

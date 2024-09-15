@@ -19,4 +19,6 @@ import java.util.Optional;
   Submission findMostRecentByUserId(long userId);
 
   Optional<Submission> findById(long submissionId);
+
+  List<AnswerSubmission> findAnswerMostRecentByRoundId(long roundId);
 }

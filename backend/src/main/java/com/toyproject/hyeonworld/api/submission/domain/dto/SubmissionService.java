@@ -5,6 +5,7 @@ import static com.toyproject.hyeonworld.api.submission.domain.dto.out.Submission
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
@@ -48,5 +49,9 @@ public class SubmissionService {
   @Transactional(propagation = Propagation.REQUIRES_NEW)
   public AnswerSubmissionInfo submitAnswer(long roundId, RoundPlayCommand command) {
     return AnswerSubmissionInfo.from(submissionRepository.saveAnswer(AnswerSubmissionInfo.createEntity(roundId, command)));
+  }
+
+  public AnswerSubmissionInfos retrieveAnswerSubmissions(long roundId) {
+    return AnswerSubmissionInfos.from(submissionRepository.findAnswerMostRecentByRoundId(roundId));
   }
 }
