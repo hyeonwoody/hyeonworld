@@ -5,6 +5,7 @@ import com.toyproject.hyeonworld.api.user.infrastructure.jpa.UserJpaRepository;
 import com.toyproject.hyeonworld.api.user.infrastructure.jpa.UserJpaRepository.UserNameProjection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -48,7 +49,7 @@ public class UserRepositoryImpl implements UserRepository{
   }
 
   @Override
-  public List<UserNameProjection> findNamesByIds(List<Long> userIds) {
+  public List<UserNameProjection> findNamesByIds(Set<Long> userIds) {
     return userJpaRepository.findNamesByIdsIn(userIds);
   }
 }

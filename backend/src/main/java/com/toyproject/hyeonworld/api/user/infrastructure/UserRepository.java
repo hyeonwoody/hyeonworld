@@ -4,6 +4,7 @@ import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 import com.toyproject.hyeonworld.api.user.infrastructure.jpa.UserJpaRepository.UserNameProjection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author : hyeonwoody@gmail.com
@@ -23,5 +24,5 @@ public interface UserRepository {
 
   Optional<User> findByName(String userName);
 
-  List<UserNameProjection> findNamesByIds(List<Long> userIds);
+  List<UserNameProjection> findNamesByIds(Set<Long> userIds);
 }

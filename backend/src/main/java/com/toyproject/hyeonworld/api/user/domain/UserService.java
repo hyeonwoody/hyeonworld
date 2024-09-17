@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -105,7 +106,7 @@ public class UserService {
     return userInfo.getName();
   }
 
-  public Map<Long, String> getNamesByIds(List<Long> userIds) {
+  public Map<Long, String> getNamesByIds(Set<Long> userIds) {
     if (userIds.isEmpty()){
       return Collections.emptyMap();
     }
@@ -116,4 +117,6 @@ public class UserService {
             (existing, replacement)-> existing, LinkedHashMap::new
         ));
   }
+
+
 }
