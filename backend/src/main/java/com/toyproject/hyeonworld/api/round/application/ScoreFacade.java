@@ -1,8 +1,11 @@
 package com.toyproject.hyeonworld.api.round.application;
 
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultInfo;
+import com.toyproject.hyeonworld.api.round.domain.out.ScoreInfo;
 import com.toyproject.hyeonworld.api.score.domain.ScoreService;
+import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfos;
@@ -24,6 +27,7 @@ public class ScoreFacade {
   private final SubmissionService submissionService;
   private final UserService userService;
   private final RoundService roundService;
+  private final ScoreService scoreService;
 
   public ResultInfo result(long roundId) {
     AnswerSubmissionInfos answerSubmissionInfos = submissionService.retrieveAnswerSubmissions(roundId);
@@ -36,8 +40,18 @@ public class ScoreFacade {
         .filter(answerSubmissionInfo -> answer.equals(answerSubmissionInfo.getAnswer()))
         .map(AnswerSubmissionInfo::getUserId)
         .collect(Collectors.toSet());
+
     Map<Long, String> userNames = userService.getNamesByIds(winnerIds);
-    userNames.values().forEach(resultInfo::addWinner);
+    for (Long winnerId : winnerIds) {
+      String winnerName = userNames.get(winnerId);
+      if (winnerName != null) {
+        resultInfo.addWinner(winnerId, winnerName);
+      }
+    }
     return resultInfo;
   }
+
+  public ScoreInfo resultScore(RoundResultConfirmCommand command) {
+  }
+
 }

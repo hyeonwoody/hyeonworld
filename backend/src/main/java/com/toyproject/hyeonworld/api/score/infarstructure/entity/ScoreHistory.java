@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
@@ -18,6 +19,7 @@ import org.checkerframework.checker.units.qual.A;
  * @author : hyeonwoody@gmail.com
  * @since : 24. 9. 14.
  */
+@Data
 @Entity
 @Table(name = "score_history",
     uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "party_id", "round_id"}))

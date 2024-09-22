@@ -1,6 +1,7 @@
 package com.toyproject.hyeonworld.api.score.infarstructure;
 
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
+import java.util.List;
 
 /**
  * @author : hyeonwoody@gmail.com
@@ -9,4 +10,6 @@ import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
 public interface ScoreRepository {
 
   ScoreHistory save(ScoreHistory scoreHistory);
+
+  List<ScoreHistory> saveAll(List<ScoreHistory> scoreHistory);
 }
