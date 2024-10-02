@@ -11,15 +11,26 @@ import lombok.Getter;
 @Getter
 public class ResultInfo {
   private final String answer;
-  private final List<String> winners;
+  private final List<Winner> winners;
 
+  @Getter
+  public static class Winner {
+    private final long id;
+    private final String name;
+
+    public Winner(long id, String name) {
+      this.id = id;
+      this.name = name;
+    }
+  }
 
   public ResultInfo(String answer) {
     this.answer = answer;
     this.winners = new ArrayList<>();
   }
 
-  public void addWinner(String userName) {
-    winners.add(userName);
+  public void addWinner(long userId, String userName) {
+    Winner winner = new Winner(userId, userName);
+    winners.add(winner);
   }
 }

@@ -1,11 +1,11 @@
 package com.toyproject.hyeonworld.api.user.infrastructure.jpa;
 
-import com.toyproject.hyeonworld.api.game.infrastructure.entity.Game;
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Meta;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,7 +26,7 @@ public interface UserJpaRepository extends JpaRepository<User, Long> {
 
   @Modifying
   @Query("SELECT u.id as id, u.name as name FROM User u WHERE u.id IN :userIds")
-  List<UserNameProjection> findNamesByIdsIn(List<Long> userIds);
+  List<UserNameProjection> findNamesByIdsIn(Set<Long> userIds);
 
   interface UserNameProjection {
     Long getId();

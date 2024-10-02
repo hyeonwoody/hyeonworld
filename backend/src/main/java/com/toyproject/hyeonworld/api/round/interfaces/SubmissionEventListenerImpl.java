@@ -28,7 +28,6 @@ public class SubmissionEventListenerImpl implements SubmissionEventListener{
   private final GameStrategyFactory gameStrategyFactory;
   private final SubmissionService submissionService;
   private final RoundService roundService;
-  private final ScoreService scoreService;
 
   @Override
   @Async

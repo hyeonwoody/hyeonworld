@@ -91,4 +91,20 @@ public class RoundController {
   ){
     return ResponseEntity.ok(RoundResponse.Result.from(scoreFacade.result(roundId)));
   }
+
+  @PostMapping("/{roundId}/result-score")
+  public ResponseEntity<RoundResponse.ResultScore> resultScore (
+      @PathVariable long roundId,
+      @RequestBody RoundRequest.ResultScore request
+  ){
+    return ResponseEntity.ok(RoundResponse.ResultScore.from(scoreFacade.resultScore(request.toCommand(roundId))));
+  }
+
+  @GetMapping("/rankings")
+  public ResponseEntity<RoundResponse.Ranking> ranking (
+      @RequestBody RoundRequest.Ranking request
+  ){
+    return ResponseEntity.ok(RoundResponse.Ranking.from(scoreFacade.ranking(request.toCommand())));
+  }
+
 }

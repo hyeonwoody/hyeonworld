@@ -34,6 +34,8 @@ public class RoundService {
   }
 
 
+
+
   public RoundInfo updateAnswerInternal(long roundId, Object answer) {
     RoundInfo roundInfo = from(roundRepository.findById(roundId)
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
@@ -56,6 +58,11 @@ public class RoundService {
   @Cacheable(cacheNames = "roundAnswer", key = "#roundId")
   public String retrieveAnswer(long roundId) {
     return getAnswerFrom(roundRepository.findById(roundId)
+        .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
+  }
+
+  public long retrievePartyId(long roundId) {
+    return getPartyIdFrom(roundRepository.findById(roundId)
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
   }
 

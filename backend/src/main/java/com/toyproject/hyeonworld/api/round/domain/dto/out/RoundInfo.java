@@ -32,6 +32,8 @@ public class RoundInfo {
     return ObjectrMapper.convert(round, RoundInfo.class);
   }
 
+  public static long getPartyIdFrom(Round round) {return round.getPartyId();}
+
   public static long getGameIdFrom (Round round) {
     return round.getGameId();
   }
