@@ -1,13 +1,18 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.res;
 
+import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Result.Winner;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.PlayInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.RankingInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.RankingInfo.Participant;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 
+import com.toyproject.hyeonworld.api.round.domain.dto.out.UserNameScoreInfo;
 import com.toyproject.hyeonworld.api.round.domain.out.ScoreInfo;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.stream.Stream;
 
 
 /**
@@ -73,6 +78,38 @@ public abstract interface RoundResponse {
     public static RoundResponse.ResultScore from(ScoreInfo scoreInfo) {
       return new ResultScore();
     }
+  }
+
+
+  record Ranking(
+      List<Participant> rank
+  ) {
+    record Participant (
+        String name,
+        Long score
+    ){
+      public static Ranking.Participant from(String userName, long score) {
+        if (userName == null || userName.trim().isEmpty()) {
+          throw new IllegalArgumentException("User name cannot be null or empty");
+        }
+        return new Participant(userName, score);
+      }
+    }
+    public static RoundResponse.Ranking from (RankingInfo rankingInfo){
+      return new Ranking(convertParticipant(rankingInfo.getParticipants()));
+    }
+
+
+    private static List<Participant> convertParticipant(List<RankingInfo.Participant> participants) {
+      if (participants == null) {
+        throw new IllegalArgumentException("Winner IDs and names must be non-null and have the same size");
+      }
+      return participants.stream()
+          .map(participant -> RoundResponse.Ranking.Participant.from(participant.getName(), participant.getScore()))
+          .toList();
+    }
+
+    ;
   }
 
 }

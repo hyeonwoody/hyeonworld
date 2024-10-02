@@ -1,6 +1,8 @@
 package com.toyproject.hyeonworld.api.score.infarstructure.entity;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
+import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
+import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission.SubmissionBuilder;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -8,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,4 +51,15 @@ public class ScoreHistory {
 
   @Column(name = "score")
   private Long score;
+
+  public static ScoreHistoryBuilder defaultBuilder(){
+    return ScoreHistory.builder();
+  }
+
+  public static ScoreHistory createForRanking(ResultSet rs) throws SQLException {
+    return  defaultBuilder()
+        .userId(rs.getLong("user_id"))
+        .score(rs.getLong("score"))
+        .build();
+  }
 }

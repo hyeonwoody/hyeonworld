@@ -4,6 +4,7 @@ import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Result;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.BeginRoundCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundRankingCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand.Winner;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultInfo;
@@ -57,5 +58,17 @@ public abstract interface RoundRequest {
 
       return new RoundResultConfirmCommand(roundId, convertedWinners);
     }
+  }
+
+  record Ranking (
+      long partyId,
+      long roundId
+  )
+      implements RoundRequest {
+
+    public RoundRankingCommand toCommand() {
+      return new RoundRankingCommand(partyId, roundId);
+    }
+
   }
 }

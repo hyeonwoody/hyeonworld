@@ -1,9 +1,16 @@
 package com.toyproject.hyeonworld.api.round.application;
 
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundRankingCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.RankingInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.UserNameScoreInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfo;
 import com.toyproject.hyeonworld.api.round.domain.out.ScoreInfo;
+import com.toyproject.hyeonworld.api.round.event.ScoreEvent;
+import com.toyproject.hyeonworld.api.round.event.ScoreEvent.Ranking;
+import com.toyproject.hyeonworld.api.round.event.ScoreEventPublisher;
 import com.toyproject.hyeonworld.api.score.domain.ScoreService;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
@@ -13,9 +20,11 @@ import com.toyproject.hyeonworld.api.user.domain.UserService;
 import com.toyproject.hyeonworld.common.annotation.Facade;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author : hyeonwoody@gmail.com
@@ -28,6 +37,8 @@ public class ScoreFacade {
   private final UserService userService;
   private final RoundService roundService;
   private final ScoreService scoreService;
+
+  private final ScoreEventPublisher scoreEventPublisher;
 
   public ResultInfo result(long roundId) {
     AnswerSubmissionInfos answerSubmissionInfos = submissionService.retrieveAnswerSubmissions(roundId);
@@ -59,4 +70,16 @@ public class ScoreFacade {
     return ScoreInfo.from(scoreHistories);
   }
 
+  @Transactional
+  public RankingInfo ranking(RoundRankingCommand command) {
+    Map<Long, Long> userScores = scoreService.retrieveSumScores(command.partyId());
+    scoreEventPublisher.execute(new Ranking(command.partyId(), userScores));
+    RankingInfo rankingInfo = new RankingInfo();
+
+    for (Map.Entry<Long, Long> entry : userScores.entrySet()){
+      String name = userService.getNameById(entry.getKey());
+      rankingInfo.addParticipant(name, entry.getValue());
+    }
+    return rankingInfo;
+  }
 }

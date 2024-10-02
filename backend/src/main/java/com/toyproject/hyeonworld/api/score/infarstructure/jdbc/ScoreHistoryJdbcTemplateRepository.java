@@ -3,6 +3,7 @@ package com.toyproject.hyeonworld.api.score.infarstructure.jdbc;
 import com.toyproject.hyeonworld.api.round.infrastructure.entity.Round;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.Score;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
+import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import java.sql.PreparedStatement;
@@ -46,7 +47,17 @@ public class ScoreHistoryJdbcTemplateRepository {
     return jdbcTemplate.query(selectSql, params.toArray(), this::mapRowToScoreHistory);
   }
 
-
+  public List<ScoreHistory> findByPartyId(long partyId) {
+    String sql = """
+            SELECT s.*
+            FROM score_history s
+            WHERE s.party_id = ?
+        """;
+    return jdbcTemplate.query(
+        sql,
+        new Long[]{partyId},
+        (resultSet, rowNum) -> ScoreHistory.createForRanking(resultSet));
+  }
 
 
 
@@ -76,4 +87,6 @@ public class ScoreHistoryJdbcTemplateRepository {
     scoreHistory.setScore(rs.getLong("score"));
     return scoreHistory;
   }
+
+
 }

@@ -1,8 +1,10 @@
 package com.toyproject.hyeonworld.api.score.infarstructure;
 
+import com.toyproject.hyeonworld.api.score.infarstructure.entity.Score;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
 import com.toyproject.hyeonworld.api.score.infarstructure.jdbc.ScoreHistoryJdbcTemplateRepository;
 import com.toyproject.hyeonworld.api.score.infarstructure.jpa.ScoreHistoryJpaRepository;
+import com.toyproject.hyeonworld.api.score.infarstructure.jpa.ScoreJpaRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -14,8 +16,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class ScoreRepositoryImpl implements ScoreRepository{
+  private final ScoreJpaRepository scoreJpaRepository;
   private final ScoreHistoryJpaRepository scoreHistoryJpaRepository;
   private final ScoreHistoryJdbcTemplateRepository scoreHistoryJdbcTemplateRepository;
+
+  @Override
+  public List<Score> saveScoreAll(List<Score> score){
+    return scoreJpaRepository.saveAll(score);
+  }
 
   @Override
   public ScoreHistory save(ScoreHistory scoreHistory){
@@ -23,7 +31,12 @@ public class ScoreRepositoryImpl implements ScoreRepository{
   }
 
   @Override
-  public List<ScoreHistory> saveAll(List<ScoreHistory> scoreHistory){
+  public List<ScoreHistory> saveScoreHistoryAll(List<ScoreHistory> scoreHistory){
     return scoreHistoryJdbcTemplateRepository.saveAll(scoreHistory);
+  }
+
+  @Override
+  public List<ScoreHistory> findByPartyId(long partyId) {
+    return scoreHistoryJdbcTemplateRepository.findByPartyId(partyId);
   }
 }
