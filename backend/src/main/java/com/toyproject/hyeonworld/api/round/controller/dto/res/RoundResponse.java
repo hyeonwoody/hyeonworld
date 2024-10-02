@@ -99,6 +99,13 @@ public abstract interface RoundResponse {
       return new Ranking(convertParticipant(rankingInfo.getParticipants()));
     }
 
+    private static List<Participant> convertParticipant(PriorityQueue<RankingInfo.Participant> pq) {
+      
+      return Stream.generate(pq::poll)
+          .limit(pq.size())
+          .map(participant -> RoundResponse.Ranking.Participant.from(participant.getName(), participant.getScore()))
+          .toList();
+    }
 
     private static List<Participant> convertParticipant(List<RankingInfo.Participant> participants) {
       if (participants == null) {
