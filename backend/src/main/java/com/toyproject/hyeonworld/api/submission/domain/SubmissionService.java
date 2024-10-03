@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.submission.domain.dto;
+package com.toyproject.hyeonworld.api.submission.domain;
 
 import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.*;
 
@@ -8,6 +8,7 @@ import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionI
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionRepository;
 
