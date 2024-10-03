@@ -42,9 +42,10 @@ CREATE TABLE round (
                        id BIGINT PRIMARY KEY AUTO_INCREMENT,
                        party_id BIGINT,
                        game_id BIGINT,
-                       answer INT,
+                       answer BIGINT,
                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                        terminated_at DATETIME
+                        terminated_at DATETIME,
+                       UNIQUE (party_id, id)
 );
 
 -- Submission table
