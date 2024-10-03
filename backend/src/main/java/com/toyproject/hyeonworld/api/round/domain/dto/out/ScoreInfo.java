@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.round.domain.out;
+package com.toyproject.hyeonworld.api.round.domain.dto.out;
 
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.Score;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;

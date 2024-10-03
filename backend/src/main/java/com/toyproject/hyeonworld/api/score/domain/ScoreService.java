@@ -2,10 +2,8 @@ package com.toyproject.hyeonworld.api.score.domain;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
-import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand.Winner;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfos;
-import com.toyproject.hyeonworld.api.round.domain.out.ScoreInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.ScoreInfo;
 import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreHistoryInfo;
 import com.toyproject.hyeonworld.api.score.infarstructure.ScoreRepository;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;

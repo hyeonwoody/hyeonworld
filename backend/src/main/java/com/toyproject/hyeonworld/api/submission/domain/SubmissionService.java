@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.submission.domain.dto;
+package com.toyproject.hyeonworld.api.submission.domain;
 
 import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.*;
 

@@ -12,7 +12,7 @@ import com.toyproject.hyeonworld.api.round.domain.dto.out.PlayInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowInfo;
 import com.toyproject.hyeonworld.api.score.domain.ScoreService;
-import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
+import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.RoundSubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;

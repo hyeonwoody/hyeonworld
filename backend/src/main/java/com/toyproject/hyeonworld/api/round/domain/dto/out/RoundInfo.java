@@ -13,8 +13,8 @@ import lombok.Getter;
  */
 @Getter
 public class RoundInfo {
-  long id;
-  String answer;
+  public long id;
+  public String answer;
 
   private static Round.RoundBuilder initializeEntity(){
     return Round.builder();
