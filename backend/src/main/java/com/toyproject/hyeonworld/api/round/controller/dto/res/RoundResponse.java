@@ -1,14 +1,11 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.res;
 
-import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Result.Winner;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.PlayInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RankingInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.RankingInfo.Participant;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserNameScoreInfo;
-import com.toyproject.hyeonworld.api.round.domain.out.ScoreInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.ScoreInfo;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 import java.util.List;
 import java.util.PriorityQueue;
