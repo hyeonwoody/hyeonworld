@@ -4,7 +4,7 @@ import static com.toyproject.hyeonworld.api.submission.domain.dto.out.Submission
 
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
-import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
+import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfo;

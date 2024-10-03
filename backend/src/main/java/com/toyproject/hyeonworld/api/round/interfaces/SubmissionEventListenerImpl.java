@@ -2,7 +2,7 @@ package com.toyproject.hyeonworld.api.round.interfaces;
 
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
-import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
+import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.round.event.SubmissionEvent;
 import com.toyproject.hyeonworld.api.round.event.SubmissionEvent.Basic;
 import lombok.RequiredArgsConstructor;
