@@ -2,13 +2,22 @@ package com.toyproject.hyeonworld.api.round.application;
 
 import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.*;
 
+import com.toyproject.hyeonworld.api.game.strategy.GameStrategy;
+import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
+import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.PlayInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowInfo;
+import com.toyproject.hyeonworld.api.score.domain.ScoreService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
-import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCheckCommand;
+import com.toyproject.hyeonworld.api.submission.domain.dto.in.RoundSubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfo;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionCheckInfos;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.round.event.SubmissionEvent;
 import com.toyproject.hyeonworld.api.round.event.SubmissionEventPublisher;
@@ -24,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Facade
 @RequiredArgsConstructor
 public class SubmissionFacade {
+  private final GameStrategyFactory gameStrategyFactory;
   private final RoundService roundService;
   private final SubmissionService submissionService;
   private final UserService userService;
@@ -37,13 +47,49 @@ public class SubmissionFacade {
   }
 
   @Transactional
-  public SubmissionCheckInfos checkSubmissions(SubmissionCheckCommand command) {
-    SubmissionCheckInfos submissionCheckInfos = submissionService.checkSubmissions(command.roundId());
+  public RoundSubmissionInfos check(RoundSubmissionCommand command) {
+    RoundSubmissionInfos roundSubmissionInfos = submissionService.check(command.roundId());
 
-    for (SubmissionCheckInfo submissionCheckInfo : submissionCheckInfos){
-      String userName = userService.getNameById(submissionCheckInfo.getUserId());
-      submissionCheckInfo.complete(userName);
+    for (RoundSubmissionInfo roundSubmissionInfo : roundSubmissionInfos){
+      String userName = userService.getNameById(roundSubmissionInfo.getUserId());
+      roundSubmissionInfo.complete(userName);
     }
-    return submissionCheckInfos;
+    return roundSubmissionInfos;
+  }
+
+  @Transactional
+  public RoundSubmissionInfo checkConfirm (SubmissionCheckConfirmCommand command) {
+    GameStrategy gameStrategy = gameStrategyFactory.getStrategy(command.gameId());
+    StringOrLong<?> answer = gameStrategy.checkConfirm(command);
+    updateRoundAnswer(command.roundId(), answer);
+    return new RoundSubmissionInfo(command);
+  }
+
+  private RoundInfo updateRoundAnswer (long roundId, StringOrLong<?> answer){
+    if (answer.isLong()){
+      return roundService.updateAnswer(roundId, (long) answer.getValue());
+    }
+    if (answer.isString()){
+      return roundService.updateAnswer(roundId, (String) answer.getValue());
+    }
+    throw new IllegalArgumentException("Unsupported answer type: " + answer.getClass().getSimpleName());
+  }
+
+  public ShowInfo show(long roundId) {
+    long gameId = roundService.retrieveCurrentGame(roundId);
+    GameStrategy gameStrategy = gameStrategyFactory.getStrategy(gameId);
+    String content = gameStrategy.show(roundId);
+    return ShowInfo.from(content);
+  }
+
+  @Transactional
+  public PlayInfo play(RoundPlayCommand command) {
+    RoundInfo roundInfo = roundService.retrieveCurrentRound(command.partyId());
+    long gameId = roundService.retrieveCurrentGame(roundInfo.getId());
+    GameStrategy gameStrategy = gameStrategyFactory.getStrategy(gameId);
+    gameStrategy.play(command);
+
+    //submissionEventPublisher.execute(new SubmissionEvent.Answer(command));
+    return PlayInfo.from(command);
   }
 }

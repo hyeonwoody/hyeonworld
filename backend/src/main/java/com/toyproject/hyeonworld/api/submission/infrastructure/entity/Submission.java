@@ -53,6 +53,16 @@ public class Submission {
     return Submission.builder();
   }
 
+  public static Submission createToShow(ResultSet rs) throws SQLException {
+    return defaultBuilder()
+        .id(rs.getLong("id"))
+        .roundId(rs.getLong("round_id"))
+        .userId(rs.getLong("user_id"))
+        .text(rs.getString("text"))
+        .number(rs.getLong("number"))
+        .build();
+  }
+
   public static Submission createToCheck(ResultSet rs) throws SQLException {
     return defaultBuilder()
         .userId(rs.getLong("user_id"))

@@ -3,14 +3,13 @@ package com.toyproject.hyeonworld.api.round.domain;
 import static com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo.*;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.BeginRoundCommand;
-import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundAnswerCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.round.infrastructure.RoundRepository;
-import com.toyproject.hyeonworld.api.round.infrastructure.entity.Round;
 import com.toyproject.hyeonworld.common.exception.ServerException;
 import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +33,37 @@ public class RoundService {
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
   }
 
-  public RoundInfo updateAnswer(RoundAnswerCommand command) {
-    RoundInfo roundInfo = from(roundRepository.findById(command.id())
+
+
+
+  public RoundInfo updateAnswerInternal(long roundId, Object answer) {
+    RoundInfo roundInfo = from(roundRepository.findById(roundId)
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
-    return from(roundRepository.update(roundInfo.entityToUpdate(command)));
+    return from(roundRepository.update(roundInfo.entityToUpdateAnswer(answer)));
   }
 
+  public RoundInfo updateAnswer(long roundId, long answer) {
+    return updateAnswerInternal(roundId, answer);
+  }
+  public RoundInfo updateAnswer(long roundId, String answer) {
+    return updateAnswerInternal(roundId, answer);
+  }
+
+  @Cacheable(cacheNames = "roundGame", key = "#roundId")
+  public long retrieveCurrentGame(long roundId) {
+    return getGameIdFrom(roundRepository.findById(roundId)
+        .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
+  }
+
+  @Cacheable(cacheNames = "roundAnswer", key = "#roundId")
+  public String retrieveAnswer(long roundId) {
+    return getAnswerFrom(roundRepository.findById(roundId)
+        .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
+  }
+
+  public long retrievePartyId(long roundId) {
+    return getPartyIdFrom(roundRepository.findById(roundId)
+        .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
+  }
 
 }
