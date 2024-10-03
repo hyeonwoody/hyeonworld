@@ -3,20 +3,18 @@ package com.toyproject.hyeonworld.api.round.interfaces;
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
 import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
-import com.toyproject.hyeonworld.api.game.strategy.GameStrategy;
+
 import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.round.event.SubmissionEvent.Answer;
-import com.toyproject.hyeonworld.api.score.domain.ScoreService;
-import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
+
 import com.toyproject.hyeonworld.api.round.event.SubmissionEvent;
 import com.toyproject.hyeonworld.api.round.event.SubmissionEvent.Basic;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 /**

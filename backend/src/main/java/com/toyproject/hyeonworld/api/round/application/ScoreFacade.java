@@ -10,7 +10,7 @@ import com.toyproject.hyeonworld.api.round.event.ScoreEvent.Ranking;
 import com.toyproject.hyeonworld.api.round.event.ScoreEventPublisher;
 import com.toyproject.hyeonworld.api.score.domain.ScoreService;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
-import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
+import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfos;
 import com.toyproject.hyeonworld.api.user.domain.UserService;
