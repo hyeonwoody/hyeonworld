@@ -4,11 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand.Winner;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.ScoreInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfos;
+import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreInfo;
 import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreHistoryInfo;
 import com.toyproject.hyeonworld.api.score.infarstructure.ScoreRepository;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
 import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
+import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionRepository;
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +60,27 @@ import static org.mockito.Mockito.*;
 
   @Test
   void retrieveScores() {
+    List<ScoreHistory> mockScoreHistories = Arrays.asList(
+        ScoreHistory.defaultBuilder()
+            .userId(1L)
+            .score(10L)
+            .build(),
+        ScoreHistory.defaultBuilder()
+            .userId(2L)
+            .score(10L)
+            .build()
+    );
+    when(scoreRepository.findByPartyId(partyId)).thenReturn(mockScoreHistories);
+    UserScoreInfos result = service.retrieveScores(partyId);
+    assertNotNull(result);
+    verify(scoreRepository, times(1)).findByPartyId(partyId);
+    for (int i = 0; i < result.size(); ++i){
+      UserScoreInfo userScore = result.get(i);
+      ScoreHistory scoreHistory = mockScoreHistories.get(i);
+
+      assertEquals(scoreHistory.getUserId(), userScore.getUserId());
+      assertEquals(scoreHistory.getScore(), userScore.getScore());
+    }
   }
 
   @Test
