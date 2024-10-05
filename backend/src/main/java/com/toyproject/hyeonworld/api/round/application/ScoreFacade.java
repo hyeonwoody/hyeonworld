@@ -62,8 +62,8 @@ public class ScoreFacade {
     long partyId = roundService.retrievePartyId(command.roundId());
     command = new RoundResultConfirmCommand(partyId, command.roundId(), command.winners());
 
-    List<ScoreHistory> scoreHistories = scoreService.updateScore(command);
-    return ScoreInfo.from(scoreHistories);
+    ScoreInfo scoreInfo = scoreService.updateScore(command);
+    return scoreInfo;
   }
 
   @Transactional
