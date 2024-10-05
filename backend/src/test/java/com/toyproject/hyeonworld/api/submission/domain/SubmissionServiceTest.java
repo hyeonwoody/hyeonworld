@@ -1,11 +1,9 @@
 package com.toyproject.hyeonworld.api.submission.domain;
 
-import static com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo.createEntity;
 import static org.mockito.Mockito.when;
 
-import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
-import com.toyproject.hyeonworld.api.round.infrastructure.RoundRepository;
+import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfos;
@@ -16,7 +14,6 @@ import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionReposit
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
 import com.toyproject.hyeonworld.common.exception.ServerException;
-import jakarta.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
