@@ -52,10 +52,30 @@ import static org.mockito.Mockito.*;
     List<ScoreHistory> mockScoreHistory = ScoreHistoryInfo.createEntities(command);
     when(scoreRepository.saveScoreHistoryAll(any())).thenReturn(mockScoreHistory);
 
-    ScoreInfo result = service.updateScore(command);
 
+    when(scoreRepository.saveScoreHistoryAll(any())).thenAnswer(invocation ->
+    {
+      List<ScoreHistory> savedScore = invocation.getArgument(0);
+      return savedScore;
+    });
+
+    ScoreInfo result = service.updateScore(command);
     assertNotNull(result);
     verify(scoreRepository, times(1)).saveScoreHistoryAll(any());
+    ArgumentCaptor<List<ScoreHistory>> scoreHistoryCaptor = ArgumentCaptor.forClass(List.class);
+    verify(scoreRepository, times(1)).saveScoreHistoryAll(scoreHistoryCaptor.capture());
+    List<ScoreHistory> capturedScore = scoreHistoryCaptor.getValue();
+
+    assertEquals(2, capturedScore.size());
+    for (int i = 0; i < capturedScore.size(); ++i){
+      Winner winner =winners.get(i);
+      ScoreHistory scoreHistory = capturedScore.get(i);
+
+      assertEquals(winner.id(), scoreHistory.getUserId());
+      assertEquals(winner.score(), scoreHistory.getScore());
+    }
+
+    //verify(scoreRepository, times(1)).saveScoreHistoryAll(any());
   }
 
   @Test
