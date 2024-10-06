@@ -5,7 +5,7 @@ import com.toyproject.hyeonworld.api.round.domain.dto.out.RankingInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 
-import com.toyproject.hyeonworld.api.round.domain.dto.out.ScoreInfo;
+import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreInfo;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 import java.util.List;
 import java.util.PriorityQueue;
