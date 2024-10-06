@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.round.domain.out;
+package com.toyproject.hyeonworld.api.score.domain.dto.out;
 
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.Score;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
@@ -14,7 +14,7 @@ public class ScoreInfo {
 
 
   public static ScoreInfo from(List<ScoreHistory> scoreHistories) {
-    return null;
+    return new ScoreInfo();
   }
 
 

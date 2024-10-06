@@ -5,22 +5,16 @@ import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundRankingCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RankingInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserNameScoreInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfo;
-import com.toyproject.hyeonworld.api.round.domain.out.ScoreInfo;
-import com.toyproject.hyeonworld.api.round.event.ScoreEvent;
+import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreInfo;
 import com.toyproject.hyeonworld.api.round.event.ScoreEvent.Ranking;
 import com.toyproject.hyeonworld.api.round.event.ScoreEventPublisher;
 import com.toyproject.hyeonworld.api.score.domain.ScoreService;
-import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
-import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
+import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfos;
 import com.toyproject.hyeonworld.api.user.domain.UserService;
 import com.toyproject.hyeonworld.common.annotation.Facade;
-import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -66,8 +60,8 @@ public class ScoreFacade {
     long partyId = roundService.retrievePartyId(command.roundId());
     command = new RoundResultConfirmCommand(partyId, command.roundId(), command.winners());
 
-    List<ScoreHistory> scoreHistories = scoreService.updateScore(command);
-    return ScoreInfo.from(scoreHistories);
+    ScoreInfo scoreInfo = scoreService.updateScore(command);
+    return scoreInfo;
   }
 
   @Transactional

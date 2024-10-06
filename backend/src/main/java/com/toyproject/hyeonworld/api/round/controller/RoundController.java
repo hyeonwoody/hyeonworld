@@ -13,7 +13,7 @@ import com.toyproject.hyeonworld.api.score.domain.ScoreService;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
-import com.toyproject.hyeonworld.api.submission.domain.dto.SubmissionService;
+import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

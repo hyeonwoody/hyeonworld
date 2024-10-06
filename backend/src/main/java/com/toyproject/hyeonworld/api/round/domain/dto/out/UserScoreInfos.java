@@ -29,8 +29,7 @@ public class UserScoreInfos extends ArrayList<UserScoreInfo> {
   public static HashMap<Long, Long> toSum(UserScoreInfos userScoreInfos) {
     HashMap<Long, Long> ret = new HashMap<>();
     for (UserScoreInfo info :userScoreInfos){
-      ret.put(info.getUserId(),
-          ret.getOrDefault(info.getUserId(), 0L) + info.getScore());
+      ret.merge(info.getUserId(), info.getScore(), Long::sum);
     }
     return ret;
   }
