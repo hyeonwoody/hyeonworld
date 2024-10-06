@@ -89,5 +89,19 @@ import static org.mockito.Mockito.*;
 
   @Test
   void save() {
+    Map<Long, Long> userSumScore = new HashMap<>();
+    userSumScore.put(1L, 100L);
+    userSumScore.put(2L, 200L);
+
+    service.save(partyId, userSumScore);
+    ArgumentCaptor<List<Score>> scoreInfoCaptor = ArgumentCaptor.forClass(List.class);
+    verify(scoreRepository).saveScoreAll(scoreInfoCaptor.capture());
+    List<Score> capturedScoreInfos = scoreInfoCaptor.getValue();
+    for (Score score : capturedScoreInfos){
+      assertTrue(userSumScore.containsKey(score.getUserId()));
+      assertEquals(userSumScore.get(score.getUserId()), score.getScore());
+    }
+    Set<Long> savedUserIds = capturedScoreInfos.stream().map(Score::getUserId).collect(Collectors.toSet());
+    assertEquals(userSumScore.keySet(), savedUserIds);
   }
 }
