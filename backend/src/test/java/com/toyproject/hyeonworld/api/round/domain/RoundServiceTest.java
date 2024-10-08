@@ -7,6 +7,8 @@ import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 import com.toyproject.hyeonworld.api.round.infrastructure.RoundRepository;
 import com.toyproject.hyeonworld.api.round.infrastructure.entity.Round;
 
+import com.toyproject.hyeonworld.common.exception.ServerException;
+import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
 import java.time.LocalDateTime;
 
 import java.util.Optional;
@@ -57,6 +59,13 @@ class RoundServiceTest {
     assertEquals("",roundInfo.getAnswer());
   }
 
+    @Test
+    void begin_shouldHandleNullCommand(){
+      BeginRoundCommand command = null;
+      assertThrows(NullPointerException.class, ()->service.begin(command));
+      verify(roundRepository, never()).insert(any());
+    }
+
   @Test
   void retrieveCurrentRound() {
     //given
@@ -77,6 +86,19 @@ class RoundServiceTest {
     assertEquals(-1, roundInfo.getId());
     assertEquals("",roundInfo.getAnswer());
   }
+
+    @Test
+    void retrieveCurrentRound_shouldThrowExceptionWhenRoundNotFound(){
+      long nonExistentPartyId = -1L;
+      when(roundRepository.findByPartyId(nonExistentPartyId)).thenReturn(Optional.empty());
+
+      ServerException exception = assertThrows(ServerException.class,
+          ()-> service.retrieveCurrentRound(nonExistentPartyId));
+
+      assertEquals(ServerResponseCode.ROUND_NOT_FOUND,
+          exception.getCode());
+      verify(roundRepository, times(1)).findByPartyId(nonExistentPartyId);
+    }
 
   @Test
   void updateAnswerStringInternal() {
@@ -112,6 +134,20 @@ class RoundServiceTest {
     verify(roundRepository, times(1)).findById(retrieveRoundId);
     verify(roundRepository, times(1)).update(any(Round.class));
   }
+
+    @Test
+    void updateAnswerStringInternal_shouldThrowExceptionWhenRoundNotFound(){
+      long nonExistentRoundId = -1L;
+      String answer = "non";
+      when(roundRepository.findById(nonExistentRoundId)).thenReturn(Optional.empty());
+
+      ServerException exception = assertThrows(ServerException.class,
+          ()-> service.updateAnswerInternal(nonExistentRoundId, answer));
+
+      assertEquals(ServerResponseCode.ROUND_NOT_FOUND,
+          exception.getCode());
+      verify(roundRepository, times(1)).findById(nonExistentRoundId);
+    }
 
   @Test
   void updateAnswerLongInternal() {
@@ -151,6 +187,19 @@ class RoundServiceTest {
     verify(roundRepository, times(1)).update(any(Round.class));
   }
 
+    @Test
+    void updateAnswerLongInternal_shouldThrowExceptionWhenRoundNotFound(){
+      long nonExistentRoundId = -1L;
+      Long answer = 3L;
+      when(roundRepository.findById(nonExistentRoundId)).thenReturn(Optional.empty());
+
+      ServerException exception = assertThrows(ServerException.class,
+          ()-> service.updateAnswerInternal(nonExistentRoundId, answer));
+
+      assertEquals(ServerResponseCode.ROUND_NOT_FOUND,
+          exception.getCode());
+      verify(roundRepository, times(1)).findById(nonExistentRoundId);
+    }
 //  @Test void updateAnswerString() {}
 //  @Test void updateAnswerLong() {}
 
@@ -177,6 +226,21 @@ class RoundServiceTest {
     assertEquals(gameId, retGameId);
   }
 
+    @Test
+    void retrieveCurrentGame_shouldThrowExceptionWhenRoundNotFound() {
+      // given
+      long nonExistentRoundId = -1L;
+      when(roundRepository.findById(nonExistentRoundId)).thenReturn(Optional.empty());
+
+      // when & then
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.retrieveCurrentGame(nonExistentRoundId));
+
+      assertEquals(ServerResponseCode.ROUND_NOT_FOUND, exception.getCode());
+      verify(roundRepository, times(1)).findById(nonExistentRoundId);
+    }
+
+
   @Test
   void retrieveAnswer() {
     //given
@@ -199,6 +263,20 @@ class RoundServiceTest {
     verify(roundRepository, times(1)).findById(retrieveRoundId);
     assertEquals(answer, retAnswer);
   }
+    @Test
+    void retrieveAnswer_shouldThrowExceptionWhenRoundNotFound() {
+      // given
+      long nonExistentRoundId = -1L;
+      when(roundRepository.findById(nonExistentRoundId)).thenReturn(Optional.empty());
+
+      // when & then
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.retrieveAnswer(nonExistentRoundId));
+
+      assertEquals(ServerResponseCode.ROUND_NOT_FOUND, exception.getCode());
+      verify(roundRepository, times(1)).findById(nonExistentRoundId);
+    }
+
 
   @Test
   void retrievePartyId() {
@@ -222,4 +300,18 @@ class RoundServiceTest {
     verify(roundRepository, times(1)).findById(retrieveRoundId);
     assertEquals(retrievePartyId, retPartyId);
   }
+
+    @Test
+    void retrievePartyId_shouldThrowExceptionWhenRoundNotFound() {
+      // given
+      long nonExistentRoundId = -1L;
+      when(roundRepository.findById(nonExistentRoundId)).thenReturn(Optional.empty());
+
+      // when & then
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.retrievePartyId(nonExistentRoundId));
+
+      assertEquals(ServerResponseCode.ROUND_NOT_FOUND, exception.getCode());
+      verify(roundRepository, times(1)).findById(nonExistentRoundId);
+    }
 }
