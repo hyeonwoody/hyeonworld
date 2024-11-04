@@ -38,9 +38,6 @@ public class ScoreFacade {
     AnswerSubmissionInfos answerSubmissionInfos = submissionService.retrieveAnswerSubmissions(roundId);
     String answer = roundService.retrieveAnswer(roundId);
     ResultInfo resultInfo = new ResultInfo(answer);
-    
-    
-
     Set<Long> winnerIds = answerSubmissionInfos.stream()
         .filter(answerSubmissionInfo -> answer.equals(answerSubmissionInfo.getAnswer()))
         .map(AnswerSubmissionInfo::getUserId)
