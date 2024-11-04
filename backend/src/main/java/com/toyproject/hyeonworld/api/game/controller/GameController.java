@@ -1,8 +1,8 @@
 package com.toyproject.hyeonworld.api.game.controller;
 
-import static  com.toyproject.hyeonworld.api.game.controller.dto.res.DisplayGameResponse.*;
+import static com.toyproject.hyeonworld.api.game.controller.dto.res.DisplayGamesResponse.*;
 
-import com.toyproject.hyeonworld.api.game.controller.dto.res.DisplayGameResponse;
+import com.toyproject.hyeonworld.api.game.controller.dto.res.DisplayGamesResponse;
 import com.toyproject.hyeonworld.api.game.domain.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class GameController {
     private final GameService gameService;
 
     @GetMapping("/playable")
-    public ResponseEntity<DisplayGameResponse> displayGame (){
+    public ResponseEntity<DisplayGamesResponse> displayGame (){
         return ResponseEntity.ok (from(gameService.displayGame()));
     }
 }
