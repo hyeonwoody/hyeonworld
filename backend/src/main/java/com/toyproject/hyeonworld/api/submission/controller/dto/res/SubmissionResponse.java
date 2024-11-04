@@ -12,13 +12,5 @@ import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 */
 public abstract interface SubmissionResponse {
 
-  record Basic(
-      long partyId,
-      long roundId
-  ) implements SubmissionResponse {
 
-    public static SubmissionResponse.Basic from(SubmissionInfo submissionInfo) {
-      return ObjectrMapper.convert(submissionInfo, SubmissionResponse.Basic.class);
-    }
-  }
 };

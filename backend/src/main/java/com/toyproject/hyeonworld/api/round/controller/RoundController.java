@@ -10,8 +10,10 @@ import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Begin;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.score.domain.ScoreService;
+import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionBasicRequest;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse;
+import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionBasicResponse;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import java.util.List;
@@ -54,8 +56,8 @@ public class RoundController {
   사회자만 partyId, roundId 정보를 관리합니다.
    */
   @PostMapping("/submits")
-  public ResponseEntity<SubmissionResponse.Basic> submitSubmission(@RequestBody SubmissionRequest.Basic request){
-    return ResponseEntity.ok(SubmissionResponse.Basic.from(submissionFacade.submitSubmission(request.toCommand())));
+  public ResponseEntity<SubmissionBasicResponse> submitSubmission(@RequestBody SubmissionBasicRequest request){
+    return ResponseEntity.ok(SubmissionBasicResponse.from(submissionFacade.submitSubmission(request.toCommand())));
   }
 
   @GetMapping("/{roundId}/checks")
