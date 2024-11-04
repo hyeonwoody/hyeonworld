@@ -3,6 +3,7 @@ package com.toyproject.hyeonworld.api.user.domain;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
+import com.toyproject.hyeonworld.api.round.domain.dto.in.BeginRoundCommand;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.Score;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.CreateUserCommand;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.RetrieveUserWaitingListCommand;
@@ -14,6 +15,8 @@ import com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListInfo;
 import com.toyproject.hyeonworld.api.user.infrastructure.UserRepository;
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 import com.toyproject.hyeonworld.api.user.infrastructure.jpa.UserJpaRepository.UserNameProjection;
+import com.toyproject.hyeonworld.common.exception.ServerException;
+import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +117,19 @@ class UserServiceTest {
     assertEquals(mockUser.getId(), result.getId());
   }
 
+    @Test
+    void getUserById_shouldThrowsServerExceptionWhenUserNotFound() {
+      // Arrange
+      long nonExistentUserId = -1L;
+      when(userRepository.findById(nonExistentUserId)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.getUserById(nonExistentUserId));
+
+      assertEquals(ServerResponseCode.USER_NOT_FOUND, exception.getCode());
+    }
+
   @Test
   void updateUser() {
     long userId = 2L;
@@ -141,6 +157,22 @@ class UserServiceTest {
     verify(userRepository, times(1)).findById(userId);
     verify(userRepository, times(1)).save(any(User.class));
   }
+
+    @Test
+    void updateUser_shouldThrowsServerExceptionWhenUserNotFound() {
+      // Arrange
+      long userId = -1L;
+      UpdateUserCommand command = new UpdateUserCommand(userId, Optional.of("New Name"), Optional.of((byte)2),Optional.of((byte)2));
+      when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.updateUser(command));
+
+      assertEquals(ServerResponseCode.USER_NOT_FOUND, exception.getCode());
+      verify(userRepository, times(1)).findById(userId);
+      verify(userRepository, never()).save(any(User.class));
+    }
 
   @Test
   void deleteUser() {
@@ -208,6 +240,20 @@ class UserServiceTest {
     assertEquals(name, result.getName());
   }
 
+    @Test
+    void getUserByName_shouldThrowsServerExceptionWhenUserNotFound() {
+      // Arrange
+      String nonExistentUserName = "이게 이름이냐";
+      when(userRepository.findByName(nonExistentUserName)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.getUserByName(nonExistentUserName));
+
+      assertEquals(ServerResponseCode.USER_NOT_FOUND, exception.getCode());
+      verify(userRepository, times(1)).findByName(nonExistentUserName);
+    }
+
   @Test
   void confirmLogin() {
     String name = "testUser";
@@ -228,6 +274,42 @@ class UserServiceTest {
     assertTrue(result.isLogin());
     assertFalse(result.isInGame());
   }
+
+    @Test
+    void confirmLogin_shouldThrowsServerExceptionWhenUserNotFound() {
+      // Arrange
+      String nonExistentUserName = "이게 이름이냐";
+      when(userRepository.findByName(nonExistentUserName)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.confirmLogin(nonExistentUserName));
+
+      assertEquals(ServerResponseCode.USER_NOT_FOUND, exception.getCode());
+      verify(userRepository, times(1)).findByName(nonExistentUserName);
+      verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    void confirmLogin_shouldThrowsServerExceptionWhenUserAlreadyLoggedIn() {
+      // Arrange
+      String userName = "존재하기는 해";
+      User mockUser = User.builder()
+          .name(userName)
+          .login(true)
+          .inGame(false)
+          .build();
+
+      when(userRepository.findByName(userName)).thenReturn(Optional.of(mockUser));
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.confirmLogin(userName));
+
+      assertEquals(ServerResponseCode.USER_ALREADY_LOGGED_IN, exception.getCode());
+      verify(userRepository, times(1)).findByName(userName);
+      verify(userRepository, never()).save(any(User.class));
+    }
 
   @Test
   void confirmLogOut() {
@@ -253,6 +335,21 @@ class UserServiceTest {
     assertFalse(result.isInGame());
   }
 
+    @Test
+    void confirmLogOut_shouldThrowsServerExceptionWhenUserNotFound() {
+      // Arrange
+      long nonExistentUserId = -1L;
+      when(userRepository.findById(nonExistentUserId)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.confirmLogOut(nonExistentUserId));
+
+      assertEquals(ServerResponseCode.USER_NOT_FOUND, exception.getCode());
+      verify(userRepository).findById(nonExistentUserId);
+      verify(userRepository, never()).save(any());
+    }
+
   @Test
   void confirmEnterGame() {
     long userId = 2L;
@@ -277,6 +374,21 @@ class UserServiceTest {
     assertTrue(result.isInGame());
   }
 
+    @Test
+    void confirmEnterGame_shouldThrowsServerExceptionWhenUserNotFound() {
+      // Arrange
+      long nonExistentUserId = -1L;
+      when(userRepository.findById(nonExistentUserId)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.confirmEnterGame(nonExistentUserId));
+
+      assertEquals(ServerResponseCode.USER_NOT_FOUND, exception.getCode());
+      verify(userRepository).findById(nonExistentUserId);
+      verify(userRepository, never()).save(any());
+    }
+
   @Test
   void confirmExitGame() {
     long userId = 2L;
@@ -300,6 +412,21 @@ class UserServiceTest {
     assertTrue(result.isLogin());
     assertFalse(result.isInGame());
   }
+
+    @Test
+    void confirmExitGame_shouldThrowsServerExceptionWhenUserNotFound() {
+      // Arrange
+      long nonExistentUserId = -1L;
+      when(userRepository.findById(nonExistentUserId)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.confirmExitGame(nonExistentUserId));
+
+      assertEquals(ServerResponseCode.USER_NOT_FOUND, exception.getCode());
+      verify(userRepository).findById(nonExistentUserId);
+      verify(userRepository, never()).save(any());
+    }
 
   @Test
   void retrieveWaitingList() {
@@ -354,6 +481,20 @@ class UserServiceTest {
     assertEquals(mockUser.getName(), result);
     verify(userRepository, times(1)).findById(userId);
   }
+
+    @Test
+    void getNameById_shouldThrowsServerExceptionWhenUserNotFound() {
+      // Arrange
+      long nonExistentUserId = -1L;
+      when(userRepository.findById(nonExistentUserId)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      ServerException exception = assertThrows(ServerException.class,
+          () -> service.getNameById(nonExistentUserId));
+
+      assertEquals(ServerResponseCode.USER_NOT_FOUND, exception.getCode());
+      verify(userRepository, times(1)).findById(nonExistentUserId);
+    }
 
   @Test
   void getNamesByIds() {
