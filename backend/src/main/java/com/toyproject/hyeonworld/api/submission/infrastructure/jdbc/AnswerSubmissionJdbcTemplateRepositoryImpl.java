@@ -1,7 +1,7 @@
 package com.toyproject.hyeonworld.api.submission.infrastructure.jdbc;
 
+import com.toyproject.hyeonworld.api.submission.infrastructure.AnswerSubmissionRepository;
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
-import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @RequiredArgsConstructor
-public class AnswerSubmissionJdbcTemplateRepository {
+public class AnswerSubmissionJdbcTemplateRepositoryImpl implements AnswerSubmissionJdbctemplateRepository {
   private final JdbcTemplate jdbcTemplate;
 
 
@@ -33,5 +33,10 @@ public class AnswerSubmissionJdbcTemplateRepository {
         sql,
         new Long[]{roundId, roundId},
         (resultSet, rowNum) -> AnswerSubmission.createForResult(resultSet));
+  }
+
+  @Override
+  public AnswerSubmission saveAnswer(AnswerSubmission answerSubmission) {
+    return null;
   }
 }

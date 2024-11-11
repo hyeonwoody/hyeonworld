@@ -11,14 +11,11 @@ import java.util.Optional;
 */public interface SubmissionRepository {
 
   Submission save(Submission submission);
-  AnswerSubmission saveAnswer(AnswerSubmission answerSubmission);
 
   List<Submission> findAllByRoundId(long roundId);
-
   List<Submission> findMostRecentByRoundId(long roundId);
   Submission findMostRecentByUserId(long userId);
 
   Optional<Submission> findById(long submissionId);
 
-  List<AnswerSubmission> findAnswerMostRecentByRoundId(long roundId);
 }

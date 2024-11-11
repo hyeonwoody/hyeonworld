@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since : 24. 9. 7.
  */
 public interface SubmissionJpaRepository extends JpaRepository<Submission, Long> {
-
   List<Submission> findAllByRoundId(long roundId);
 }

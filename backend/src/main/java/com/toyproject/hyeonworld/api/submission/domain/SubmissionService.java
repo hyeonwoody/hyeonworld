@@ -9,6 +9,7 @@ import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionI
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
+import com.toyproject.hyeonworld.api.submission.infrastructure.AnswerSubmissionRepository;
 import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionRepository;
 
 import com.toyproject.hyeonworld.common.exception.ServerException;
@@ -26,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class SubmissionService {
   private final SubmissionRepository submissionRepository;
+
+  private final AnswerSubmissionRepository answerSubmissionRepository;
 
   public RoundSubmissionInfo retrieveById(long submissionId) {
     return RoundSubmissionInfo.from(submissionRepository.findById(submissionId)
@@ -48,10 +51,10 @@ public class SubmissionService {
 
   @Transactional(propagation = Propagation.REQUIRES_NEW)
   public AnswerSubmissionInfo submitAnswer(long roundId, RoundPlayCommand command) {
-    return AnswerSubmissionInfo.from(submissionRepository.saveAnswer(AnswerSubmissionInfo.createEntity(roundId, command)));
+    return AnswerSubmissionInfo.from(answerSubmissionRepository.saveAnswer(AnswerSubmissionInfo.createEntity(roundId, command)));
   }
 
   public AnswerSubmissionInfos retrieveAnswerSubmissions(long roundId) {
-    return AnswerSubmissionInfos.from(submissionRepository.findAnswerMostRecentByRoundId(roundId));
+    return AnswerSubmissionInfos.from(answerSubmissionRepository.findAnswerMostRecentByRoundId(roundId));
   }
 }
