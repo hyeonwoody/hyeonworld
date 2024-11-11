@@ -5,6 +5,7 @@ import com.toyproject.hyeonworld.api.game.domain.dto.out.GameInfos;
 import com.toyproject.hyeonworld.api.game.infrastructure.GameRepository;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class GameService {
-  private final GameRepository gameRepository;
+
+    private final GameRepository gameRepository;
 
   public GameInfos displayGame() {
     return GameInfos.from(gameRepository.findByPlayable(true));

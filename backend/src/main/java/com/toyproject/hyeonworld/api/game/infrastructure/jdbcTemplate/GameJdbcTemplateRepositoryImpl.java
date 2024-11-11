@@ -16,14 +16,14 @@ public class GameJdbcTemplateRepositoryImpl implements GameJdbcTemplateRepositor
   private final JdbcTemplate jdbcTemplate;
 
   @Override
-  public List<Game> findByPlayble(boolean playable) {
+  public List<Game> findByPlayable(boolean playable) {
     String sql = "SELECT name, description FROM game WHERE playable = ?";
     return this.jdbcTemplate.query(
-        sql,
-        new Boolean[]{playable},
-        (resultSet, rowNum) -> Game.createToDisplay(resultSet)
+            sql,
+            (resultSet, rowNum) -> Game.createToDisplay(resultSet),
+            new Boolean[]{playable}
     );
+
+
   }
-
-
 }

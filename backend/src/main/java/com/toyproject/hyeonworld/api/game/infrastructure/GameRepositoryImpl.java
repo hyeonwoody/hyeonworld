@@ -6,6 +6,7 @@ import com.toyproject.hyeonworld.api.game.infrastructure.GameRepository;
 import com.toyproject.hyeonworld.api.game.infrastructure.jpa.GameJpaRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * @since : 24. 9. 3.
  */
 @Repository
+@Primary
 @RequiredArgsConstructor
 public class GameRepositoryImpl implements GameRepository {
   private final GameJdbcTemplateRepository gameJdbcTemplateRepository;
@@ -20,11 +22,6 @@ public class GameRepositoryImpl implements GameRepository {
 
   @Override
   public List<Game> findByPlayable(boolean playable) {
-    return gameJdbcTemplateRepository.findByPlayble(playable);
-  }
-
-  @Override
-  public List<Game> findByPlayableJpa (boolean playable){
-    return gameJpaRepository.findByPlayable(playable);
+    return gameJdbcTemplateRepository.findByPlayable(playable);
   }
 }
