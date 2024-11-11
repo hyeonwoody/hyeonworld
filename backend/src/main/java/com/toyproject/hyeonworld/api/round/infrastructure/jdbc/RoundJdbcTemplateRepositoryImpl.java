@@ -1,21 +1,17 @@
 package com.toyproject.hyeonworld.api.round.infrastructure.jdbc;
 
 import com.toyproject.hyeonworld.api.game.infrastructure.entity.Game;
-import com.toyproject.hyeonworld.api.party.infrastructure.entity.Party;
 import com.toyproject.hyeonworld.api.round.infrastructure.entity.Round;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -26,7 +22,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @RequiredArgsConstructor
-public class RoundJdbcTemplateRepository {
+public class RoundJdbcTemplateRepositoryImpl implements RoundjdbcTemplateRepository {
   private final JdbcTemplate jdbcTemplate;
 
   public Round insert(Round round) {
@@ -46,6 +42,11 @@ public class RoundJdbcTemplateRepository {
       round.setId(key.longValue());
     }
     return round;
+  }
+
+  @Override
+  public Optional<Round> findById(long id) {
+    return Optional.empty();
   }
 
   public Round update(Round round) {
@@ -80,15 +81,6 @@ public class RoundJdbcTemplateRepository {
     return Optional.ofNullable(round.getId())
         .map(id -> update(round))
         .orElseGet(() -> insert(round));
-  }
-
-  public List<Game> findByPlayble(boolean playable) {
-    String sql = "SELECT name, description FROM game WHERE playable = ?";
-    return this.jdbcTemplate.query(
-        sql,
-        new Boolean[]{playable},
-        (resultSet, rowNum) -> Game.createToDisplay(resultSet)
-    );
   }
 
   public Optional<Round> findByPartyId(long partyId) {
