@@ -9,11 +9,8 @@ import java.util.List;
  * @since : 24. 9. 14.
  */
 public interface ScoreRepository {
-  List<Score> saveScoreAll (List<Score> score);
+  List<Score> saveAll (List<Score> score);
 
-  ScoreHistory save(ScoreHistory scoreHistory);
 
-  List<ScoreHistory> saveScoreHistoryAll(List<ScoreHistory> scoreHistory);
 
-  List<ScoreHistory> findByPartyId(long partyId);
 }

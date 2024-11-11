@@ -5,7 +5,9 @@ import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmComma
 import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfos;
 import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreInfo;
 import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreHistoryInfo;
+import com.toyproject.hyeonworld.api.score.infarstructure.ScoreHistoryRepository;
 import com.toyproject.hyeonworld.api.score.infarstructure.ScoreRepository;
+import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +23,19 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ScoreService {
   private final ScoreRepository scoreRepository;
+  private final ScoreHistoryRepository scoreHistoryRepository;
 
   @Transactional(propagation = Propagation.REQUIRES_NEW)
   public void submitAnswer(RoundPlayCommand command, long roundId, String answer) {
-    scoreRepository.save(ScoreHistoryInfo.createEntity(command, roundId, answer));
+    scoreHistoryRepository.save(ScoreHistoryInfo.createEntity(command, roundId, answer));
   }
 
   public ScoreInfo updateScore(RoundResultConfirmCommand command) {
-      return ScoreInfo.from(scoreRepository.saveScoreHistoryAll(ScoreHistoryInfo.createEntities(command)));
+      return ScoreInfo.from(scoreHistoryRepository.saveAll(ScoreHistoryInfo.createEntities(command)));
   }
 
   public UserScoreInfos retrieveScores(long partyId) {
-    return UserScoreInfos.from(scoreRepository.findByPartyId(partyId));
+    return UserScoreInfos.from(scoreHistoryRepository.findByPartyId(partyId));
   }
 
   public HashMap<Long, Long> retrieveSumScores(long partyId) {
@@ -41,6 +44,6 @@ public class ScoreService {
 
   @Transactional(propagation = Propagation.REQUIRES_NEW)
   public void save(long partyId, Map<Long, Long> userSumScore) {
-      scoreRepository.saveScoreAll(ScoreInfo.from(partyId, userSumScore));
+      scoreRepository.saveAll(ScoreInfo.from(partyId, userSumScore));
   }
 }

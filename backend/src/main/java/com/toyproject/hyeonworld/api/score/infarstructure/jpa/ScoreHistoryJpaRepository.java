@@ -2,6 +2,7 @@ package com.toyproject.hyeonworld.api.score.infarstructure.jpa;
 
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author : hyeonwoody@gmail.com
