@@ -32,23 +32,7 @@ public class PartyDashboard {
   @Column(name = "current_game_stage")
   private Byte currentGameStage;
 
-  private static PartyDashboardBuilder defaultBuilder(){
+  public static PartyDashboardBuilder defaultBuilder(){
     return PartyDashboard.builder();
-  }
-
-  public static PartyDashboard create (long partyId){
-    return defaultBuilder()
-        .partyId(partyId)
-        .currentGameId((long) -1)
-        .currentGameStage((byte) -1)
-        .build();
-  }
-
-  public static PartyDashboard create (ChangeDashboardCommand command){
-    return defaultBuilder()
-        .partyId(command.partyId())
-        .currentGameId(command.gameId())
-        .currentGameStage(command.gameStage())
-        .build();
   }
 }
