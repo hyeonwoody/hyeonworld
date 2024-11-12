@@ -9,10 +9,10 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class ShowInfo {
+public class ShowStage {
   private String content;
 
-  public static ShowInfo from(String content) {
-    return new ShowInfo(content);
+  public static ShowStage from(String content) {
+    return new ShowStage(content);
   }
 }
