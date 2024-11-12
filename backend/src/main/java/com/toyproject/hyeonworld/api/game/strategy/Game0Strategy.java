@@ -1,12 +1,14 @@
 package com.toyproject.hyeonworld.api.game.strategy;
 
+import com.toyproject.hyeonworld.api.answerSubmission.domain.AnswerSubmissionService;
 import com.toyproject.hyeonworld.api.game.strategy.dto.StringOrLong;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
+import com.toyproject.hyeonworld.api.round.event.Submission.AnswerSubmissionEvent;
+import com.toyproject.hyeonworld.api.round.event.Submission.SubmissionEventPublisher;
 import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.user.domain.UserService;
@@ -22,8 +24,9 @@ import lombok.RequiredArgsConstructor;
 public class Game0Strategy implements GameStrategy{
   private final RoundService roundService;
   private final SubmissionService submissionService;
+  private final AnswerSubmissionService answerSubmissionService;
   private final UserService userService;
-
+  private final SubmissionEventPublisher submissionEventPublisher;
 
   @Override
   public long getGameId() {
@@ -32,7 +35,7 @@ public class Game0Strategy implements GameStrategy{
 
   @Override
   public StringOrLong<Long> checkConfirm(SubmissionCheckConfirmCommand command) {
-    SubmissionInfo submissionInfo = submissionService.retrieveByUserId(command.userId());
+    SubmissionInfo submissionInfo = submissionService.checkConfirmSubmission(command.userId());
     return StringOrLong.ofNumber(submissionInfo.getId());
   }
 
@@ -53,7 +56,7 @@ public class Game0Strategy implements GameStrategy{
   @Override
   public String show(long roundId) {
     String submissionId = roundService.retrieveAnswer(roundId);
-    RoundSubmissionInfo roundSubmissionInfo = submissionService.retrieveById(Long.parseLong(submissionId));
+    RoundSubmissionInfo roundSubmissionInfo = submissionService.showById(Long.parseLong(submissionId));
     String userName = userService.getNameById(roundSubmissionInfo.getUserId());
     roundSubmissionInfo.complete(userName);
     return formatSubmissionText(roundSubmissionInfo);
@@ -61,8 +64,7 @@ public class Game0Strategy implements GameStrategy{
 
   @Override
   public long play(RoundPlayCommand command) {
-    RoundInfo roundInfo = roundService.retrieveCurrentRound(command.partyId());
-    submissionService.submitAnswer(roundInfo.getId(), command);
+    submissionEventPublisher.execute(AnswerSubmissionEvent.from(command.partyId(), command));
     return 0;
   }
 }
