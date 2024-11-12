@@ -44,10 +44,7 @@ public class RoundScoreFacade {
 
     public ScoreInfo resultScoreConfirm(RoundResultConfirmCommand command) {
         long partyId = roundService.retrievePartyId(command.roundId());
-        command = new RoundResultConfirmCommand(partyId, command.roundId(), command.winners());
-
-        ScoreInfo scoreInfo = scoreService.updateScore(command);
-        return scoreInfo;
+        return scoreService.updateScore(partyId, command);
     }
 
     @Transactional

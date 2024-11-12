@@ -29,8 +29,8 @@ public class ScoreService {
     scoreHistoryRepository.save(ScoreHistoryInfo.createEntity(command, roundId, answer));
   }
 
-  public ScoreInfo updateScore(RoundResultConfirmCommand command) {
-      return ScoreInfo.from(scoreHistoryRepository.saveAll(ScoreHistoryInfo.createEntities(command)));
+  public ScoreInfo updateScore(long partyId, RoundResultConfirmCommand command) {
+      return ScoreInfo.from(scoreHistoryRepository.saveAll(ScoreHistoryInfo.createEntities(partyId, command)));
   }
 
   public ScoreDtos retrieveScores(long partyId) {

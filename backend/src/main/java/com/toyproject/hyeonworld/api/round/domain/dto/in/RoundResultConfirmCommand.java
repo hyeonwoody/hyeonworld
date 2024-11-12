@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.api.round.domain.dto.in;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,13 +8,9 @@ import java.util.List;
  * @since : 24. 9. 18.
  */
 public record RoundResultConfirmCommand (
-    Long partyId,
-    Long roundId,
+    long roundId,
     List<Winner> winners
 ){
-  public RoundResultConfirmCommand(long roundId, List<Winner> winners) {
-    this(null, roundId, winners);
-  }
 
   public record Winner(
       long id,
@@ -21,5 +18,9 @@ public record RoundResultConfirmCommand (
   ) {
 
 
+  }
+
+  public static RoundResultConfirmCommand from (long roundId, List<Winner> winners) {
+    return new RoundResultConfirmCommand(roundId, winners);
   }
 }

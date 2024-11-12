@@ -5,8 +5,6 @@ import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
-import com.toyproject.hyeonworld.api.round.event.Submission.AnswerSubmissionEvent;
-import com.toyproject.hyeonworld.api.round.event.Submission.SubmissionEventPublisher;
 import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
@@ -25,7 +23,6 @@ public class TruthOrFalseStrategy implements GameStrategy<Long> {
   private final SubmissionService submissionService;
   private final AnswerSubmissionService answerSubmissionService;
   private final UserService userService;
-
 
   @Override
   public long getGameId() {

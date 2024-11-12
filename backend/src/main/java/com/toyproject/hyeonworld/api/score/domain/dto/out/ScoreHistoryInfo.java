@@ -4,8 +4,6 @@ import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand.Winner;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +28,11 @@ public class ScoreHistoryInfo {
         .build();
   }
 
-  public static List<ScoreHistory> createEntities(RoundResultConfirmCommand command) {
+  public static List<ScoreHistory> createEntities(long partyId, RoundResultConfirmCommand command) {
     List<ScoreHistory> scoreHistories = new ArrayList<>();
     for (Winner winner : command.winners()) {
       ScoreHistory scoreHistory = ScoreHistory.builder()
-          .partyId(command.partyId())
+          .partyId(partyId)
           .roundId(command.roundId())
           .userId(winner.id())
           .score(winner.score())
