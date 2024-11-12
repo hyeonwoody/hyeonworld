@@ -2,16 +2,17 @@ package com.toyproject.hyeonworld.api.submission.domain;
 
 import static org.mockito.Mockito.when;
 
+import com.toyproject.hyeonworld.api.answerSubmission.domain.AnswerSubmissionService;
+import com.toyproject.hyeonworld.api.answerSubmission.domain.out.AnswerSubmissionInfo;
+import com.toyproject.hyeonworld.api.answerSubmission.domain.out.AnswerSubmissionInfos;
+import com.toyproject.hyeonworld.api.answerSubmission.infrastructure.AnswerSubmissionRepository;
+import com.toyproject.hyeonworld.api.answerSubmission.infrastructure.entity.AnswerSubmission;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
-import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfo;
-import com.toyproject.hyeonworld.api.submission.domain.dto.out.AnswerSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionRepository;
-import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
 import com.toyproject.hyeonworld.common.exception.ServerException;
 import java.time.LocalDateTime;
@@ -31,7 +32,11 @@ import static org.mockito.Mockito.*;
  */
 class SubmissionServiceTest {
   private final SubmissionRepository submissionRepository = Mockito.mock(SubmissionRepository.class);
+  private final AnswerSubmissionRepository answerSubmissionRepository = Mockito.mock(AnswerSubmissionRepository.class);
+
   private final SubmissionService service = new SubmissionService(submissionRepository);
+  private final AnswerSubmissionService answerSubmissionService = new AnswerSubmissionService(answerSubmissionRepository);
+
 
   private long partyId;
   private long roundId;
@@ -59,7 +64,7 @@ class SubmissionServiceTest {
 
     when(submissionRepository.findById(retrieveSubmissionId)).thenReturn(Optional.of(mockSubmission));
 
-    RoundSubmissionInfo roundSubmissionInfo = service.retrieveById(retrieveSubmissionId);
+    RoundSubmissionInfo roundSubmissionInfo = service.showById(retrieveSubmissionId);
     verify(submissionRepository, times(1)).findById(retrieveSubmissionId);
     assertNotNull(roundSubmissionInfo);
     assertEquals(mockSubmission.getUserId(), roundSubmissionInfo.getUserId());
@@ -72,7 +77,7 @@ class SubmissionServiceTest {
         long nonExistentSubmissionId = -1L;
         when(submissionRepository.findById(nonExistentSubmissionId)).thenReturn(Optional.empty());
 
-        assertThrows(ServerException.class, () -> service.retrieveById(nonExistentSubmissionId));
+        assertThrows(ServerException.class, () -> service.showById(nonExistentSubmissionId));
 
         verify(submissionRepository, times(1)).findById(nonExistentSubmissionId);
       }
@@ -90,7 +95,7 @@ class SubmissionServiceTest {
         .build();
     when(submissionRepository.findMostRecentByUserId(retrieveUserId)).thenReturn(mockSubmission);
 
-    SubmissionInfo submissionInfo = service.retrieveByUserId(retrieveUserId);
+    SubmissionInfo submissionInfo = service.checkConfirmSubmission(retrieveUserId);
     verify(submissionRepository, times(1)).findMostRecentByUserId(retrieveUserId);
     assertNotNull(submissionInfo);
     assertEquals(submissionId, submissionInfo.getId());
@@ -112,7 +117,7 @@ class SubmissionServiceTest {
         .build();
     when(submissionRepository.save(any(Submission.class))).thenReturn(mockSubmission);
 
-    SubmissionInfo submissionInfo = service.hand(roundId, command);
+    SubmissionInfo submissionInfo = service.handFromParticipants(roundId, command);
     verify(submissionRepository, times(1)).save(any(Submission.class));
     assertNotNull(submissionInfo);
     assertEquals(0, submissionInfo.getId()); //
@@ -166,9 +171,9 @@ class SubmissionServiceTest {
         .userId(command.userId())
         .answer(command.answer())
         .build();
-    when(submissionRepository.saveAnswer(any(AnswerSubmission.class))).thenReturn(mockAnswerSubmission);
+    when(answerSubmissionRepository.saveAnswer(any(AnswerSubmission.class))).thenReturn(mockAnswerSubmission);
 
-    AnswerSubmissionInfo result = service.submitAnswer(roundId, command);
+    AnswerSubmissionInfo result = answerSubmissionService.submitAnswer(roundId, command.userId(), command.answer());
 
     assertNotNull(result);
     //assertEquals(expectedInfo.getId(), result.getId()); //
@@ -191,10 +196,10 @@ class SubmissionServiceTest {
             .userId(2L)
             .answer("lost").build()
     );
-    when(submissionRepository.findAnswerMostRecentByRoundId(roundId)).thenReturn(mockAnswerSubmissions);
+    when(answerSubmissionRepository.findAnswerMostRecentByRoundId(roundId)).thenReturn(mockAnswerSubmissions);
 
 
-    AnswerSubmissionInfos result = service.retrieveAnswerSubmissions(roundId);
+    AnswerSubmissionInfos result = answerSubmissionService.retrieveAnswerSubmissions(roundId);
     assertNotNull(result);
     for (int i = 0; i < result.size(); ++i){
       AnswerSubmissionInfo info = result.get(i);

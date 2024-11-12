@@ -4,15 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand.Winner;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfos;
+import com.toyproject.hyeonworld.api.score.infarstructure.ScoreHistoryRepository;
+import com.toyproject.hyeonworld.api.user.application.dto.ScoreDto;
+import com.toyproject.hyeonworld.api.user.application.dto.ScoreDtos;
 import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreInfo;
-import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreHistoryInfo;
 import com.toyproject.hyeonworld.api.score.infarstructure.ScoreRepository;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.Score;
 import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
-import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
-import com.toyproject.hyeonworld.api.submission.infrastructure.SubmissionRepository;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -33,7 +30,8 @@ import static org.mockito.Mockito.*;
 */
 class ScoreServiceTest {
   private final ScoreRepository scoreRepository = Mockito.mock(ScoreRepository.class);
-  private final ScoreService service = new ScoreService(scoreRepository);
+  private final ScoreHistoryRepository scoreHistoryRepository = Mockito.mock(ScoreHistoryRepository.class);
+  private final ScoreService service = new ScoreService(scoreRepository, scoreHistoryRepository);
 
   private long partyId;
   private long roundId;
@@ -57,7 +55,7 @@ class ScoreServiceTest {
     RoundResultConfirmCommand command = new RoundResultConfirmCommand(partyId, roundId, winners);
 
 
-    when(scoreRepository.saveScoreHistoryAll(any())).thenAnswer(invocation ->
+    when(scoreHistoryRepository.saveAll(any())).thenAnswer(invocation ->
     {
       List<ScoreHistory> savedScore = invocation.getArgument(0);
       return savedScore;
@@ -66,7 +64,7 @@ class ScoreServiceTest {
     ScoreInfo result = service.updateScore(command);
     assertNotNull(result);
     ArgumentCaptor<List<ScoreHistory>> scoreHistoryCaptor = ArgumentCaptor.forClass(List.class);
-    verify(scoreRepository, times(1)).saveScoreHistoryAll(scoreHistoryCaptor.capture());
+    verify(scoreHistoryRepository, times(1)).saveAll(scoreHistoryCaptor.capture());
     List<ScoreHistory> capturedScore = scoreHistoryCaptor.getValue();
 
     assertEquals(2, capturedScore.size());
@@ -93,16 +91,16 @@ class ScoreServiceTest {
             .score(10L)
             .build()
     );
-    when(scoreRepository.findByPartyId(partyId)).thenReturn(mockScoreHistories);
-    UserScoreInfos result = service.retrieveScores(partyId);
+    when(scoreHistoryRepository.findByPartyId(partyId)).thenReturn(mockScoreHistories);
+    ScoreDtos result = service.retrieveScores(partyId);
     assertNotNull(result);
-    verify(scoreRepository, times(1)).findByPartyId(partyId);
+    verify(scoreHistoryRepository, times(1)).findByPartyId(partyId);
     for (int i = 0; i < result.size(); ++i){
-      UserScoreInfo userScore = result.get(i);
+      ScoreDto userScore = result.get(i);
       ScoreHistory scoreHistory = mockScoreHistories.get(i);
 
-      assertEquals(scoreHistory.getUserId(), userScore.getUserId());
-      assertEquals(scoreHistory.getScore(), userScore.getScore());
+      assertEquals(scoreHistory.getUserId(), userScore.userId());
+      assertEquals(scoreHistory.getScore(), userScore.score());
     }
   }
 
@@ -122,7 +120,7 @@ class ScoreServiceTest {
             .score(15L)
             .build()
     );
-    when(scoreRepository.findByPartyId(partyId)).thenReturn(mockScoreHistories);
+    when(scoreHistoryRepository.findByPartyId(partyId)).thenReturn(mockScoreHistories);
 
     // Act
     HashMap<Long, Long> result = service.retrieveSumScores(partyId);
@@ -144,7 +142,7 @@ class ScoreServiceTest {
     for (long userId : expectedSums.keySet()){
       assertTrue(result.containsKey(userId));
     }
-    verify(scoreRepository, times(1)).findByPartyId(partyId);
+    verify(scoreHistoryRepository, times(1)).findByPartyId(partyId);
   }
 
   @Test
@@ -155,7 +153,7 @@ class ScoreServiceTest {
 
     service.save(partyId, userSumScore);
     ArgumentCaptor<List<Score>> scoreInfoCaptor = ArgumentCaptor.forClass(List.class);
-    verify(scoreRepository).saveScoreAll(scoreInfoCaptor.capture());
+    verify(scoreRepository).saveAll(scoreInfoCaptor.capture());
     List<Score> capturedScoreInfos = scoreInfoCaptor.getValue();
     for (Score score : capturedScoreInfos){
       assertTrue(userSumScore.containsKey(score.getUserId()));

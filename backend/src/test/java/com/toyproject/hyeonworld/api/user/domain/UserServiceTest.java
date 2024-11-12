@@ -3,15 +3,12 @@ package com.toyproject.hyeonworld.api.user.domain;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
-import com.toyproject.hyeonworld.api.round.domain.dto.in.BeginRoundCommand;
-import com.toyproject.hyeonworld.api.score.infarstructure.entity.Score;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.CreateUserCommand;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.RetrieveUserWaitingListCommand;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.UpdateUserCommand;
-import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInGameInfo;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos;
-import com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListInfo;
+import com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListDto;
 import com.toyproject.hyeonworld.api.user.infrastructure.UserRepository;
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 import com.toyproject.hyeonworld.api.user.infrastructure.jpa.UserJpaRepository.UserNameProjection;
@@ -22,12 +19,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -452,17 +449,17 @@ class UserServiceTest {
             .inGame(false)
             .build()
     );
+    Set<String> loggedInUserNames = loggedInUsers.stream().map(User::getName).collect(Collectors.toSet());
 
     when(userRepository.findByLogin(true)).thenReturn(loggedInUsers);
 
     // Act
-    UserWaitingListInfo result = service.retrieveWaitingList(command);
+    List<String> results = service.retrieveWaitingList(command);
 
     // Assert
-    assertNotNull(result);
-    for (int i = 0; i < result.getNames().size(); ++i){
-      User loggedInUser = i == 1 ? loggedInUsers.get(i+1) : loggedInUsers.get(i);
-      assertEquals(loggedInUser.getName(), result.getNames().get(i));
+    assertNotNull(results);
+    for (String result : results) {
+        assertTrue(loggedInUserNames.contains(result));
     }
     verify(userRepository, times(1)).findByLogin(true);
   }
