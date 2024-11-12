@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Facade
 @RequiredArgsConstructor
-public class SubmissionFacade {
+public class RoundSubmissionFacade {
 
     private final GameService gameService;
     private final RoundService roundService;

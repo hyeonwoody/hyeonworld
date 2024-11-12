@@ -2,20 +2,16 @@ package com.toyproject.hyeonworld.api.round.controller;
 
 import static com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse.Basic.from;
 
-import com.toyproject.hyeonworld.api.round.application.ScoreFacade;
-import com.toyproject.hyeonworld.api.round.application.SubmissionFacade;
+import com.toyproject.hyeonworld.api.round.application.RoundScoreFacade;
+import com.toyproject.hyeonworld.api.round.application.RoundSubmissionFacade;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundSubmissionRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Begin;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
-import com.toyproject.hyeonworld.api.score.domain.ScoreService;
 import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionBasicRequest;
-import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionRequest;
 import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionBasicResponse;
-import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
-import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v2/rounds")
 public class RoundController {
   private final RoundService roundService;
-  private final SubmissionFacade submissionFacade;
-  private final ScoreFacade scoreFacade;
+  private final RoundSubmissionFacade roundSubmissionFacade;
+  private final RoundScoreFacade roundScoreFacade;
 
   @PostMapping
   public ResponseEntity<RoundResponse.Begin> beginRound(@RequestBody RoundRequest.Begin request){
@@ -57,41 +53,41 @@ public class RoundController {
    */
   @PostMapping("/submits")
   public ResponseEntity<SubmissionBasicResponse> submitSubmission(@RequestBody SubmissionBasicRequest request){
-    return ResponseEntity.ok(SubmissionBasicResponse.from(submissionFacade.submitSubmission(request.toCommand())));
+    return ResponseEntity.ok(SubmissionBasicResponse.from(roundSubmissionFacade.submitSubmission(request.toCommand())));
   }
 
   @GetMapping("/{roundId}/checks")
   public ResponseEntity<List<RoundSubmissionResponse.Basic>> checkSubmissions(
       @PathVariable long roundId,
       @RequestBody RoundSubmissionRequest.Basic request){
-    return ResponseEntity.ok(RoundSubmissionResponse.Basic.from(submissionFacade.check(request.toCommand(roundId))));
+    return ResponseEntity.ok(RoundSubmissionResponse.Basic.from(roundSubmissionFacade.check(request.toCommand(roundId))));
   } //check stage
 
   @PatchMapping("/{roundId}/check-confirm")
   public ResponseEntity<RoundSubmissionResponse.Confirm> checkSubmissionConfirm(
       @PathVariable long roundId,
       @RequestBody RoundSubmissionRequest.Confirm request){
-    return ResponseEntity.ok(RoundSubmissionResponse.Confirm.from(submissionFacade.checkConfirm(request.toCommand(roundId))));
+    return ResponseEntity.ok(RoundSubmissionResponse.Confirm.from(roundSubmissionFacade.checkConfirm(request.toCommand(roundId))));
   }
 
   @GetMapping("/{roundId}/shows")
   public ResponseEntity<RoundSubmissionResponse.Show> show (
       @PathVariable long roundId){
-    return ResponseEntity.ok(RoundSubmissionResponse.Show.from(submissionFacade.show(roundId)));
+    return ResponseEntity.ok(RoundSubmissionResponse.Show.from(roundSubmissionFacade.show(roundId)));
   }
 
   @PostMapping("/plays")
   public ResponseEntity<RoundResponse.Play> play (
       @RequestBody RoundRequest.Play request
   ){
-    return ResponseEntity.ok(RoundResponse.Play.from(submissionFacade.play(request.toCommand())));
+    return ResponseEntity.ok(RoundResponse.Play.from(roundSubmissionFacade.play(request.toCommand())));
   }
 
   @GetMapping("/{roundId}/results")
   public ResponseEntity<RoundResponse.Result> result (
       @PathVariable long roundId
   ){
-    return ResponseEntity.ok(RoundResponse.Result.from(scoreFacade.result(roundId)));
+    return ResponseEntity.ok(RoundResponse.Result.from(roundScoreFacade.result(roundId)));
   }
 
   @PostMapping("/{roundId}/result-score")
@@ -99,14 +95,14 @@ public class RoundController {
       @PathVariable long roundId,
       @RequestBody RoundRequest.ResultScore request
   ){
-    return ResponseEntity.ok(RoundResponse.ResultScore.from(scoreFacade.resultScoreConfirm(request.toCommand(roundId))));
+    return ResponseEntity.ok(RoundResponse.ResultScore.from(roundScoreFacade.resultScoreConfirm(request.toCommand(roundId))));
   }
 
   @GetMapping("/rankings")
   public ResponseEntity<RoundResponse.Ranking> ranking (
       @RequestBody RoundRequest.Ranking request
   ){
-    return ResponseEntity.ok(RoundResponse.Ranking.from(scoreFacade.ranking(request.toCommand())));
+    return ResponseEntity.ok(RoundResponse.Ranking.from(roundScoreFacade.ranking(request.toCommand())));
   }
 
 }

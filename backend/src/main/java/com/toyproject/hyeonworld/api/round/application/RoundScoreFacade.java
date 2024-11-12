@@ -26,14 +26,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Facade
 @RequiredArgsConstructor
-public class ScoreFacade {
+public class RoundScoreFacade {
 
+    private final RoundService roundService;
     private final AnswerSubmissionService answerSubmissionService;
     private final ScoreService scoreService;
-
     private final UserService userService;
-    private final RoundService roundService;
-
     private final ScoreEventPublisher scoreEventPublisher;
 
     public ResultStage result(long roundId) {
