@@ -1,17 +1,24 @@
 package com.toyproject.hyeonworld.api.round.controller;
 
-import static com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse.Basic.from;
-
 import com.toyproject.hyeonworld.api.round.application.RoundScoreFacade;
 import com.toyproject.hyeonworld.api.round.application.RoundSubmissionFacade;
-import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundRequest;
-import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundSubmissionRequest;
-import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse;
-import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundResponse.Begin;
+import com.toyproject.hyeonworld.api.round.controller.dto.req.CheckConfirmRequest;
+import com.toyproject.hyeonworld.api.round.controller.dto.req.CheckRequest;
+import com.toyproject.hyeonworld.api.round.controller.dto.req.PlayRequest;
+import com.toyproject.hyeonworld.api.round.controller.dto.req.RankingRequest;
+import com.toyproject.hyeonworld.api.round.controller.dto.req.ResultConfirmRequest;
+import com.toyproject.hyeonworld.api.round.controller.dto.req.RoundBeginRequest;
+import com.toyproject.hyeonworld.api.round.controller.dto.req.SubmissionRequest;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.CheckConfirmResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.CheckResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.PlayResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.RankingResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.ResultConfirmResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.ResultResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundBeginResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.ShowResponse;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
-import com.toyproject.hyeonworld.api.submission.controller.dto.req.SubmissionBasicRequest;
-import com.toyproject.hyeonworld.api.round.controller.dto.res.RoundSubmissionResponse;
-import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionBasicResponse;
+import com.toyproject.hyeonworld.api.round.controller.dto.res.SubmissionResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +43,8 @@ public class RoundController {
   private final RoundScoreFacade roundScoreFacade;
 
   @PostMapping
-  public ResponseEntity<RoundResponse.Begin> beginRound(@RequestBody RoundRequest.Begin request){
-    return ResponseEntity.ok(Begin.from(roundService.begin(request.toCommand())));
+  public ResponseEntity<RoundBeginResponse> beginRound(@RequestBody RoundBeginRequest request){
+    return ResponseEntity.ok(RoundBeginResponse.from(roundService.begin(request.toCommand())));
   }
 
 //  @PatchMapping("/{roundId}")
@@ -52,57 +59,57 @@ public class RoundController {
   사회자만 partyId, roundId 정보를 관리합니다.
    */
   @PostMapping("/submits")
-  public ResponseEntity<SubmissionBasicResponse> submitSubmission(@RequestBody SubmissionBasicRequest request){
-    return ResponseEntity.ok(SubmissionBasicResponse.from(roundSubmissionFacade.submitSubmission(request.toCommand())));
+  public ResponseEntity<SubmissionResponse> submitSubmission(@RequestBody SubmissionRequest request){
+    return ResponseEntity.ok(SubmissionResponse.from(roundSubmissionFacade.submitSubmission(request.toCommand())));
   }
 
   @GetMapping("/{roundId}/checks")
-  public ResponseEntity<List<RoundSubmissionResponse.Basic>> checkSubmissions(
+  public ResponseEntity<List<CheckResponse>> checkSubmissions(
       @PathVariable long roundId,
-      @RequestBody RoundSubmissionRequest.Basic request){
-    return ResponseEntity.ok(RoundSubmissionResponse.Basic.from(roundSubmissionFacade.check(request.toCommand(roundId))));
+      @RequestBody CheckRequest request){
+    return ResponseEntity.ok(CheckResponse.from(roundSubmissionFacade.check(request.toCommand(roundId))));
   } //check stage
 
   @PatchMapping("/{roundId}/check-confirm")
-  public ResponseEntity<RoundSubmissionResponse.Confirm> checkSubmissionConfirm(
+  public ResponseEntity<CheckConfirmResponse> checkSubmissionConfirm(
       @PathVariable long roundId,
-      @RequestBody RoundSubmissionRequest.Confirm request){
-    return ResponseEntity.ok(RoundSubmissionResponse.Confirm.from(roundSubmissionFacade.checkConfirm(request.toCommand(roundId))));
+      @RequestBody CheckConfirmRequest request){
+    return ResponseEntity.ok(CheckConfirmResponse.from(roundSubmissionFacade.checkConfirm(request.toCommand(roundId))));
   }
 
   @GetMapping("/{roundId}/shows")
-  public ResponseEntity<RoundSubmissionResponse.Show> show (
+  public ResponseEntity<ShowResponse> show (
       @PathVariable long roundId){
-    return ResponseEntity.ok(RoundSubmissionResponse.Show.from(roundSubmissionFacade.show(roundId)));
+    return ResponseEntity.ok(ShowResponse.from(roundSubmissionFacade.show(roundId)));
   }
 
   @PostMapping("/plays")
-  public ResponseEntity<RoundResponse.Play> play (
-      @RequestBody RoundRequest.Play request
+  public ResponseEntity<PlayResponse> play (
+      @RequestBody PlayRequest request
   ){
-    return ResponseEntity.ok(RoundResponse.Play.from(roundSubmissionFacade.play(request.toCommand())));
+    return ResponseEntity.ok(PlayResponse.from(roundSubmissionFacade.play(request.toCommand())));
   }
 
   @GetMapping("/{roundId}/results")
-  public ResponseEntity<RoundResponse.Result> result (
+  public ResponseEntity<ResultResponse> result (
       @PathVariable long roundId
   ){
-    return ResponseEntity.ok(RoundResponse.Result.from(roundScoreFacade.result(roundId)));
+    return ResponseEntity.ok(ResultResponse.from(roundScoreFacade.result(roundId)));
   }
 
   @PostMapping("/{roundId}/result-score")
-  public ResponseEntity<RoundResponse.ResultScore> resultScore (
+  public ResponseEntity<ResultConfirmResponse> resultScore (
       @PathVariable long roundId,
-      @RequestBody RoundRequest.ResultScore request
+      @RequestBody ResultConfirmRequest request
   ){
-    return ResponseEntity.ok(RoundResponse.ResultScore.from(roundScoreFacade.resultScoreConfirm(request.toCommand(roundId))));
+    return ResponseEntity.ok(ResultConfirmResponse.from(roundScoreFacade.resultScoreConfirm(request.toCommand(roundId))));
   }
 
   @GetMapping("/rankings")
-  public ResponseEntity<RoundResponse.Ranking> ranking (
-      @RequestBody RoundRequest.Ranking request
+  public ResponseEntity<RankingResponse> ranking (
+      @RequestBody RankingRequest request
   ){
-    return ResponseEntity.ok(RoundResponse.Ranking.from(roundScoreFacade.ranking(request.toCommand())));
+    return ResponseEntity.ok(RankingResponse.from(roundScoreFacade.ranking(request.toCommand())));
   }
 
 }
