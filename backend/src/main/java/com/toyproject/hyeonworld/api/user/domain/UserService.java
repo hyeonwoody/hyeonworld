@@ -2,16 +2,16 @@ package com.toyproject.hyeonworld.api.user.domain;
 
 import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos.*;
 import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo.*;
-import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListInfo.*;
+import static com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListDto.*;
 import static com.toyproject.hyeonworld.api.user.infrastructure.entity.User.*;
 
 import com.toyproject.hyeonworld.api.user.domain.dto.in.CreateUserCommand;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.RetrieveUserWaitingListCommand;
 import com.toyproject.hyeonworld.api.user.domain.dto.in.UpdateUserCommand;
-import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInGameInfo;
+import com.toyproject.hyeonworld.api.user.domain.dto.out.NameInGameInfos;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfo;
 import com.toyproject.hyeonworld.api.user.domain.dto.out.UserInfos;
-import com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListInfo;
+import com.toyproject.hyeonworld.api.user.domain.dto.out.UserWaitingListDto;
 import com.toyproject.hyeonworld.api.user.infrastructure.UserRepository;
 import com.toyproject.hyeonworld.api.user.infrastructure.jpa.UserJpaRepository.UserNameProjection;
 import com.toyproject.hyeonworld.common.exception.ServerException;
@@ -96,9 +96,9 @@ public class UserService {
     return from(userRepository.save(userInfo.entityToGame(false)));
   }
 
-  public UserWaitingListInfo retrieveWaitingList(RetrieveUserWaitingListCommand command) {
-    List<UserInGameInfo> userInfos = UserInGameInfo.from(userRepository.findByLogin(true));
-    return from(userInfos);
+  public List<String> retrieveWaitingList(RetrieveUserWaitingListCommand command) {
+    NameInGameInfos nameInGameInfos = NameInGameInfos.from(userRepository.findByLogin(true));
+    return nameInGameInfos.getWatingNameList();
   }
 
   public String getNameById(long userId) {

@@ -10,8 +10,7 @@ import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.PlayInfo;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowInfo;
-import com.toyproject.hyeonworld.api.round.event.Submission.AnswerSubmissionEvent;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowStage;
 import com.toyproject.hyeonworld.api.round.event.Submission.PrimarySubmissionEvent;
 import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.RoundSubmissionCommand;
@@ -74,11 +73,11 @@ public class SubmissionFacade {
     throw new IllegalArgumentException("Unsupported answer type: " + answer.getClass().getSimpleName());
   }
 
-  public ShowInfo show(long roundId) {
+  public ShowStage show(long roundId) {
     long gameId = roundService.retrieveCurrentGame(roundId);
     GameStrategy gameStrategy = gameStrategyFactory.getStrategy(gameId);
     String content = gameStrategy.show(roundId);
-    return ShowInfo.from(content);
+    return ShowStage.from(content);
   }
 
   @Transactional

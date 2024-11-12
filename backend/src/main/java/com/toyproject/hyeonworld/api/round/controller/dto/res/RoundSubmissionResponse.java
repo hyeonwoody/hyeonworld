@@ -1,6 +1,6 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.res;
 
-import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.ShowStage;
 import com.toyproject.hyeonworld.api.submission.controller.dto.res.SubmissionResponse;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
@@ -52,8 +52,8 @@ public interface RoundSubmissionResponse extends SubmissionResponse {
   record Show(
       String content
   ) {
-    public static RoundSubmissionResponse.Show from(ShowInfo showInfo) {
-      return ObjectrMapper.convert(showInfo, Show.class);
+    public static RoundSubmissionResponse.Show from(ShowStage showStage) {
+      return ObjectrMapper.convert(showStage, Show.class);
     }
   }
 }

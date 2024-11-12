@@ -109,7 +109,7 @@ Continuously undergoing updates.
 - **Port Forwarding**: Configure the router to allow access from external networks.  
 - **CORS Configuration**: Utilize `WebMvcConfigurer`.  
 - **SSE (Server-Sent Events)**: Establish an EventSource connection with the server when a player enters the game. The server manages connections using an `SseEmitter` list.  
-- **Login**: Allow login by comparing the entered name with a list of family member names stored in a database.  
+- **Login**: Allow login by comparing the entered name with a list of family member nameDtos stored in a database.  
 - **Member CRUD**: Provide an admin menu to add users.  
 
 <br>

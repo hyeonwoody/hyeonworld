@@ -1,14 +1,12 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.res;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.out.PlayInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.RankingInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultInfo;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.RankStage;
+import com.toyproject.hyeonworld.api.round.domain.dto.out.ResultStage;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserNameInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserNameInfos;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserNameScoreInfo;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfo;
+import com.toyproject.hyeonworld.api.user.application.dto.NameDtos;
+import com.toyproject.hyeonworld.api.user.application.dto.NameScoreDto;
 import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreInfo;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 import java.util.List;
@@ -64,15 +62,15 @@ public abstract interface RoundResponse {
             }
         }
 
-        public static RoundResponse.Result from(ResultInfo resultInfo) {
-            return new Result(resultInfo.answer(), convertWinners(resultInfo.userNameInfos()));
+        public static RoundResponse.Result from(ResultStage resultStage) {
+            return new Result(resultStage.answer(), convertWinners(resultStage.nameDtos()));
         }
 
-        private static List<RoundResponse.Result.Winner> convertWinners(UserNameInfos winners) {
+        private static List<RoundResponse.Result.Winner> convertWinners(NameDtos winners) {
             if (winners == null) {
                 throw new IllegalArgumentException("Winner IDs and names must be non-null and have the same size");
             }
-            return winners.userNameInfos().stream()
+            return winners.nameDtos().stream()
                     .map(winner -> RoundResponse.Result.Winner.from(winner.id(), winner.name()))
                     .toList();
         }
@@ -105,11 +103,11 @@ public abstract interface RoundResponse {
             }
         }
 
-        public static RoundResponse.Ranking from(RankingInfo rankingInfo) {
-            return new Ranking(convertParticipant(rankingInfo.participants()));
+        public static RoundResponse.Ranking from(RankStage rankStage) {
+            return new Ranking(convertParticipant(rankStage.participants()));
         }
 
-        private static List<Participant> convertParticipant(PriorityQueue<UserNameScoreInfo> pq) {
+        private static List<Participant> convertParticipant(PriorityQueue<NameScoreDto> pq) {
 
             return Stream.generate(pq::poll)
                     .limit(pq.size())
@@ -118,7 +116,7 @@ public abstract interface RoundResponse {
                     .toList();
         }
 
-        private static List<Participant> convertParticipant(List<UserNameScoreInfo> participants) {
+        private static List<Participant> convertParticipant(List<NameScoreDto> participants) {
             if (participants == null) {
                 throw new IllegalArgumentException("Winner IDs and names must be non-null and have the same size");
             }

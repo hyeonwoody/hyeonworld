@@ -2,12 +2,11 @@ package com.toyproject.hyeonworld.api.score.domain;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
-import com.toyproject.hyeonworld.api.round.domain.dto.out.UserScoreInfos;
+import com.toyproject.hyeonworld.api.user.application.dto.ScoreDtos;
 import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreInfo;
 import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreHistoryInfo;
 import com.toyproject.hyeonworld.api.score.infarstructure.ScoreHistoryRepository;
 import com.toyproject.hyeonworld.api.score.infarstructure.ScoreRepository;
-import com.toyproject.hyeonworld.api.score.infarstructure.entity.ScoreHistory;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +33,12 @@ public class ScoreService {
       return ScoreInfo.from(scoreHistoryRepository.saveAll(ScoreHistoryInfo.createEntities(command)));
   }
 
-  public UserScoreInfos retrieveScores(long partyId) {
-    return UserScoreInfos.from(scoreHistoryRepository.findByPartyId(partyId));
+  public ScoreDtos retrieveScores(long partyId) {
+    return ScoreDtos.from(scoreHistoryRepository.findByPartyId(partyId));
   }
 
   public HashMap<Long, Long> retrieveSumScores(long partyId) {
-    return UserScoreInfos.toSum(retrieveScores(partyId));
+    return ScoreDtos.toSum(retrieveScores(partyId));
   }
 
   @Transactional(propagation = Propagation.REQUIRES_NEW)
