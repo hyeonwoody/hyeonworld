@@ -99,7 +99,7 @@ public class RoundController {
       @PathVariable long roundId,
       @RequestBody RoundRequest.ResultScore request
   ){
-    return ResponseEntity.ok(RoundResponse.ResultScore.from(scoreFacade.resultScore(request.toCommand(roundId))));
+    return ResponseEntity.ok(RoundResponse.ResultScore.from(scoreFacade.resultScoreConfirm(request.toCommand(roundId))));
   }
 
   @GetMapping("/rankings")

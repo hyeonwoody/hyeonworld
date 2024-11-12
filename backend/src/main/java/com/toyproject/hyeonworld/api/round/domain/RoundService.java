@@ -9,7 +9,6 @@ import com.toyproject.hyeonworld.common.exception.ServerException;
 import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +31,6 @@ public class RoundService {
     return from(roundRepository.findByPartyId(partyId)
         .orElseThrow(()-> new ServerException(ServerResponseCode.ROUND_NOT_FOUND)));
   }
-
-
-
 
   public RoundInfo updateAnswerInternal(long roundId, Object answer) {
     RoundInfo roundInfo = from(roundRepository.findById(roundId)

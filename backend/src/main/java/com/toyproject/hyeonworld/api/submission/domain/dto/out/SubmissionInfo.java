@@ -16,6 +16,8 @@ public class SubmissionInfo {
   private long id;
   private final long partyId;
   private final long roundId;
+  private String text;
+  private Long number;
 
   private static Submission.SubmissionBuilder initializeEntity(){
     return Submission.builder();
@@ -33,6 +35,8 @@ public class SubmissionInfo {
     return SubmissionInfo.builder()
         .id(submission.getId())
         .roundId(submission.getRoundId())
+            .text(submission.getText())
+            .number(submission.getNumber())
         .build();
   }
 

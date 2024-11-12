@@ -29,9 +29,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ScoreFacade {
 
     private final AnswerSubmissionService answerSubmissionService;
+    private final ScoreService scoreService;
+
     private final UserService userService;
     private final RoundService roundService;
-    private final ScoreService scoreService;
 
     private final ScoreEventPublisher scoreEventPublisher;
 
@@ -43,7 +44,7 @@ public class ScoreFacade {
         return ResultStage.from(answer, UsersIdName);
     }
 
-    public ScoreInfo resultScore(RoundResultConfirmCommand command) {
+    public ScoreInfo resultScoreConfirm(RoundResultConfirmCommand command) {
         long partyId = roundService.retrievePartyId(command.roundId());
         command = new RoundResultConfirmCommand(partyId, command.roundId(), command.winners());
 

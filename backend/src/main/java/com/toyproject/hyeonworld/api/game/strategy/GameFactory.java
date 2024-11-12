@@ -10,10 +10,10 @@ import java.util.Map;
  * @since : 24. 9. 11.
  */
 @StrategyFactory
-public class GameStrategyFactory {
+public class GameFactory {
   private final Map<Long, GameStrategy> strategies;
 
-  public GameStrategyFactory(List<GameStrategy> gameStrategies) {
+  public GameFactory(List<GameStrategy> gameStrategies) {
     this.strategies = new HashMap<>();
     for (GameStrategy gameStrategy : gameStrategies){
       strategies.put(gameStrategy.getGameId(), gameStrategy);

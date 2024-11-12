@@ -8,7 +8,6 @@ import com.toyproject.hyeonworld.api.round.event.Submission.PrimarySubmissionEve
 import com.toyproject.hyeonworld.api.round.event.Submission.SubmissionEvent;
 import com.toyproject.hyeonworld.api.submission.domain.SubmissionService;
 
-import com.toyproject.hyeonworld.api.game.strategy.GameStrategyFactory;
 import com.toyproject.hyeonworld.api.round.domain.RoundService;
 import com.toyproject.hyeonworld.api.round.domain.dto.out.RoundInfo;
 
@@ -26,8 +25,6 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class SubmissionEventListenerImpl implements SubmissionEventListener {
 
     private final SubmissionService submissionService;
-    private final AnswerSubmissionService answerSubmissionService;
-    private final RoundService roundService;
 
     @Override
     @Async
@@ -43,9 +40,7 @@ public class SubmissionEventListenerImpl implements SubmissionEventListener {
 
     @Override
     public void handleAnswerSubmissionEvent(AnswerSubmissionEvent event) {
-        RoundInfo roundInfo = roundService.retrieveCurrentRound(event.partyId());
-        answerSubmissionService.submitAnswer(roundInfo.getId(),
-                event.userId(), event.answer());
+        event.gameStrategy().playStage(event.roundPlayCommand());
     }
 
     @Override
