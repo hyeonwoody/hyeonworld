@@ -1,8 +1,5 @@
 package com.toyproject.hyeonworld.api.user.domain.dto.out;
 
-import com.toyproject.hyeonworld.api.game.domain.dto.out.GameInfo;
-import com.toyproject.hyeonworld.api.game.domain.dto.out.GameInfos;
-import com.toyproject.hyeonworld.api.game.infrastructure.entity.Game;
 import com.toyproject.hyeonworld.api.user.infrastructure.entity.User;
 import java.util.ArrayList;
 import java.util.Collections;

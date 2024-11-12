@@ -8,14 +8,17 @@ import org.checkerframework.checker.units.qual.A;
  * @author : hyeonwoody@gmail.com
  * @since : 24. 10. 1.
  */
-@Getter
-@AllArgsConstructor
-public class UserNameScoreInfo implements Comparable<UserScoreInfo>{
-  private String name;
-  private long score;
+public record UserNameScoreInfo (
+        String name,
+        long score
+        ){
 
-  @Override
-  public int compareTo(UserScoreInfo u){
-    return (int) (this.score - u.getScore());
+  public UserNameScoreInfo(String name, long score) {
+    this.name = name;
+    this.score = score;
+  }
+
+  public static UserNameScoreInfo from (String name, long score) {
+    return new UserNameScoreInfo(name, score);
   }
 }

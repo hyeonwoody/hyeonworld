@@ -11,13 +11,23 @@ import lombok.Getter;
  * @author : hyeonwoody@gmail.com
  * @since : 24. 10. 1.
  */
-@Getter
-@AllArgsConstructor
-public class UserScoreInfo {
-  private long userId;
-  private long score;
+
+public record UserScoreInfo (
+        long userId,
+        long score
+){
+
+
+  public UserScoreInfo(long userId, long score) {
+    this.userId = userId;
+    this.score = score;
+  }
 
   public static UserScoreInfo from(ScoreHistory scoreHistory) {
     return new UserScoreInfo(scoreHistory.getUserId() ,scoreHistory.getScore());
+  }
+
+  public static UserScoreInfo from(Long userId, Long score) {
+    return new UserScoreInfo(userId, score);
   }
 }

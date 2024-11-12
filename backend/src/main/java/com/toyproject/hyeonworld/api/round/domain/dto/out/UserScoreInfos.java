@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class UserScoreInfos extends ArrayList<UserScoreInfo> {
   public static HashMap<Long, Long> toSum(UserScoreInfos userScoreInfos) {
     HashMap<Long, Long> ret = new HashMap<>();
     for (UserScoreInfo info :userScoreInfos){
-      ret.merge(info.getUserId(), info.getScore(), Long::sum);
+      ret.merge(info.userId(), info.score(), Long::sum);
     }
     return ret;
   }
