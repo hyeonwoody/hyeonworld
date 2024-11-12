@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.round.controller.dto.res;
+package com.toyproject.hyeonworld.api.round.controller.dto.res.submit;
 
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.SubmissionInfo;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
@@ -10,7 +10,7 @@ import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 public record SubmissionResponse(
     long partyId,
     long roundId
-) implements RoundResponse {
+) implements RoundSubmitResponse {
 
   public static SubmissionResponse from(SubmissionInfo submissionInfo) {
     return ObjectrMapper.convert(submissionInfo, SubmissionResponse.class);

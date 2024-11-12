@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.round.controller.dto.res;
+package com.toyproject.hyeonworld.api.round.controller.dto.res.submit;
 
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfos;
@@ -14,7 +14,7 @@ public record CheckResponse (
         String name,
         String text,
         String number
-) implements RoundResponse {
+) implements RoundSubmitResponse {
 
 
     public static List<CheckResponse> from(

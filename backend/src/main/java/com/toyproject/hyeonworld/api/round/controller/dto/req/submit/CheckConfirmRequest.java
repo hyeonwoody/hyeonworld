@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.round.controller.dto.req;
+package com.toyproject.hyeonworld.api.round.controller.dto.req.submit;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.SubmissionCheckConfirmCommand;
 
@@ -11,7 +11,7 @@ public record CheckConfirmRequest(
         long userId,
         String text,
         long number
-)implements RoundRequest {
+)implements RoundSubmitRequest {
 
     public SubmissionCheckConfirmCommand toCommand(long roundId) {
         return new SubmissionCheckConfirmCommand(roundId, gameId, userId, text, number);

@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.round.controller.dto.req;
+package com.toyproject.hyeonworld.api.round.controller.dto.req.submit;
 
 import com.toyproject.hyeonworld.api.submission.domain.dto.in.SubmissionCommand;
 
@@ -11,7 +11,7 @@ public record SubmissionRequest (long partyId,
                                  String text,
                                  long number
 
-) implements RoundRequest {
+) implements RoundSubmitRequest {
     public SubmissionCommand toCommand() {
         return new SubmissionCommand(partyId, userId, text, number);
     }

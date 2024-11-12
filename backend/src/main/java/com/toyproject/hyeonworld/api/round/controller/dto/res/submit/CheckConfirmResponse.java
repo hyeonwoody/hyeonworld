@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.round.controller.dto.res;
+package com.toyproject.hyeonworld.api.round.controller.dto.res.submit;
 
 import com.toyproject.hyeonworld.api.submission.domain.dto.out.RoundSubmissionInfo;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
@@ -10,7 +10,7 @@ import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
 public record CheckConfirmResponse(
         long partyId,
         long roundId
-) implements RoundResponse {
+) implements RoundSubmitResponse {
     public static CheckConfirmResponse from(RoundSubmissionInfo roundSubmissionInfo) {
         return ObjectrMapper.convert(roundSubmissionInfo, CheckConfirmResponse.class);
     }
