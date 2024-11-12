@@ -1,9 +1,8 @@
-package com.toyproject.hyeonworld.api.submission.domain.dto.out;
+package com.toyproject.hyeonworld.api.answerSubmission.domain.out;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
-import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
+import com.toyproject.hyeonworld.api.answerSubmission.infrastructure.entity.AnswerSubmission;
 import com.toyproject.hyeonworld.common.mapper.ObjectrMapper;
-import jakarta.persistence.Column;
 import lombok.Getter;
 
 /**
@@ -17,15 +16,19 @@ public class AnswerSubmissionInfo {
   private Long userId;
   private String answer;
 
-  public static AnswerSubmission createEntity(long roundId, RoundPlayCommand command){
+  public static AnswerSubmission toEntity(long roundId, long userid, String answer){
     return AnswerSubmission.builder()
-        .roundId(roundId)
-        .userId(command.userId())
-        .answer(command.answer())
-        .build();
+            .roundId(roundId)
+            .userId(userid)
+            .answer(answer)
+            .build();
   }
 
   public static AnswerSubmissionInfo from(AnswerSubmission answerSubmission) {
     return ObjectrMapper.convert(answerSubmission, AnswerSubmissionInfo.class);
+  }
+
+  public boolean matchAnswer (String actualAnswer) {
+    return answer.equals(actualAnswer);
   }
 }

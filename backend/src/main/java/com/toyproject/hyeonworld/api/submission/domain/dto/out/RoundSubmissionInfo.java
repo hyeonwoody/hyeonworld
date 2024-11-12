@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class RoundSubmissionInfo {
-  long userId;
-  String name;
-  String text;
-  long number;
+  private long userId;
+  private String name;
+  private String text;
+  private long number;
 
   public RoundSubmissionInfo(SubmissionCheckConfirmCommand command){
     this.userId = command.userId();

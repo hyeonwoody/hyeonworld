@@ -1,6 +1,5 @@
-package com.toyproject.hyeonworld.api.submission.infrastructure.entity;
+package com.toyproject.hyeonworld.api.answerSubmission.infrastructure.entity;
 
-import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission.SubmissionBuilder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

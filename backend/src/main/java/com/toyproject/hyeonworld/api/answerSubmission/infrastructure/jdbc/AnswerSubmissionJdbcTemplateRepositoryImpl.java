@@ -1,7 +1,6 @@
-package com.toyproject.hyeonworld.api.submission.infrastructure.jdbc;
+package com.toyproject.hyeonworld.api.answerSubmission.infrastructure.jdbc;
 
-import com.toyproject.hyeonworld.api.submission.infrastructure.AnswerSubmissionRepository;
-import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
+import com.toyproject.hyeonworld.api.answerSubmission.infrastructure.entity.AnswerSubmission;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class AnswerSubmissionJdbcTemplateRepositoryImpl implements AnswerSubmissionJdbctemplateRepository {
   private final JdbcTemplate jdbcTemplate;
-
 
   public List<AnswerSubmission> findAnswerMostRecentByRoundId(long roundId) {
     String sql = """

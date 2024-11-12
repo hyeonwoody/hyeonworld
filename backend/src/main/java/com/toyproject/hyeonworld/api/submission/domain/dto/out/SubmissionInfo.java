@@ -21,7 +21,7 @@ public class SubmissionInfo {
     return Submission.builder();
   }
 
-  public static Submission createEntity(long roundId, SubmissionCommand command) {
+  public static Submission toEntity(long roundId, SubmissionCommand command) {
     return initializeEntity()
         .roundId(roundId)
         .userId(command.userId())

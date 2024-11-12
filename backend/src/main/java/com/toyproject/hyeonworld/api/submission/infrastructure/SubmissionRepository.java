@@ -1,6 +1,5 @@
 package com.toyproject.hyeonworld.api.submission.infrastructure;
 
-import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
 import com.toyproject.hyeonworld.api.submission.infrastructure.entity.Submission;
 import java.util.List;
 import java.util.Optional;

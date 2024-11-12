@@ -1,6 +1,6 @@
-package com.toyproject.hyeonworld.api.submission.infrastructure.jpa;
+package com.toyproject.hyeonworld.api.answerSubmission.infrastructure.jpa;
 
-import com.toyproject.hyeonworld.api.submission.infrastructure.entity.AnswerSubmission;
+import com.toyproject.hyeonworld.api.answerSubmission.infrastructure.entity.AnswerSubmission;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
