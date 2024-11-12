@@ -1,8 +1,9 @@
 package com.toyproject.hyeonworld.api.round.interfaces;
 
-import com.toyproject.hyeonworld.api.round.event.SubmissionEvent.Basic;
-import com.toyproject.hyeonworld.api.round.event.SubmissionEvent.Answer;
-import com.toyproject.hyeonworld.api.round.event.SubmissionEvent;
+
+import com.toyproject.hyeonworld.api.round.event.Submission.AnswerSubmissionEvent;
+import com.toyproject.hyeonworld.api.round.event.Submission.PrimarySubmissionEvent;
+import com.toyproject.hyeonworld.api.round.event.Submission.SubmissionEvent;
 import com.toyproject.hyeonworld.common.event.EventListener;
 
 /**
@@ -12,7 +13,9 @@ import com.toyproject.hyeonworld.common.event.EventListener;
 public interface SubmissionEventListener extends EventListener {
   void handleSubmissionEvent(SubmissionEvent event);
 
-  void handleSubmissionAnswerEvent(Answer event);
+  void handleAnswerSubmissionEvent(AnswerSubmissionEvent event);
 
-  void handleSubmissionBasicEvent(Basic event);
+  void handlePrimarySubmissionEvent(PrimarySubmissionEvent event);
+
+
 }

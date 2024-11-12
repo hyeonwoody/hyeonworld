@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.api.round.event;
+package com.toyproject.hyeonworld.api.round.event.Submission;
 
 import com.toyproject.hyeonworld.common.event.CustomEvent;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 */
 @Component
 @RequiredArgsConstructor
-public class SubmissionEventPublisherImpl implements SubmissionEventPublisher{
+public class SubmissionEventPublisherImpl implements SubmissionEventPublisher {
   private final ApplicationEventPublisher applicationEventPublisher;
 
   @Override

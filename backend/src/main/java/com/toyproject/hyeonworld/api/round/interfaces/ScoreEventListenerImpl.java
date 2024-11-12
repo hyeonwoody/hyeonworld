@@ -4,8 +4,6 @@ import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMI
 
 import com.toyproject.hyeonworld.api.round.event.ScoreEvent;
 import com.toyproject.hyeonworld.api.round.event.ScoreEvent.Ranking;
-import com.toyproject.hyeonworld.api.round.event.ScoreEventPublisher;
-import com.toyproject.hyeonworld.api.round.event.SubmissionEvent;
 import com.toyproject.hyeonworld.api.score.domain.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
