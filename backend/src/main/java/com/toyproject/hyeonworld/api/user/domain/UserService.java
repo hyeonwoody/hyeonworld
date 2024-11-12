@@ -45,7 +45,7 @@ public class UserService {
 
   public UserInfo getUserById(long userId) {
     return from(userRepository.findById(userId)
-        .orElseThrow(()->new ServerException(ServerResponseCode.USER_NOT_FOUND))
+        .orElseThrow(()->new ServerException(ServerResponseCode.USER_NOT_FOUND, String.valueOf(userId)))
     );
   }
 

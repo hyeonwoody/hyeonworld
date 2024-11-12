@@ -27,7 +27,7 @@ public class ExceptionResponse {
             .statusCode(code.getHttpStatus().value())
             .statusCodeName(code.getHttpStatus().name())
             .code(code.name())
-            .message(code.getMessage())
+            .message(code.getMessage() + runtimeValue)
             .build()
         );
   }
