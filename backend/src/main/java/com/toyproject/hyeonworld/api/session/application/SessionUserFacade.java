@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.api.session.application;
 
+import com.toyproject.hyeonworld.api.party.domain.PartyService;
 import com.toyproject.hyeonworld.api.session.application.dto.in.CreateLoginSessionCommand;
 import com.toyproject.hyeonworld.api.session.application.dto.in.SessionCommand;
 import com.toyproject.hyeonworld.api.session.event.SessionEvent;
@@ -18,23 +19,23 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Facade
 @RequiredArgsConstructor
-public class SessionFacade {
+public class SessionUserFacade {
 
-  private static final Logger log = LoggerFactory.getLogger(SessionFacade.class);
+  private static final Logger log = LoggerFactory.getLogger(SessionUserFacade.class);
   private final UserService userService;
   private final SessionEventPublisher eventPublisher;
 
   @Transactional
   public long createLoginSession(CreateLoginSessionCommand command) {
     UserInfo userInfo = userService.confirmLogin(command.userName());
-    eventPublisher.execute(new SessionEvent.Login(userInfo.getId(), userInfo.getName()));
+    eventPublisher.execute(new SessionEvent.Login(userInfo.getRelationType(), userInfo.getId(), userInfo.getName()));
     return userInfo.getId();
   }
 
   @Transactional
   public long deleteLoginSession(SessionCommand command) {
     UserInfo userInfo = userService.confirmLogOut(command.userId());
-    eventPublisher.execute(new SessionEvent.Logout(userInfo.getId()));
+    eventPublisher.execute(new SessionEvent.Logout(userInfo.getId(), userInfo.getName()));
     return command.userId();
   }
 

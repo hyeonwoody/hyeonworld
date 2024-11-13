@@ -4,9 +4,8 @@ import com.toyproject.hyeonworld.api.session.controller.dto.req.SessionCreateReq
 import com.toyproject.hyeonworld.api.session.controller.dto.req.SessionDeleteRequest;
 import com.toyproject.hyeonworld.api.session.controller.dto.req.SessionGameRequest;
 
-import com.toyproject.hyeonworld.api.session.application.SessionFacade;
+import com.toyproject.hyeonworld.api.session.application.SessionUserFacade;
 import com.toyproject.hyeonworld.api.session.controller.dto.res.SessionBasicResponse;
-import com.toyproject.hyeonworld.api.session.controller.dto.res.SessionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,26 +22,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v2/auth/session")
 public class SessionController {
-  private final SessionFacade sessionFacade;
+  private final SessionUserFacade sessionUserFacade;
 
   @PostMapping
   public ResponseEntity<SessionBasicResponse> processLogin(@RequestBody SessionCreateRequest request){
-    return ResponseEntity.ok(SessionBasicResponse.from(sessionFacade.createLoginSession(request.toCommand())));
+    return ResponseEntity.ok(SessionBasicResponse.from(sessionUserFacade.createLoginSession(request.toCommand())));
   }
 
   @PostMapping("/game")
   public ResponseEntity<SessionBasicResponse> processEnterGame(@RequestBody SessionGameRequest request){
-    return ResponseEntity.ok(SessionBasicResponse.from(sessionFacade.enterGame(request.toCommand())));
+    return ResponseEntity.ok(SessionBasicResponse.from(sessionUserFacade.enterGame(request.toCommand())));
   }
 
   @DeleteMapping("/game")
   public ResponseEntity<SessionBasicResponse> processExitGame(@RequestBody SessionGameRequest request){
-    return ResponseEntity.ok(SessionBasicResponse.from(sessionFacade.exitGame(request.toCommand())));
+    return ResponseEntity.ok(SessionBasicResponse.from(sessionUserFacade.exitGame(request.toCommand())));
   }
 
   @DeleteMapping
   public ResponseEntity<SessionBasicResponse> processLogout(@RequestBody SessionDeleteRequest request){
-    return ResponseEntity.ok(SessionBasicResponse.from(sessionFacade.deleteLoginSession(request.toCommand())));
+    return ResponseEntity.ok(SessionBasicResponse.from(sessionUserFacade.deleteLoginSession(request.toCommand())));
   }
 
 
