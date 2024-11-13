@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 public sealed interface SessionEvent extends CustomEvent {
   long userId();
   record GameOut(long userId, String userName) implements SessionEvent {}
-  record Login(long userId, String userName) implements SessionEvent {}
+  record Login(byte relationType, long userId, String userName) implements SessionEvent {}
 
-  record Logout(long userId) implements SessionEvent {}
+  record Logout(long userId, String userName) implements SessionEvent {}
   record GameIn(long userId, String userName) implements SessionEvent {}
 
 

@@ -2,8 +2,9 @@ package com.toyproject.hyeonworld.api.session.interfaces;
 
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
-import com.toyproject.hyeonworld.common.event.CustomEvent;
-import com.toyproject.hyeonworld.common.sse.SseManager;
+import com.toyproject.hyeonworld.api.sse.application.SsePartyFacade;
+import com.toyproject.hyeonworld.api.sse.domain.SseService;
+import com.toyproject.hyeonworld.api.sse.interfaces.SseManager;
 import com.toyproject.hyeonworld.api.session.event.SessionEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -17,7 +18,8 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 @RequiredArgsConstructor
 public class SessionEventListenerImpl implements SessionEventListener {
-  private final SseManager sseManager;
+  private final SsePartyFacade ssePartyFacade;
+  private final SseService sseService;
 
   @Override
   @Async
@@ -42,25 +44,22 @@ public class SessionEventListenerImpl implements SessionEventListener {
 
   @Override
   public void handleLoginSessionEvent(SessionEvent.Login event) {
-    sseManager.registerWaitingList(event.userName());
-    sseManager.add(event.userId());
+    ssePartyFacade.logIn(event.relationType(), event.userId(), event.userName());
   }
 
   @Override
   public void handleGameOutSessionEvent(SessionEvent.GameOut event) {
-    sseManager.registerWaitingList(event.userName());
+    sseService.gameOut(event.userId(), event.userName());
   }
 
   @Override
   public void handleGameInSessionEvent(SessionEvent.GameIn event) {
-    sseManager.removeWaitingList(event.userName());
+    sseService.gameIn(event.userId(), event.userName());
   }
 
   @Override
   public void handleLogoutSessionEvent(SessionEvent.Logout event) {
-    sseManager.remove(event.userId());
+    sseService.logOut(event.userId(), event.userName());
   }
-
-
 
 }
