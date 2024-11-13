@@ -1,14 +1,9 @@
-package com.toyproject.hyeonworld.common.sse;
+package com.toyproject.hyeonworld.api.sse.interfaces;
 
+import com.toyproject.hyeonworld.api.sse.constant.EmiitterType;
+import com.toyproject.hyeonworld.api.sse.domain.dto.EmitterManager;
+import com.toyproject.hyeonworld.api.sse.domain.dto.WaitingListEmitter;
 import com.toyproject.hyeonworld.controller.sse.DataMap;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +14,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class SseManager {
+  private final WaitingListEmitter waitingListEmitter;
   private final EmitterManager emitterManager;
 
 
   public void registerWaitingList(String userName) {
+    //waitingListEmitter.registerWaitingList(partyId, userName);
     emitterManager.send("registerWaitingList", DataMap.mapOf("userName", userName));
   }
 
@@ -33,8 +30,10 @@ public class SseManager {
   //Nobody listens to this.
   public void add(long userId) {
     emitterManager.addEmitter(userId, "currentGame");
+  }
 
-
+  public void subscribeWaitingList(long userId) {
+    //emitterManager.addEmitter(userId, EmiitterType.);
   }
 
   public void remove(long userId) {

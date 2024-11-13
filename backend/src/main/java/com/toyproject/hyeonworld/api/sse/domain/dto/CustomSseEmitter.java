@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.common.sse;
+package com.toyproject.hyeonworld.api.sse.domain.dto;
 
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -26,9 +26,5 @@ public class CustomSseEmitter extends SseEmitter {
   public String getEventName() {
     return this.eventName;
   }
-
-  public void onError() {
-  }
-
 
 }

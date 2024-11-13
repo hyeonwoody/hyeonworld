@@ -1,4 +1,4 @@
-package com.toyproject.hyeonworld.common.sse;
+package com.toyproject.hyeonworld.api.sse.domain.dto;
 
 import java.io.IOException;
 import java.util.ArrayList;
