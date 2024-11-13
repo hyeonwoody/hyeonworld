@@ -8,6 +8,8 @@ import com.toyproject.hyeonworld.api.party.infrastructure.PartyRepository;
 import com.toyproject.hyeonworld.common.exception.ServerException;
 import com.toyproject.hyeonworld.common.exception.dto.ServerResponseCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +38,8 @@ public class PartyService {
     partyRepository.save(partyInfo.entityToTerminate());
   }
 
-
+  @Cacheable(cacheNames = "partyId", key = "#relationType")
   public long retrieveByRelationType(byte relationType) {
-    return partyRepository.findByRelationType(relationType);
+    return partyRepository.findIdByRelationType(relationType);
   }
 }

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 //      - cache2
 //      - cache3
 public class CaffeineCaches {
-  private List<String> cacheNames = List.of("partyDashboardInfo","roundInfo", "roundGame", "roundAnswer", "gameStrategy");
+  private List<String> cacheNames = List.of("partyDashboardInfo","roundInfo", "roundGame", "roundAnswer", "gameStrategy", "partyId");
 
   public List<String> getCacheNames() {
     return cacheNames;

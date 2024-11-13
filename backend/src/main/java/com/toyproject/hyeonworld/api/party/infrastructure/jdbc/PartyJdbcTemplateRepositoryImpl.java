@@ -87,4 +87,9 @@ public class PartyJdbcTemplateRepositoryImpl implements PartyJdbcTemplateReposit
   public Optional<Party> findById(long partyId) {
     return Optional.empty();
   }
+
+  @Override
+  public long findIdByRelationType(byte relationType) {
+    return 0;
+  }
 }

@@ -13,5 +13,5 @@ public interface PartyRepository {
 
   Optional<Party> findById(long partyId);
 
-    long findByRelationType(byte relationType);
+    long findIdByRelationType(byte relationType);
 }

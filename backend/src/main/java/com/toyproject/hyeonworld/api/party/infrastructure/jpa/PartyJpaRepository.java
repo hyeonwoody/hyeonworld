@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PartyJpaRepository extends JpaRepository<Party, Long> {
 
-    long findByRelationType(byte relationType);
+    long findIdByRelationType(byte relationType);
 }

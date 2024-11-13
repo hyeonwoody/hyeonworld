@@ -30,7 +30,7 @@ public class PartyRepositoryImpl implements PartyRepository{
   }
 
   @Override
-  public long findByRelationType(byte relationType) {
-    return partyJpaRepository.findByRelationType(relationType);
+  public long findIdByRelationType(byte relationType) {
+    return partyJpaRepository.findIdByRelationType(relationType);
   }
 }
