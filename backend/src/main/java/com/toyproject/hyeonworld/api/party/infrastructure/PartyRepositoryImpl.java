@@ -28,4 +28,9 @@ public class PartyRepositoryImpl implements PartyRepository{
   public Optional<Party> findById(long partyId) {
     return partyJpaRepository.findById(partyId);
   }
+
+  @Override
+  public long findByRelationType(byte relationType) {
+    return partyJpaRepository.findByRelationType(relationType);
+  }
 }

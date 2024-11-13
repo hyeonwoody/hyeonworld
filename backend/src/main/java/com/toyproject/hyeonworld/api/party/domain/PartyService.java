@@ -35,4 +35,9 @@ public class PartyService {
     PartyInfo partyInfo = this.retrieveById(partyId);
     partyRepository.save(partyInfo.entityToTerminate());
   }
+
+
+  public long retrieveByRelationType(byte relationType) {
+    return partyRepository.findByRelationType(relationType);
+  }
 }
