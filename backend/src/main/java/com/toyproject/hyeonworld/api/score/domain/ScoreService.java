@@ -24,11 +24,6 @@ public class ScoreService {
   private final ScoreRepository scoreRepository;
   private final ScoreHistoryRepository scoreHistoryRepository;
 
-  @Transactional(propagation = Propagation.REQUIRES_NEW)
-  public void submitAnswer(RoundPlayCommand command, long roundId, String answer) {
-    scoreHistoryRepository.save(ScoreHistoryInfo.createEntity(command, roundId, answer));
-  }
-
   public ScoreInfo updateScore(long partyId, RoundResultConfirmCommand command) {
       return ScoreInfo.from(scoreHistoryRepository.saveAll(ScoreHistoryInfo.createEntities(partyId, command)));
   }

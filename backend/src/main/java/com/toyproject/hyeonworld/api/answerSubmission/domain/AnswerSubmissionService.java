@@ -4,6 +4,7 @@ import com.toyproject.hyeonworld.api.answerSubmission.domain.out.AnswerSubmissio
 import com.toyproject.hyeonworld.api.answerSubmission.domain.out.AnswerSubmissionInfos;
 import com.toyproject.hyeonworld.api.answerSubmission.infrastructure.AnswerSubmissionRepository;
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundPlayCommand;
+import com.toyproject.hyeonworld.api.score.domain.dto.out.ScoreHistoryInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

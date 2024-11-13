@@ -1,6 +1,7 @@
 package com.toyproject.hyeonworld.api.round.controller.dto.req;
 
 import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand;
+import com.toyproject.hyeonworld.api.round.domain.dto.in.RoundResultConfirmCommand.Participant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,10 +20,10 @@ public record ResultConfirmRequest(
 
     }
     public RoundResultConfirmCommand toCommand(long roundId) {
-        List<RoundResultConfirmCommand.Winner> convertedWinners = this.winners.stream()
-                .map(winner -> new RoundResultConfirmCommand.Winner(winner.id(), winner.score()))
+        List<Participant> convertedParticipants = this.winners.stream()
+                .map(winner -> new Participant(winner.id(), winner.score()))
                 .collect(Collectors.toList());
 
-        return new RoundResultConfirmCommand(roundId, convertedWinners);
+        return new RoundResultConfirmCommand(roundId, convertedParticipants);
     }
 }
