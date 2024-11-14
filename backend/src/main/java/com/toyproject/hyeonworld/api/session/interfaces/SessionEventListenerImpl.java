@@ -2,10 +2,15 @@ package com.toyproject.hyeonworld.api.session.interfaces;
 
 import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
+import com.toyproject.hyeonworld.api.session.event.GameInSessionEvent;
+import com.toyproject.hyeonworld.api.session.event.GameOutSessionEvent;
+import com.toyproject.hyeonworld.api.session.event.LogInSessionEvent;
+import com.toyproject.hyeonworld.api.session.event.LogOutSessionEvent;
 import com.toyproject.hyeonworld.api.sse.application.SsePartyFacade;
 import com.toyproject.hyeonworld.api.sse.domain.SseService;
-import com.toyproject.hyeonworld.api.sse.interfaces.SseManager;
 import com.toyproject.hyeonworld.api.session.event.SessionEvent;
+import java.util.Map;
+import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -18,48 +23,54 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 @RequiredArgsConstructor
 public class SessionEventListenerImpl implements SessionEventListener {
-  private final SsePartyFacade ssePartyFacade;
-  private final SseService sseService;
 
-  @Override
-  @Async
-  @TransactionalEventListener(phase = AFTER_COMMIT)
-  public void handleSessionEvent(SessionEvent event) {
-    switch (event.getClass().getSimpleName()){
-      case "Login":
-        handleLoginSessionEvent((SessionEvent.Login) event);
-        break;
-      case "GameIn":
-        handleGameInSessionEvent((SessionEvent.GameIn) event);
-        break;
-      case "GameOut":
-        handleGameOutSessionEvent((SessionEvent.GameOut) event);
-        break;
-      case "Logout":
-        handleLogoutSessionEvent((SessionEvent.Logout) event);
-        break;
-      default:
-        throw new IllegalArgumentException("Unexpected event type: " + event.getClass());}
-  }
+    private final SsePartyFacade ssePartyFacade;
 
-  @Override
-  public void handleLoginSessionEvent(SessionEvent.Login event) {
-    ssePartyFacade.logIn(event.relationType(), event.userId(), event.userName());
-  }
+    private final Map<Class<? extends SessionEvent>, Consumer<SessionEvent>>
+            eventHandlers = Map.of(
+            LogInSessionEvent.class, this::handleGameInSessionEvent,
+            GameInSessionEvent.class, this::handleGameInSessionEvent,
+            GameOutSessionEvent.class, this::handleGameOutSessionEvent,
+            LogOutSessionEvent.class, this::handleLogoutSessionEvent
+    );
 
-  @Override
-  public void handleGameOutSessionEvent(SessionEvent.GameOut event) {
-    sseService.gameOut(event.userId(), event.userName());
-  }
+    @Override
+    @Async
+    @TransactionalEventListener(phase = AFTER_COMMIT)
+    public void handleSessionEvent(SessionEvent event) {
+        eventHandlers.getOrDefault(event.getClass(), this::handleUnknownEvent).accept(event);
+    }
 
-  @Override
-  public void handleGameInSessionEvent(SessionEvent.GameIn event) {
-    sseService.gameIn(event.userId(), event.userName());
-  }
+    @Override
+    public void handleLoginSessionEvent(SessionEvent event) {
+        LogInSessionEvent logInSessionEvent = (LogInSessionEvent) event;
+        ssePartyFacade.logIn(logInSessionEvent.relationType(), logInSessionEvent.userId(),
+                logInSessionEvent.userName());
+    }
 
-  @Override
-  public void handleLogoutSessionEvent(SessionEvent.Logout event) {
-    sseService.logOut(event.userId(), event.userName());
-  }
+    @Override
+    public void handleGameOutSessionEvent(SessionEvent event) {
+        GameOutSessionEvent gameOutSessionEvent = (GameOutSessionEvent) event;
+        ssePartyFacade.gameOut(gameOutSessionEvent.relationType(), gameOutSessionEvent.userId(),
+                gameOutSessionEvent.userName());
+    }
+
+    @Override
+    public void handleGameInSessionEvent(SessionEvent event) {
+        GameInSessionEvent gameInSessionEvent = (GameInSessionEvent) event;
+        ssePartyFacade.gameIn(gameInSessionEvent.relationType(), gameInSessionEvent.userId(),
+                gameInSessionEvent.userName());
+    }
+
+    @Override
+    public void handleLogoutSessionEvent(SessionEvent event) {
+        LogOutSessionEvent logOutSessionEvent = (LogOutSessionEvent) event;
+        ssePartyFacade.logOut(logOutSessionEvent.relationType(), logOutSessionEvent.userId(),
+                logOutSessionEvent.userName());
+    }
+
+    private void handleUnknownEvent(SessionEvent event) {
+        throw new IllegalArgumentException("Unexpected event type: " + event.getClass());
+    }
 
 }
