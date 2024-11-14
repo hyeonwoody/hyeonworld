@@ -1,5 +1,6 @@
 package com.toyproject.hyeonworld.api.sse.domain;
 
+import com.toyproject.hyeonworld.api.sse.constant.EmitterType;
 import com.toyproject.hyeonworld.api.sse.domain.dto.SseInfo;
 import com.toyproject.hyeonworld.api.sse.infrastructure.SseRepository;
 import com.toyproject.hyeonworld.api.sse.interfaces.SseManager;
@@ -18,22 +19,22 @@ public class SseService {
 
     public void logIn(long partyId, long userId, String userName) {
         sseRepository.save(SseInfo.toEntity(partyId));
-        sseManager.registerWaitingList(userName);
-        sseManager.add(userId);
+        sseManager.add(EmitterType.WAITING_LIST, userId);
+        sseManager.registerNameOnWaitingList(userName);
     }
 
     public void gameOut(long userId, String userName) {
-        sseManager.remove(userId);
-        sseManager.removeWaitingList(userName);
+        sseManager.remove(EmitterType.WAITING_LIST, userId);
+        sseManager.registerNameOnWaitingList(userName);
     }
 
     public void gameIn(long userId, String userName) {
-        sseManager.removeWaitingList(userName);
-        sseManager.subscribeWaitingList(userId);
+        sseManager.add(EmitterType.WAITING_LIST, userId);
+        sseManager.removeNameFromWaitingList(userName);
     }
 
     public void logOut(long userId, String userName) {
-        sseManager.removeWaitingList(userName);
-        sseManager.remove(userId);
+        sseManager.removeNameFromWaitingList(userName);
+        sseManager.remove(EmitterType.ALL, userId);
     }
 }

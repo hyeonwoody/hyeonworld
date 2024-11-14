@@ -9,6 +9,7 @@ import com.toyproject.hyeonworld.api.session.controller.dto.res.SessionBasicResp
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,4 @@ public class SessionController {
   public ResponseEntity<SessionBasicResponse> processLogout(@RequestBody SessionDeleteRequest request){
     return ResponseEntity.ok(SessionBasicResponse.from(sessionUserFacade.deleteLoginSession(request.toCommand())));
   }
-
-
 }

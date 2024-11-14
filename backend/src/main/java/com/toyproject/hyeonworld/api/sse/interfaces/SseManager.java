@@ -1,42 +1,56 @@
 package com.toyproject.hyeonworld.api.sse.interfaces;
 
-import com.toyproject.hyeonworld.api.sse.constant.EmiitterType;
-import com.toyproject.hyeonworld.api.sse.domain.dto.EmitterManager;
-import com.toyproject.hyeonworld.api.sse.domain.dto.WaitingListEmitter;
-import com.toyproject.hyeonworld.controller.sse.DataMap;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import com.toyproject.hyeonworld.api.sse.constant.EmitterType;
+import com.toyproject.hyeonworld.api.sse.domain.dto.WaitingListEmitterManager;
+import java.util.EnumMap;
+import java.util.List;
 
 /**
  * @author : hyeonwoody@gmail.com
  * @since : 24. 9. 4.
  */
-@Component
-@RequiredArgsConstructor
 public class SseManager {
-  private final WaitingListEmitter waitingListEmitter;
-  private final EmitterManager emitterManager;
+    private EnumMap<EmitterType, EmitterManager> emitterStrategy;
 
+    private SseManager() {
+        this.emitterStrategy = new EnumMap<>(EmitterType.class);
+    }
 
-  public void registerWaitingList(String userName) {
-    //waitingListEmitter.registerWaitingList(partyId, userName);
-    emitterManager.send("registerWaitingList", DataMap.mapOf("userName", userName));
-  }
+    public static SseManager from() {
+        return new SseManager();
+    }
 
-  public void removeWaitingList(String userName){
-    emitterManager.send("removeWaitingList", DataMap.mapOf("userName", userName));
-  }
+    public void registerNameOnWaitingList(String userName) {
+        WaitingListEmitterManager emitterManager = (WaitingListEmitterManager) getEmitterManager(EmitterType.WAITING_LIST);
+        emitterManager.registerNameOnWaitingList(userName);
+    }
 
-  //Nobody listens to this.
-  public void add(long userId) {
-    emitterManager.addEmitter(userId, "currentGame");
-  }
+    public void removeNameFromWaitingList(String userName) {
+        WaitingListEmitterManager emitterManager = (WaitingListEmitterManager) getEmitterManager(EmitterType.WAITING_LIST);
+        emitterManager.removeNameOnWaitingList(userName);
+    }
 
-  public void subscribeWaitingList(long userId) {
-    //emitterManager.addEmitter(userId, EmiitterType.);
-  }
+    //Nobody listens to this.
+    public void add(EmitterType emitterType, long userId) {
+        EmitterManager emitterManager = getEmitterManager(emitterType);
+        emitterManager.add(userId);
+    }
 
-  public void remove(long userId) {
-    emitterManager.removeEmitter(userId);
-  }
+    public void remove(EmitterType emitterType, long userId) {
+        List<EmitterManager> emitterManagers = getEmitterManagers(emitterType);
+        for (EmitterManager emitterManager : emitterManagers) {
+            emitterManager.remove(userId);
+        }
+    }
+
+    private EmitterManager getEmitterManager(EmitterType emitterType) {
+        return emitterStrategy.get(emitterType);
+    }
+
+    private List<EmitterManager> getEmitterManagers(EmitterType emitterType) {
+        if (emitterType == EmitterType.ALL) {
+            return emitterStrategy.values().stream().toList();
+        }
+        return List.of(emitterStrategy.get(emitterType));
+    }
 }

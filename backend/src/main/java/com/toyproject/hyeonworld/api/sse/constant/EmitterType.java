@@ -4,11 +4,12 @@ package com.toyproject.hyeonworld.api.sse.constant;
  * @author : jiffyin7@gmail.com
  * @since : 24. 11. 14.
  */
-public enum EmiitterType {
-    WAITING_LIST("WaitingList");
+public enum EmitterType {
+    WAITING_LIST("WaitingList"),
+    ALL("All");
 
     private String eventName;
 
-    EmiitterType(String EventName) {
+    EmitterType(String EventName) {
     }
 }
