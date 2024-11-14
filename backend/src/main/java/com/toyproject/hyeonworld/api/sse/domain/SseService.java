@@ -15,25 +15,27 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SseService {
     private final SseRepository sseRepository;
-    private final SseManager sseManager;
 
     public void logIn(long partyId, long userId, String userName) {
-        sseRepository.save(SseInfo.toEntity(partyId));
+        SseManager sseManager = sseRepository.save(SseInfo.toEntity(partyId));
         sseManager.add(EmitterType.WAITING_LIST, userId);
         sseManager.registerNameOnWaitingList(userName);
     }
 
-    public void gameOut(long userId, String userName) {
+    public void gameOut(long partyId, long userId, String userName) {
+        SseManager sseManager = sseRepository.findByPartyId(partyId);
         sseManager.remove(EmitterType.WAITING_LIST, userId);
         sseManager.registerNameOnWaitingList(userName);
     }
 
-    public void gameIn(long userId, String userName) {
+    public void gameIn(long partyId, long userId, String userName) {
+        SseManager sseManager = sseRepository.findByPartyId(partyId);
         sseManager.add(EmitterType.WAITING_LIST, userId);
         sseManager.removeNameFromWaitingList(userName);
     }
 
-    public void logOut(long userId, String userName) {
+    public void logOut(long partyId, long userId, String userName) {
+        SseManager sseManager = sseRepository.findByPartyId(partyId);
         sseManager.removeNameFromWaitingList(userName);
         sseManager.remove(EmitterType.ALL, userId);
     }

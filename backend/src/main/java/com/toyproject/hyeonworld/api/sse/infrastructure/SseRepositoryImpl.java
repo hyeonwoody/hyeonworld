@@ -21,8 +21,16 @@ public class SseRepositoryImpl implements SseRepository {
     private final SseJpaRepository sseJpaRepository;
 
     @Override
-    public Sse save(Sse sse) {
-        sseCollection.put(sse.getPartyId(), SseManager.from());
-        return sseJpaRepository.save(sse);
+    public SseManager save(Sse sse) {
+        if (sseCollection.containsKey(sse.getPartyId())) {
+            return sseCollection.get(sse.getPartyId());
+        }
+        sseJpaRepository.save(sse);
+        return sseCollection.put(sse.getPartyId(), SseManager.from());
+    }
+
+    @Override
+    public SseManager findByPartyId(long partyId) {
+        return sseCollection.get(partyId);
     }
 }

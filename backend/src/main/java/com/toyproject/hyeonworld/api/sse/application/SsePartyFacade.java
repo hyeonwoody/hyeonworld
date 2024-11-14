@@ -16,7 +16,29 @@ public class SsePartyFacade {
     private final PartyService partyService;
 
     public void logIn(byte relationType, long userId, String userName) {
-        long partyId = partyService.retrieveByRelationType(relationType);
+        long partyId = getPartyId(relationType);
         sseService.logIn(partyId, userId, userName);
     }
+
+    public void gameIn(byte relationType, long userId, String userName) {
+        long partyId = getPartyId(relationType);
+        sseService.gameIn(partyId, userId, userName);
+    }
+
+    public void gameOut(byte relationType, long userId, String userName) {
+        long partyId = getPartyId(relationType);
+        sseService.gameOut(partyId, userId, userName);
+    }
+
+    public void logOut(byte relationType, long userId, String userName) {
+        long partyId = getPartyId(relationType);
+        sseService.logIn(partyId, userId, userName);
+    }
+
+    private long getPartyId(byte relationType) {
+        return partyService.retrieveByRelationType(relationType);
+    }
+
+
+
 }

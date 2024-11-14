@@ -1,6 +1,7 @@
 package com.toyproject.hyeonworld.api.sse.infrastructure;
 
 import com.toyproject.hyeonworld.api.sse.infrastructure.entity.Sse;
+import com.toyproject.hyeonworld.api.sse.interfaces.SseManager;
 
 /**
  * @author : jiffyin7@gmail.com
@@ -8,5 +9,7 @@ import com.toyproject.hyeonworld.api.sse.infrastructure.entity.Sse;
  */
 public interface SseRepository {
 
-    Sse save(Sse sse);
+    SseManager save(Sse sse);
+
+    SseManager findByPartyId(long partyId);
 }
