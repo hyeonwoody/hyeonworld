@@ -190,7 +190,7 @@ Continuously undergoing updates.
 <br>
 
 ## 🔥: Accomplishments
-> [JPA to JDBC migration](https://github.com/hyeonwoody/hyeonworld/wiki/JPA-to-JDBC-Migration)
+> [JPA to JDBC migration](https://github.com/hyeonwoody/hyeonworld/wiki/JPA-to-JDBC-Migration)   
 > [Improving Package Structure](https://github.com/hyeonwoody/hyeonworld/wiki/JPA-to-JDBC-Migration)
 
 <br>
