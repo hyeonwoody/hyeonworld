@@ -32,10 +32,10 @@
 erDiagram
     user{
         bigint id PK "User ID"
-        bool login UK "Login status"
-        string(20) name UK "Name"
-        int relation UK "Family relation degree"
-        int party_type UK "Family relationship type"
+        bool login PK "Login status"
+        string(20) name PK "Name"
+        int relation PK "Family relation degree"
+        int party_type PK "Family relationship type"
         string email "Email"
         bool proposition "Name particle 0: 은/이, 1: 는/가"
         string nick_name "Nickname"
@@ -67,7 +67,7 @@ erDiagram
     }
     submission{
         bigint id PK "Submission ID"
-        bigint round_id UK "Round ID"
+        bigint round_id FK "Round ID"
         bigint user_id FK "User ID"
         bigint number "Number"
         string text "Text"
