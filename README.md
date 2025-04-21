@@ -32,7 +32,7 @@
 erDiagram
     user{
         bigint id PK "User ID"
-        bool login INDEX "Login status"
+        bool login "Login status (INDEX)"
         string(20) name PK "Name"
         int relation PK "Family relation degree"
         int party_type PK "Family relationship type"
